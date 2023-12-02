@@ -1,7 +1,7 @@
 import './Netflix.css'
 import GameCard from '../../Card/GameCard'
 
-function TwoPlayerCarousel({ games }) {
+function Netflix({ games }) {
 
     const twoPlayers = games.map(game => {
         return (
@@ -26,4 +26,4 @@ function TwoPlayerCarousel({ games }) {
 
 }
 
-export default TwoPlayerCarousel
+export default Netflix
