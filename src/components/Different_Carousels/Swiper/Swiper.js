@@ -1,16 +1,19 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Mousewheel } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/mousewheel';
 
 function Slider() {
   return(
     <>
-    <Swiper navigation={true} modules={[Navigation]} className="mySwiper"
+    <Swiper navigation={true} modules={[Navigation, Mousewheel]} className="mySwiper"
             slidesPerView={5}
             spaceBetween={30}
+            direction='horizontal'
+            mousewheel={true}
     >
       <SwiperSlide>Slide 1</SwiperSlide>
       <SwiperSlide>Slide 2</SwiperSlide>
