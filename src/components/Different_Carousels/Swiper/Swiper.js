@@ -1,32 +1,37 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Mousewheel } from 'swiper/modules';
-
-// Import Swiper styles
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/mousewheel';
 
-function Slider() {
-  return(
-    <>
-    <Swiper navigation={true} modules={[Navigation, Mousewheel]} className="mySwiper"
+import GameCard from '../../Card/GameCard';
+
+function Slider({ games }) {
+  const saved = games.map(game => (
+    <SwiperSlide key={game.id}>
+      <GameCard
+        id={game.id}
+        title={game.attributes.title}
+        categories={[game.attributes.categories]}
+        image={game.attributes.cover_image}
+        description={game.attributes.description}
+        min_players={game.attributes.min_players}
+        max_players={game.attributes.max_players}
+      />
+    </SwiperSlide>
+  ));
+
+  return (
+    <Swiper navigation={true} modules={[Navigation]} className="mySwiper"
             slidesPerView={5}
-            spaceBetween={30}
+            slidesPerGroup={5}
+            spaceBetween={0}
             direction='horizontal'
-            mousewheel={true}
+            speed={500}
+            loop={true}
     >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
+      {saved}
     </Swiper>
-  </>
-  )
+  );
 }
 
-export default Slider
+export default Slider;

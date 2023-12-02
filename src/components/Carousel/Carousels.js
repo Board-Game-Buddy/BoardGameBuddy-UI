@@ -12,7 +12,11 @@ function Carousels({ games }) {
     return (
         <div className='carousels-container'> 
           <SavedCarousel games={games} />
-          <Slider />
+          <SavedCarousel games={games} />
+          <SavedCarousel games={games} />
+          <SavedCarousel games={games} />
+          <SavedCarousel games={games} />
+          {/* <Slider games={games}/> */}
           {/* <TwoPlayerCarousel games={games} />
           <TopRatedCarousel games={games} />
           <FourthCarousel games={games} />
