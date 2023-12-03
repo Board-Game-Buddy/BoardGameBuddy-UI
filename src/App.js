@@ -4,10 +4,12 @@ import './App.css';
 import { getBoardGames } from './apiCalls';
 import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
+import Users from "./components/Users/Users"
 
 function App() {
   const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     getBoardGames()
@@ -24,13 +26,14 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path='/'
-            element={
-              <Carousels
-                games={games}
-              />
-            }>
-          </Route>
+        <Route
+          path='/'
+          element={<Users />}
+        />
+        <Route
+          path='/home'
+          element={<Carousels games={games} />}
+        />
       </Routes>
     </div>
   )
