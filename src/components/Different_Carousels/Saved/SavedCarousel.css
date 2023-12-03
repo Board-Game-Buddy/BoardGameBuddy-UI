@@ -1,0 +1,24 @@
+.carousel {
+  overflow-x: auto;
+}
+.saved-carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.navigation-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
