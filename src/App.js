@@ -5,6 +5,7 @@ import { getBoardGames, getUsers } from './apiCalls';
 import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
 import Users from "./components/Users/Users"
+import mockUsers from "./mockUsers";
 
 function App() {
   const [games, setGames] = useState([])
@@ -22,6 +23,13 @@ function App() {
 
       })
   }, [])
+
+  // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
+  useEffect(() => {
+    setUsers(mockUsers)
+    console.log(users)
+  }, [users])
+
 
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
 
@@ -42,7 +50,7 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<Users />}
+          element={<Users users={users} />}
         />
         <Route
           path='/home'

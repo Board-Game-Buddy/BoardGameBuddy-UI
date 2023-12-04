@@ -1,16 +1,21 @@
 import './Users.css'
+import UserCard from "../UserCard/UserCard"
 
 function Users( {users} ) {
+  const allUsers = users.map((user) => {
+    return (
+      <UserCard 
+      key={user.id}
+      id={user.id}
+    />
+    )
+  })
+
   return (
-    <div>
-      <h1>test</h1>
-      <h1>test</h1>
-      <h1>test</h1>
-      <h1>test</h1>
-      <h1>test</h1>
-      <h1>test</h1>
+    <div className="users-container">
+      {allUsers}
     </div>
-  )
-}
+  )}
+  
 
 export default Users
