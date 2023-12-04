@@ -23,6 +23,19 @@ function App() {
       })
   }, [])
 
+  // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
+  
+  // useEffect(() => {
+  //   getUsers()
+  //     .then((data) => {
+  //       setUsers(data.data)
+  //     })
+  //     .catch((error) => {
+  //       setServerError({hasError: true, message: `${error.message}`})
+
+  //     })
+  // }, [])
+
   return (
     <div className="App">
       <Header />
