@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './App.css';
-import { getBoardGames } from './apiCalls';
+import { getBoardGames, getUsers } from './apiCalls';
 import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
 import Users from "./components/Users/Users"
@@ -24,7 +24,7 @@ function App() {
   }, [])
 
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
-  
+
   // useEffect(() => {
   //   getUsers()
   //     .then((data) => {
