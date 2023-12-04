@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "type": "boardgame",
+    "attributes": {
+      "title": "Catan: Chocolate Edition",
+      "cover_image": "https://cf.geekdo-images.com/nl9filxW81FMBYa2cM3m9Q__original/img/7zwgbuKpCCxzmLRRw8Yk_CG3t0A=/0x0/filters:format(jpeg)/pic3870595.jpg",
+      "min_players": 2,
+      "max_players": 4,
+      "min_playtime": 0,
+      "max_playtime": 0,
+      "categories": [
+        "Civilization",
+        "Negotiation",
+        "Hand Management",
+        "Trading",
+        "Network and Route Building",
+        "Strategy"
+      ],
+      "cooperative": false,
+      "description": "A game of Catan in Chocolate. Build settlements, roads, cities and knights to become the champion of a chocolate Catan world.&#10;&#10;Contents:&#10;&#10; 32 pieces of chocolate with the following printed on them&#10; 15 settlements(1VP)/cities(2VP), 3 each in 5 different colors&#10; 9 roads&#10; 8 knights (0.5VP each)&#10; &#10; 90 resource cards&#10; 1 spinner&#10;&#10;&#10;At the start each player receives two settlements in different colors and a road to bind them together (similar to the layout of Catan the Card Game). Active player then spins a spinner which contains 7 possible outcomes, one for each resource, one year of plenty where the players may choose a resource for free, and a robber which will rob the players of half their resources if they have more than 7. For each resource field on the spinner, three colors of settlements are shown. These colors will produce the resource in question for all players when the spinner lands there. Then a player may build new things by paying the appropriate amount and, either take a new piece of chocolate from the box and add it to their display, or for cities, turn over the settlement piece to its back side which have a city of the same color. Settlements must have a road between them, and knights must be placed next to a settlement/city. Also, each settlement/city may only have one knight attached to it. Trading is also allowed, either between players or with the bank 3:1&#10;First player to reach 5VP wins"
+    }
+  },
+  {
+    "id": "2",
+    "type": "boardgame",
+    "attributes": {
+      "title": "Another Game",
+      "cover_image": "https://example.com/another-game.jpg",
+      "min_players": 3,
+      "max_players": 6,
+      "min_playtime": 30,
+      "max_playtime": 60,
+      "categories": [
+        "Strategy",
+        "Adventure"
+      ],
+      "cooperative": true,
+      "description": "Description of another game."
+    }
+  }
+]

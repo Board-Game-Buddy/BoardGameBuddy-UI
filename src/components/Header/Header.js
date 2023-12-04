@@ -1,11 +1,11 @@
 import './Header.css';
-
+import Logo from '../../Logo.png'
 
 function Header() {
 return (
   <nav>
   <input type="checkbox" id="nav-toggle" />
-  <div class="logo">MINZ<strong>CODE</strong></div>
+  <div class="logo"><img className='logo' src={Logo} alt="Logo" style={{ height: '100%', width: '50%' }} /></div>
   <ul class="links">
      <li><a href="#home">Home</a></li>
      <li><a href="#about">About</a></li>

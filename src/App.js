@@ -10,6 +10,7 @@ function App() {
   const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
     getBoardGames()
