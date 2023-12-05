@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Specify a Node.js version compatible with your project
+          node-version: 18
 
       - name: Install Dependencies
         run: npm install
@@ -25,45 +25,3 @@ jobs:
         with:
           browser: chrome
           start: npm start
-
-
-
-# name: Cypress Tests
-
-# on: 
-#   pull_request:
-#     branches:
-#       - main
-
-# jobs:
-#   cypress-run:
-#     runs-on: ubuntu-latest
-#     environment: Test
-#     steps:
-#        - name: Cypress run
-#          uses: cypress-io/github-action@v6
-#          with:
-#           browser: chrome
-#           start: npm start
-
-
-
-
-
-
-      # - name: Checkout
-      #   uses: actions/checkout@v3
-
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18
-          
-      # - name: Install Dependencies
-      #   run: npm i
-
-      # - name: Run Cypress Tests
-      #   uses: cypress-io/github-action@v5.5.1
-      #   with:
-      #     build: npm run build
-      #     start: npm start
