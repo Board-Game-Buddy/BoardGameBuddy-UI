@@ -6,6 +6,7 @@ import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
 import Users from "./components/Users/Users"
 import mockUsers from "./mockUsers";
+import SavedGames from "./components/SavedGames/SavedGames"
 
 function App() {
   const [games, setGames] = useState([])
