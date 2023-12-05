@@ -10,7 +10,7 @@ import mockUsers from "./mockUsers";
 function App() {
   const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false) // might want this for later?
   const [users, setUsers] = useState([])
 
   useEffect(() => {
@@ -55,6 +55,10 @@ function App() {
         <Route
           path='/home'
           element={<Carousels games={games} />}
+        />
+        <Route
+          path='/saved'
+          element={<SavedGames games={games} />}
         />
       </Routes>
     </div>
