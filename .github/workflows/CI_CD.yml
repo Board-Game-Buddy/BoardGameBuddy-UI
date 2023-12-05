@@ -8,13 +8,43 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    environment: Test
     steps:
-       - name: Cypress run
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Specify a Node.js version compatible with your project
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
           start: npm start
+
+
+
+# name: Cypress Tests
+
+# on: 
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   cypress-run:
+#     runs-on: ubuntu-latest
+#     environment: Test
+#     steps:
+#        - name: Cypress run
+#          uses: cypress-io/github-action@v6
+#          with:
+#           browser: chrome
+#           start: npm start
 
 
 
