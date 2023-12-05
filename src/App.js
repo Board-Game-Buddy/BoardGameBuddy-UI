@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     setUsers(mockUsers)
     console.log(users)
-  }, [users])
+  }, [])
 
 
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY

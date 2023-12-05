@@ -1,5 +1,21 @@
 .usercard {
-  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 3px solid black;
   padding: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+} 
+
+.usercard {
+  transition: filter 0.5s ease, transform 0.3s ease;
+}
+
+.usercard:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+  transform: scale(1.1);
 }
