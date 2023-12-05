@@ -17,7 +17,7 @@ nav {
   right: 0;
   top: 0;
   font-family: 'Montserrat', 'sans-serif';
-  height: 100px;
+  height: 10vh;
   background-color: #3e65da;
   padding: 0 5%;
 
@@ -111,7 +111,7 @@ nav .icon-burger .line {
       flex-direction: column;
       justify-content: space-evenly;
       background-color: rgba(0, 0, 0, .8);
-      overflow: hidden;
+      /* overflow: hidden; */
       transition: all .5s ease-in-out;
   }
   nav .links a {

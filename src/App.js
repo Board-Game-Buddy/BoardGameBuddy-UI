@@ -4,6 +4,7 @@ import './App.css';
 import { getBoardGames } from './apiCalls';
 import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
+import SelectedGame from "./components/SelectedGame/SelectedGame";
 
 function App() {
   const [games, setGames] = useState([])
@@ -20,6 +21,10 @@ function App() {
       })
   }, [])
 
+  const resetError = () => {
+    setServerError({hasError: false, message: ''})
+  }
+
   return (
     <div className="App">
       <Header />
@@ -29,6 +34,11 @@ function App() {
               <Carousels
                 games={games}
               />
+            }>
+          </Route>
+          <Route path='/game/:id'
+            element={
+              <SelectedGame setServerError={setServerError} />
             }>
           </Route>
       </Routes>
