@@ -16,3 +16,5 @@ function GameCard({ id, title, image }) {
 }
 
 export default GameCard
+
+// idk
