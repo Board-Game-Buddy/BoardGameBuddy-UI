@@ -42,7 +42,7 @@ function SavedCarousel({ games }) {
       key={game.key}
       title={game.attributes.title}
       categories={[game.attributes.categories]}
-      image={game.attributes.cover_image}
+      image={game.attributes.image_path}
       description={game.attributes.description}
       min_players={game.attributes.min_players}
       max_players={game.attributes.max_players}

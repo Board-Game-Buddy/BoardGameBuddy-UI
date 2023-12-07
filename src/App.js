@@ -7,11 +7,13 @@ import Header from "./components/Header/Header";
 import SelectedGame from "./components/SelectedGame/SelectedGame";
 import Users from "./components/Users/Users"
 import mockUsers from "./mockUsers";
+import SavedGames from "./components/SavedGames/SavedGames"
+import mockGames from "./mockGames";
 
 function App() {
   const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false) // might want this for later?
   const [users, setUsers] = useState([])
 
   useEffect(() => {
@@ -29,10 +31,11 @@ function App() {
   }
   
   // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
-  useEffect(() => {
-    setUsers(mockUsers)
-    console.log(users)
-  }, [])
+  // useEffect(() => {
+  //   setUsers(mockUsers)
+  //   setGames(mockGames)
+  //   console.log(users)
+  // }, [])
 
 
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
@@ -47,6 +50,7 @@ function App() {
 
   //     })
   // }, [])
+
 
   return (
     <div className="App">
@@ -67,6 +71,10 @@ function App() {
         <Route
           path='/'
           element={<Users users={users} />}
+        />
+        <Route
+          path='/saved'
+          element={<SavedGames games={games} />}
         />
       </Routes>
     </div>
