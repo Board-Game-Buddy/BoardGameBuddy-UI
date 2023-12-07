@@ -4,15 +4,18 @@ import './App.css';
 import { getBoardGames, getUsers } from './apiCalls';
 import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
+import SelectedGame from "./components/SelectedGame/SelectedGame";
 import Users from "./components/Users/Users"
 import mockUsers from "./mockUsers";
 import ServerError from "./components/ServerError/ServerError";
 import LoadingComponent from "./components/Loading/Loading";
+import SavedGames from "./components/SavedGames/SavedGames"
+import mockGames from "./mockGames";
 
 function App() {
   const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false) // might want this for later?
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -24,16 +27,20 @@ function App() {
       })
       .catch((error) => {
         setServerError({hasError: true, message: `${error.message}`})
-
       })
   }, [])
 
+  const resetError = () => {
+    setServerError({hasError: false, message: ''})
+  }
+  
   // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
-  useEffect(() => {
-    setUsers(mockUsers)
-    // setIsLoading(false)
-    console.log(users)
-  }, [])
+  // useEffect(() => {
+  //   setUsers(mockUsers)
+  //   setGames(mockGames)
+  //   console.log(users)
+  // }, [])
+
 
 
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
@@ -49,10 +56,6 @@ function App() {
   //     })
   // }, [])
 
-  const resetError = () => {
-    setServerError({hasError: false, message: ''})
-  }
-
   return (
     <div className="App">
       <Header />
@@ -62,13 +65,25 @@ function App() {
         <LoadingComponent />
     ) : (
       <Routes>
+        <Route path='/user:userid/home'
+            element={
+              <Carousels
+                games={games}
+              />
+            }>
+          </Route>
+          <Route path='/game/:id'
+            element={
+              <SelectedGame setServerError={setServerError} />
+            }>
+          </Route>
         <Route
           path='/'
           element={<Users users={users} />}
         />
         <Route
-          path='/home'
-          element={<Carousels games={games} />}
+          path='/saved'
+          element={<SavedGames games={games} />}
         />
       </Routes>
     )}
