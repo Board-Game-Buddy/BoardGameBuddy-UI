@@ -1,3 +1,19 @@
-* {
-  
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.loading-text {
+    font-weight: bolder;
+    font-size: 2em;
+    background: #6D9CF3;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    -webkit-text-stroke: .2px black;
+    text-stroke: .2px black;
 }
