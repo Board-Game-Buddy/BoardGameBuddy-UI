@@ -11,7 +11,7 @@ body {
   width: 100%;
 }
 nav {
-  position: fixed;
+  /* position: fixed; */
   z-index: 10;
   left: 0;
   right: 0;

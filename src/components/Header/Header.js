@@ -4,7 +4,7 @@ import './Header.css';
 function Header() {
 return (
   <nav>
-   <input type="checkbox" id="nav-toggle" />
+   {/* <input type="checkbox" id="nav-toggle" />
    <div class="logo">MINZ<strong>CODE</strong></div>
    <ul class="links">
       <li><a href="#home">Home</a></li>
@@ -17,7 +17,7 @@ return (
       <div class="line"></div>
       <div class="line"></div>
       <div class="line"></div>
-   </label>
+   </label> */}
   </nav>
   )
 }
