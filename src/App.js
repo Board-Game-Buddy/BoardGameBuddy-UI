@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import Users from "./components/Users/Users"
 import mockUsers from "./mockUsers";
 import SavedGames from "./components/SavedGames/SavedGames"
+import mockGames from "./mockGames";
 
 function App() {
   const [games, setGames] = useState([])
@@ -21,15 +22,15 @@ function App() {
       })
       .catch((error) => {
         setServerError({hasError: true, message: `${error.message}`})
-
       })
   }, [])
 
   // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
-  useEffect(() => {
-    setUsers(mockUsers)
-    console.log(users)
-  }, [])
+  // useEffect(() => {
+  //   setUsers(mockUsers)
+  //   setGames(mockGames)
+  //   console.log(users)
+  // }, [])
 
 
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
@@ -44,6 +45,7 @@ function App() {
 
   //     })
   // }, [])
+
 
   return (
     <div className="App">
