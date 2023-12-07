@@ -1,11 +1,14 @@
 import "./UserCard.css" 
-
-function UserCard({img, name}) {
+import { Link } from "react-router-dom" 
+ 
+function UserCard({img, name, id}) {
   return (
     <div>
-      <div className="usercard" >
-        <img src={img} style={{scale: "15%"}}/> 
-      </div>
+      <Link to={`/user/${id}/home`}>
+        <div className="usercard" >
+          <img src={img} style={{scale: "15%"}}/> 
+        </div>
+      </Link>
       <p>{name}</p>
     </div>
   )

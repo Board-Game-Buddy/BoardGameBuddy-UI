@@ -23,7 +23,7 @@ function App() {
     getBoardGames()
       .then((data) => {
         setGames(data.data)
-        // setIsLoading(false)
+        setIsLoading(false)
       })
       .catch((error) => {
         setServerError({hasError: true, message: `${error.message}`})
@@ -34,15 +34,6 @@ function App() {
     setServerError({hasError: false, message: ''})
   }
   
-  // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
-  // useEffect(() => {
-  //   setUsers(mockUsers)
-  //   setGames(mockGames)
-  //   console.log(users)
-  // }, [])
-
-
-
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
 
   // useEffect(() => {
