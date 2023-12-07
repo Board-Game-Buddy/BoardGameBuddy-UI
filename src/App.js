@@ -6,17 +6,21 @@ import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
 import Users from "./components/Users/Users"
 import mockUsers from "./mockUsers";
+import ServerError from "./components/ServerError/ServerError";
+import LoadingComponent from "./components/Loading/Loading";
 
 function App() {
   const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [users, setUsers] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     getBoardGames()
       .then((data) => {
         setGames(data.data)
+        // setIsLoading(false)
       })
       .catch((error) => {
         setServerError({hasError: true, message: `${error.message}`})
@@ -27,6 +31,7 @@ function App() {
   // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
   useEffect(() => {
     setUsers(mockUsers)
+    // setIsLoading(false)
     console.log(users)
   }, [])
 
@@ -44,9 +49,18 @@ function App() {
   //     })
   // }, [])
 
+  const resetError = () => {
+    setServerError({hasError: false, message: ''})
+  }
+
   return (
     <div className="App">
       <Header />
+      {serverError.hasError ? (
+      <ServerError resetError={resetError} serverError={serverError} />
+    ) : isLoading ? (
+        <LoadingComponent />
+    ) : (
       <Routes>
         <Route
           path='/'
@@ -57,6 +71,7 @@ function App() {
           element={<Carousels games={games} />}
         />
       </Routes>
+    )}
     </div>
   )
 }
