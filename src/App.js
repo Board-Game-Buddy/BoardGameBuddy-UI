@@ -7,6 +7,8 @@ import Header from "./components/Header/Header";
 import SelectedGame from "./components/SelectedGame/SelectedGame";
 import Users from "./components/Users/Users"
 import mockUsers from "./mockUsers";
+import ServerError from "./components/ServerError/ServerError";
+import LoadingComponent from "./components/Loading/Loading";
 import SavedGames from "./components/SavedGames/SavedGames"
 import mockGames from "./mockGames";
 
@@ -15,11 +17,13 @@ function App() {
   const [serverError, setServerError] = useState({hasError: false, message: ''})
   const [isLoggedIn, setIsLoggedIn] = useState(false) // might want this for later?
   const [users, setUsers] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     getBoardGames()
       .then((data) => {
         setGames(data.data)
+        // setIsLoading(false)
       })
       .catch((error) => {
         setServerError({hasError: true, message: `${error.message}`})
@@ -38,6 +42,7 @@ function App() {
   // }, [])
 
 
+
   // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
 
   // useEffect(() => {
@@ -51,10 +56,14 @@ function App() {
   //     })
   // }, [])
 
-
   return (
     <div className="App">
       <Header />
+      {serverError.hasError ? (
+      <ServerError resetError={resetError} serverError={serverError} />
+    ) : isLoading ? (
+        <LoadingComponent />
+    ) : (
       <Routes>
         <Route path='/user:userid/home'
             element={
@@ -77,6 +86,7 @@ function App() {
           element={<SavedGames games={games} />}
         />
       </Routes>
+    )}
     </div>
   )
 }

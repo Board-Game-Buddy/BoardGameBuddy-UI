@@ -1,0 +1,44 @@
+.serverError {
+    font-size: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #060606;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .error-image {
+    height: 7em;
+  }
+
+  .error-message {
+    text-align: center;
+  }
+  
+  .return-button {
+    border-radius: 8%;
+    height: 3em;
+    width: 8em;
+    background: #6D9CF3;
+    border: none;
+    color: white;
+    font-weight: bolder;
+  }
+  
+  .return-button:hover {
+    background: #6D9CF3;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 500px) {
+    .serverError {
+      font-size: 1.75rem;
+    }
+    
+    .error-image {
+      height: 6em;
+    }
+  }
