@@ -1,13 +1,15 @@
 import './Header.css';
 import Logo from '../../Logo.png'
+import { Link, useParams } from 'react-router-dom';
 
-function Header() {
+function Header( {resetError, currentUser} ) {
+
 return (
   <nav>
   <input type="checkbox" id="nav-toggle" />
   <img className='logo' src={Logo} />
  <ul class="links">
-     <li><a href="#home">Home</a></li>
+  <Link to={`/${currentUser}/home`}><li>Home</li></Link>
      <li><a href="#work">Saved Games</a></li>
      <li><a href="#projects">All Games</a></li>
  </ul>

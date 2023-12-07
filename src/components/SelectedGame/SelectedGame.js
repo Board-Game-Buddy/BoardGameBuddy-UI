@@ -8,7 +8,7 @@ import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice'
 import filled from '../../Assets/filled.png'
 import unfilled from '../../Assets/unfilled.png'
 
-function SelectedGame({ setServerError }) {
+function SelectedGame({ setServerError, currentUser }) {
     const { id } = useParams()
     const idNum = parseInt(id)
     const [selectedGame, setSelectedGame] = useState(false)
@@ -54,6 +54,11 @@ function SelectedGame({ setServerError }) {
       }
   }
 
+  if (currentUser === null) {
+    window.location.href = '/';
+    return null;
+  }
+ 
     return selectedGame && (
       <div className='entire-page'>
         <div className='selected-game-container'>
