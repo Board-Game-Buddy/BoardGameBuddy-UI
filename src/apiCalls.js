@@ -18,3 +18,15 @@ export function getBoardGames() {
       return response.json()
     })
   }
+
+export function getUses() {
+  return fetch(//(USER ENDPOINT HERE)).then(
+    (response) => {
+      if (!response.ok) {
+        throw new Error(`Board game not found.`)
+      }
+      return response.json()
+    }
+  )
+}
+
