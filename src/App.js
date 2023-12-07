@@ -30,23 +30,25 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    getUsers()
+      .then((data) => {
+        setUsers(data)
+      })
+      .catch((error) => {
+        setServerError({hasError: true, message: `${error.message}`})
+
+      })
+  }, [])
+
   const resetError = () => {
     setServerError({hasError: false, message: ''})
   }
   
-  // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
+ 
 
-  // useEffect(() => {
-  //   getUsers()
-  //     .then((data) => {
-  //       setUsers(data.data)
-  //     })
-  //     .catch((error) => {
-  //       setServerError({hasError: true, message: `${error.message}`})
 
-  //     })
-  // }, [])
-
+  // 
   return (
     <div className="App">
       <Header />
@@ -56,7 +58,7 @@ function App() {
         <LoadingComponent />
     ) : (
       <Routes>
-        <Route path='/user:userid/home'
+        <Route path='/:name/:userid/home'
             element={
               <Carousels
                 games={games}

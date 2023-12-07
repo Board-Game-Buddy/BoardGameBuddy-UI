@@ -11,12 +11,12 @@ export function getBoardGames() {
 
 
 export function getUsers() {
-  return fetch(//(USER ENDPOINT HERE)).then(
+  return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/`).then(
     (response) => {
       if (!response.ok) {
-        throw new Error(`Board game not found.`)
+        throw new Error(`Users not found.`)
       }
-      return response.json()
+     return response.json()
     }
   )
 }
