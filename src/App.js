@@ -4,6 +4,7 @@ import './App.css';
 import { getBoardGames, getUsers } from './apiCalls';
 import Carousels from "./components/Carousel/Carousels";
 import Header from "./components/Header/Header";
+import SelectedGame from "./components/SelectedGame/SelectedGame";
 import Users from "./components/Users/Users"
 import mockUsers from "./mockUsers";
 
@@ -20,10 +21,13 @@ function App() {
       })
       .catch((error) => {
         setServerError({hasError: true, message: `${error.message}`})
-
       })
   }, [])
 
+  const resetError = () => {
+    setServerError({hasError: false, message: ''})
+  }
+  
   // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
   useEffect(() => {
     setUsers(mockUsers)
@@ -48,13 +52,21 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
+        <Route path='/user:userid/home'
+            element={
+              <Carousels
+                games={games}
+              />
+            }>
+          </Route>
+          <Route path='/game/:id'
+            element={
+              <SelectedGame setServerError={setServerError} />
+            }>
+          </Route>
         <Route
           path='/'
           element={<Users users={users} />}
-        />
-        <Route
-          path='/home'
-          element={<Carousels games={games} />}
         />
       </Routes>
     </div>
