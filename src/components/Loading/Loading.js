@@ -1,14 +1,14 @@
-import './LoadingComponent.css'
-import { TailSpin } from 'react-loading-icons'
+import './Loading.css'
+import { Circles } from 'react-loading-icons'
 
-function Loading() {
+function LoadingComponent() {
 
     return (
         <div className='loading-container'>
-            <TailSpin />
+            <Circles fill='#6D9CF3' />
             <h1 className='loading-text'>Loading...</h1>
         </div>
     )
 }
 
-export default Loading
+export default LoadingComponent
