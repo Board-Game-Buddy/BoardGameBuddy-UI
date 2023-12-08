@@ -34,3 +34,8 @@
   .carousels-container {
     margin-top: 100px;
   }
+
+  .card:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+  }

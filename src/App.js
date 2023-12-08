@@ -18,15 +18,27 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false) // might want this for later?
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [currentUser, setCurrentUser] = useState(null)
 
   useEffect(() => {
     getBoardGames()
       .then((data) => {
         setGames(data.data)
-        // setIsLoading(false)
+        setIsLoading(false)
       })
       .catch((error) => {
         setServerError({hasError: true, message: `${error.message}`})
+      })
+  }, [])
+
+  useEffect(() => {
+    getUsers()
+      .then((data) => {
+        setUsers(data)
+      })
+      .catch((error) => {
+        setServerError({hasError: true, message: `${error.message}`})
+
       })
   }, [])
 
@@ -34,56 +46,39 @@ function App() {
     setServerError({hasError: false, message: ''})
   }
   
-  // DELETE THIS ONCE WE HAVE A USERS ENDPOINT!
-  // useEffect(() => {
-  //   setUsers(mockUsers)
-  //   setGames(mockGames)
-  //   console.log(users)
-  // }, [])
+ 
 
 
-
-  // USING MOCK DATA CURRENTLY, UNCOMMENT THIS ONCE THE ENDPOINT IS READY
-
-  // useEffect(() => {
-  //   getUsers()
-  //     .then((data) => {
-  //       setUsers(data.data)
-  //     })
-  //     .catch((error) => {
-  //       setServerError({hasError: true, message: `${error.message}`})
-
-  //     })
-  // }, [])
-
+  // 
   return (
     <div className="App">
-      <Header />
+      <Header resetError={resetError} currentUser={currentUser} />
       {serverError.hasError ? (
       <ServerError resetError={resetError} serverError={serverError} />
     ) : isLoading ? (
         <LoadingComponent />
     ) : (
       <Routes>
-        <Route path='/user:userid/home'
+        <Route path='/:userid/home'
             element={
               <Carousels
                 games={games}
+                currentUser={currentUser}
               />
             }>
           </Route>
           <Route path='/game/:id'
             element={
-              <SelectedGame setServerError={setServerError} />
+              <SelectedGame setServerError={setServerError} currentUser={currentUser} />
             }>
           </Route>
         <Route
           path='/'
-          element={<Users users={users} />}
+          element={<Users users={users} setCurrentUser={setCurrentUser} />}
         />
         <Route
-          path='/saved'
-          element={<SavedGames games={games} />}
+          path='/:userid/saved'
+          element={<SavedGames games={games} currentUser={currentUser} />}
         />
       </Routes>
     )}

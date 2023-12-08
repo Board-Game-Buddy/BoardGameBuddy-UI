@@ -7,8 +7,12 @@ import FifthCarousel from '../Different_Carousels/Fifth/FifthCarousel'
 import Slider from '../Different_Carousels/Swiper/Swiper'
 
 
-function Carousels({ games }) {
-
+function Carousels({ games, currentUser }) {
+  if (currentUser === null) {
+    window.location.href = '/';
+    return null;
+  }
+ 
     return (
         <div className='carousels-container'> 
           <SavedCarousel games={games} />
