@@ -10,8 +10,8 @@ return (
   <img className='logo' src={Logo} />
  <ul class="links">
   <Link to={`/${currentUser}/home`}><li>Home</li></Link>
-     <li><a href="#work">Saved Games</a></li>
-     <li><a href="#projects">All Games</a></li>
+  <Link to={`/${currentUser}/saved`}><li>Saved Games</li></Link>
+     {/* <li><a href="#projects">All Games</a></li> */}
  </ul>
  <label for="nav-toggle" class="icon-burger">
      <div class="line"></div>

@@ -1,7 +1,7 @@
 import "./SavedGames.css"
 import GameCard from '../Card/GameCard'
 
-function SavedGames( {games} ) {
+function SavedGames( {games, currentUser} ) {
   const savedGames = games.map(game => {
     return (
         <GameCard 
@@ -13,6 +13,7 @@ function SavedGames( {games} ) {
             description={game.attributes.description}
             min_players={game.attributes.min_players}
             max_players={game.attributes.max_players}
+            currentUser={currentUser}
         />
     )
     })

@@ -77,7 +77,7 @@ function App() {
           element={<Users users={users} setCurrentUser={setCurrentUser} />}
         />
         <Route
-          path='/saved'
+          path='/:userid/saved'
           element={<SavedGames games={games} currentUser={currentUser} />}
         />
       </Routes>
