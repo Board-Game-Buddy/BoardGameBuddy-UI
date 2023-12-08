@@ -14,12 +14,16 @@ function SelectedGame({ setServerError, currentUser }) {
     const [selectedGame, setSelectedGame] = useState(false)
     const favoriteCards = useSelector((state) => state.favoriteCards)
     const dispatch = useDispatch()
-    const isFavorite = favoriteCards.includes(idNum);
+    const isFavorite = favoriteCards.includes(id);
 
-    useEffect( () => {  
-      getSelectedGame(id)
-        .then(data => setSelectedGame(data.data))
-        .catch(error => setServerError({hasError: true, message: `${error.message}`}))
+      useEffect(() => {
+        getSelectedGame(id)
+          .then((data) => {
+            setSelectedGame(data.data)
+          })
+          .catch((error) => {
+            setServerError({ hasError: true, message: `${error.message}` })
+          })
       }, [id, setServerError])
 
     const replaceLineBreaks = (text) => {
@@ -48,16 +52,16 @@ function SelectedGame({ setServerError, currentUser }) {
 
     const toggleFavorite = () => {
       if (isFavorite) {
-        dispatch(removeFavorite(idNum))
+        dispatch(removeFavorite(id))
     } else {
-        dispatch(addFavorite(idNum));
+        dispatch(addFavorite(id));
       }
   }
 
-  if (currentUser === null) {
-    window.location.href = '/';
-    return null;
-  }
+  // if (currentUser === null) {
+  //   window.location.href = '/';
+  //   return null;
+  // }
  
     return selectedGame && (
       <div className='entire-page'>
@@ -81,11 +85,11 @@ function SelectedGame({ setServerError, currentUser }) {
               <img className='selected-game-image' src={selectedGame.attributes.image_path} alt={`boardgame cover for ${selectedGame.attributes.title}`} />
             </div>
             <h3 className='categories'>{selectedGame.attributes.categories}</h3>
-            <div className='selected-favorite-btn' id="heart" onClick={() => toggleFavorite()}>
+            <div className='selected-favorite-button' id="save" onClick={() => toggleFavorite()}>
                 {isFavorite ? (
-                    <img src={filled} alt='filled in collection icon showing that this game is saved to the users favorites' style={{color: 'red', cursor: 'pointer', fontSize: '1.3em'}} />) : 
+                    <img src={filled} alt='filled in collection icon showing that this game is saved to the users favorites' style={{cursor: 'pointer', fontSize: '1.3em'}} />) : 
                     (
-                    <img src={unfilled} alt='unfilled collection icon showing that this game is not saved to the users favorites' style={{color: "#000000", fontSize: '1.3em'}} />
+                    <img src={unfilled} alt='unfilled collection icon showing that this game is not saved to the users favorites' style={{fontSize: '1.3em'}} />
                     )}
                 </div>
           </div>
