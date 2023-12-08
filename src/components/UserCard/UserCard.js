@@ -10,7 +10,7 @@ function UserCard({ img, name, id, setCurrentUser }) {
     <div>
       <Link to={`/${id}/home`} onClick={handleCardClick}>
         <div className="usercard">
-          <img src={img} style={{ transform: 'scale(0.15)' }} />
+          <img src={img} alt='user profile' style={{ transform: 'scale(0.15)' }} />
         </div>
       </Link>
       <p>{name}</p>

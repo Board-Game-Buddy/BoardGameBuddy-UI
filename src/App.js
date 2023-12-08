@@ -45,11 +45,7 @@ function App() {
   const resetError = () => {
     setServerError({hasError: false, message: ''})
   }
-  
- 
 
-
-  // 
   return (
     <div className="App">
       <Header resetError={resetError} currentUser={currentUser} />
@@ -80,6 +76,7 @@ function App() {
           path='/:userid/saved'
           element={<SavedGames games={games} currentUser={currentUser} />}
         />
+        <Route path='*' element={<ServerError resetError={resetError} />} />
       </Routes>
     )}
     </div>
