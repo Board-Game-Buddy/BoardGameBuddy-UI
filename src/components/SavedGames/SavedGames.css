@@ -6,3 +6,13 @@
   justify-content: center;
   row-gap: 14px;
 }
+
+.no-tracked {
+  margin-top: 125px;
+  height: 73vh;
+  padding-top: 50px;
+}
+
+.no-tracked-text {
+  color: #6D9CF3;
+}
