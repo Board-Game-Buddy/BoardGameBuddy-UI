@@ -25,6 +25,8 @@
   width: 40%;
   background-color: rgba(109, 156, 243, 0.5);
   border-radius: 1em;
+  min-width: 300px;
+  margin-bottom: 50px;
 }
 
 .selected-game-image {
@@ -61,6 +63,8 @@
   background-color: rgba(109, 156, 243, 0.5);
   border-radius: 1em;
   overflow: scroll;
+  min-height: 500px;
+  min-width: 300px;
 }
 
 /* App.css */
@@ -74,7 +78,7 @@
   height: 90%;
   width: 90%;
   font-family: fantasy;
-  overflow: auto;
+  overflow-x: auto;
   word-wrap: break-word;
   text-size-adjust: auto;
   font-size: 0.8em;
@@ -143,6 +147,7 @@ transition: transform .5s;
   transform: scaleX(-1);
 }
 
+
 a {
   color: inherit;
   text-decoration: inherit;
@@ -159,7 +164,7 @@ a {
     margin-bottom: 300px;
   }
   .entire-page{
-    margin-top: 200px;
+    margin-top: 300px;
   }
   .previous-next-buttons {
     width: 20%;
@@ -167,5 +172,6 @@ a {
     justify-content: center;
     margin-right: 0
   }
+
 
 }

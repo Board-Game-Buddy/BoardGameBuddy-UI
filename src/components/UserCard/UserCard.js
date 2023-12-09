@@ -13,7 +13,7 @@ function UserCard({ img, name, id, setCurrentUser }) {
           <img src={img} alt='user profile' style={{ transform: 'scale(0.15)' }} />
         </div>
       </Link>
-      <p>{name}</p>
+      <p className="name">{name}</p>
     </div>
   );
 }
