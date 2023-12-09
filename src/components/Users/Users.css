@@ -1,9 +1,21 @@
+/* App.css */
+
+/* Existing styles... */
+
 .users-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 20px;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
-  height:90vh;
+  height: 90vh;
 }
+
+@media (max-width: 465px) {
+  .users-container {
+    transform: scale(0.8); /* Adjust the scale as needed */
+  }
+}
+
+/* Additional styles... */

@@ -8,10 +8,10 @@ import Slider from '../Different_Carousels/Swiper/Swiper'
 
 
 function Carousels({ games, currentUser }) {
-  if (currentUser === null) {
-    window.location.href = '/';
-    return null;
-  }
+  // if (currentUser === null) {
+  //   window.location.href = '/';
+  //   return null;
+  // }
  
     return (
         <div className='carousels-container'> 
