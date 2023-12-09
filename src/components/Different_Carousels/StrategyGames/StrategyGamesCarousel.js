@@ -17,6 +17,12 @@ function StrategyGamesCarousel({ games, setServerError }) {
         })
     }, [setServerError])
 
+    const sliderRef = useRef(null)
+
+    if (strategyGames.length === 0) {
+        return null;
+      }
+
     const familyGames = strategyGames.map((game, index) => (
         <GameCard
           key={game.key}
@@ -30,7 +36,6 @@ function StrategyGamesCarousel({ games, setServerError }) {
         />
       ))
 
-  const sliderRef = useRef(null);
   let isDown = false;
   let startX;
   let scrollLeft;

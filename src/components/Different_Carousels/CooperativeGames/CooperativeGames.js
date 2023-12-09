@@ -1,16 +1,16 @@
-import './TwoPlayerCarousel.css';
-import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
+import GameCard from '../../Card/GameCard';
 
-function TwoPlayerCarousel({ games, setServerError }) {
+function CooperativeGamesCarousel({ setServerError }) {
 
-  const [twoPGames, setTwoPGames] = useState([])
+  const [cooperativeGames, setCooperativeGames] = useState([])
 
   useEffect(() => {
-    getSearchedGames(`max_players=2`)
+    getSearchedGames(`cooperative=true`)
       .then((data) => {
-        setTwoPGames(data.data)
+        console.log(data)
+        setCooperativeGames(data.data)
         })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
@@ -19,11 +19,11 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
     const sliderRef = useRef(null)
 
-    if (twoPGames.length === 0) {
+    if (cooperativeGames.length === 0) {
         return null;
       }
 
-    const twoPlayerGames = twoPGames.map((game, index) => (
+    const CoOpGames = cooperativeGames.map((game, index) => (
         <GameCard
           key={game.key}
           title={game.attributes.title}
@@ -71,7 +71,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
   return (
     <div className='saved-carousel-container'>
-        <div className='carousel-title'>Two Player Games</div>
+        <div className='carousel-title'>Cooperative Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
@@ -83,7 +83,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {twoPlayerGames}
+        {CoOpGames}
       </div>
       <div className='navigation-btn right' onClick={() => scrollBy(200)}>
         &gt;
@@ -92,4 +92,4 @@ function TwoPlayerCarousel({ games, setServerError }) {
   );
 }
 
-export default TwoPlayerCarousel;
+export default CooperativeGamesCarousel;
