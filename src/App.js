@@ -60,6 +60,7 @@ function App() {
               <Carousels
                 games={games}
                 currentUser={currentUser}
+                setServerError={setServerError}
               />
             }>
           </Route>

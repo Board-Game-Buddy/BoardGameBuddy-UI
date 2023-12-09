@@ -13,12 +13,22 @@
   transform: translateY(-50%);
   font-size: 24px;
   cursor: pointer;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+.navigation-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .left {
-  left: 0;
+  left: 10px;
+  z-index: 1;
 }
 
 .right {
-  right: 0;
+  right: 10px;
 }
