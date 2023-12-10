@@ -1,0 +1,29 @@
+{
+  "data": {
+      "id": "13",
+      "type": "board_games",
+      "attributes": {
+          "bgg_id": 12333,
+          "title": "Twilight Struggle",
+          "image_path": "https://cf.geekdo-images.com/pNCiUUphnoeWOYfsWq0kng__original/img/Iae47UtAd_RXVd5tJ3YzbDHOv4E=/0x0/filters:format(jpeg)/pic3530661.jpg",
+          "min_players": 2,
+          "max_players": 2,
+          "min_playtime": 120,
+          "max_playtime": 180,
+          "categories": "Modern Warfare, Political, Wargame",
+          "cooperative": false,
+          "description": "&quot;Now the trumpet summons us again, not as a call to bear arms, though arms we need; not as a call to battle, though embattled we are &ndash; but a call to bear the burden of a long twilight struggle...&quot;&#10;&ndash; John F. Kennedy&#10;&#10;In 1945, unlikely allies toppled Hitler's war machine, while humanity's most devastating weapons forced the Japanese Empire to its knees in a storm of fire. Where once there stood many great powers, there then stood only two. The world had scant months to sigh its collective relief before a new conflict threatened. Unlike the titanic struggles of the preceding decades, this conflict would be waged not primarily by soldiers and tanks, but by spies and politicians, scientists and intellectuals, artists and traitors. Twilight Struggle is a two-player game simulating the forty-five year  dance of intrigue, prestige, and occasional flares of warfare between the Soviet Union and the United States. The entire world is the stage on which these two titans fight to make the world safe for their own ideologies and ways of life. The game begins amidst the ruins of Europe as the two new &quot;superpowers&quot; scramble over the wreckage of the Second World War, and ends in 1989, when only the United States remained standing.&#10;&#10;Twilight Struggle inherits its fundamental systems from the card-driven classics We the People and Hannibal: Rome vs. Carthage. It is a quick-playing, low-complexity game in that tradition. The game map is a world map of the period, whereon players move units and exert influence in attempts to gain allies and control for their superpower. As with GMT's other card-driven games, decision-making is a challenge; how to best use one's cards and units given consistently limited resources?&#10;&#10;Twilight Struggle's Event cards add detail and flavor to the game. They cover a vast array of historical happenings, from the Arab-Israeli conflicts of 1948 and 1967, to Vietnam and the U.S. peace movement, to the Cuban Missile Crisis and other such incidents that brought the world to the brink of nuclear annihilation. Subsystems capture the prestige-laden Space Race as well as nuclear tensions, with the possibility of game-ending nuclear war.&#10;&#10;Components (original edition):&#10;&#10;&#10;     228 full colour counters &#10;     22&quot;x34&quot; full colour map &#10;     103 event cards &#10;     2 six-sided dice&#10;     1 24-page rulebook&#10;     2 full colour player aid cards&#10;&#10;&#10;Components (2009 Deluxe edition and after)&#10;&#10;     260 full colour counters &#10;     22&quot;x34&quot; mounted map with revised graphics&#10;     110 event cards&#10;     2 six-sided dice&#10;     1 24-page rulebook&#10;     2 full colour player aid cards&#10;&#10;&#10;TIME SCALE:     approx. 3-5 years per turn&#10;MAP SCALE:     Point-to-point system&#10;UNIT SCALE:     Influence markers&#10;NUMBER OF PLAYERS:     2&#10;&#10;DESIGNER: Ananda Gupta &amp; Jason Matthews&#10;MAP, CARD, &amp; COUNTER ART: Mark Simonitch&#10;&#10;&#10;A deluxe edition, published in 2009 includes the following changes from the basic game:&#10;&#10;     Mounted map with revised graphics&#10;     Two double-thick counter sheets with 260 counters&#10;     Deck of 110 event cards (increased from 103)&#10;     Revised rules and player aid cards&#10;     Revised at start setup and text change for card #98 Aldrich Ames&#10;&#10;&#10;Upgrade kit for the owners of the previous version includes the following:&#10;&#10;     Mounted Map with revised graphics&#10;     New card decks&#10;     Updated Rules &amp; Charts&#10;&#10;&#10;",
+          "rating": 8.07634,
+          "year_published": 2005,
+          "rank": 13,
+          "abstracts_rank": null,
+          "cgs_rank": null,
+          "childrens_games_rank": null,
+          "family_games_rank": null,
+          "party_games_rank": null,
+          "strategy_games_rank": 13,
+          "thematic_rank": null,
+          "wargames_rank": 2
+      }
+  }
+}
