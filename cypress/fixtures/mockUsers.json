@@ -1,0 +1,32 @@
+[
+  {
+  "data": {
+  "id": 4,
+  "type": "user",
+  "attributes": {
+  "name": "Reed Hillmar",
+  "email": "reedhillmar@gmail.com"
+  }
+  }
+  },
+  {
+  "data": {
+  "id": 5,
+  "type": "user",
+  "attributes": {
+  "name": "Noelle Hemphill",
+  "email": "n.hemphill4@gmail.com"
+  }
+  }
+  },
+  {
+  "data": {
+  "id": 6,
+  "type": "user",
+  "attributes": {
+  "name": "Connor Richmond",
+  "email": "richmond.connor@gmail.com"
+  }
+  }
+  }
+  ]
