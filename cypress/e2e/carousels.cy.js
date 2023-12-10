@@ -5,8 +5,19 @@ describe('Carousel Page', () => {
     }).as('getUsers');
     cy.intercept('GET', 'https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games', {
       fixture: 'mockGames',
-    }).as('getUsers');
-    
+    }).as('getGames');
+    cy.intercept('GET', 'https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?max_players=2', {
+      fixture: 'twoplayer',
+    }).as('twoplayer');
+    cy.intercept('GET', 'https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?categories=fantasy', {
+      fixture: 'topfantasy',
+    }).as('fantasy');
+    cy.intercept('GET', 'https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?categories=strategy', {
+      fixture: 'topstrategy',
+    }).as('strategy');
+    cy.intercept('GET', 'https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?cooperative=true', {
+      fixture: 'coop',
+    }).as('coop');
   });
 
   it('should display the header with image, home, and about sections', () => {
