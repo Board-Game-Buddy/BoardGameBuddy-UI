@@ -35,6 +35,7 @@ function App() {
     getUsers()
       .then((data) => {
         setUsers(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
