@@ -1,4 +1,5 @@
 import './Header.css'
+import PropTypes from 'prop-types';
 import Logo from '../../Logo.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
@@ -49,3 +50,8 @@ function Header({ resetError, currentUser }) {
 }
 
 export default Header
+
+Header.propTypes = {
+  resetError: PropTypes.func.isRequired,
+  currentUser: PropTypes.number.isRequired,
+};
