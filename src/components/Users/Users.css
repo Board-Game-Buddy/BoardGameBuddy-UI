@@ -2,6 +2,10 @@
 
 /* Existing styles... */
 
+/* 
+* {
+  border: 2px solid green;
+} */
 .users-container {
   display: flex;
   align-items: center;
@@ -12,10 +16,25 @@
   height: 90vh;
 }
 
-@media (max-width: 465px) {
+@media (max-width: 1052px) {
   .users-container {
-    transform: scale(0.8); /* Adjust the scale as needed */
+    margin-top:150px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center; /* Add this line to center items */
+  }
+  a {
+    display: flex;
+    justify-content: center;
   }
 }
 
-/* Additional styles... */
+@media (max-width: 560px) {
+  .users-container {
+    margin-top: 80px;
+    scale: 80%;
+  }
+}
+
+
+

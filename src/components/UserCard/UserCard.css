@@ -22,4 +22,5 @@
 
 .name {
   white-space: nowrap;
+  font-weight: bold;
 }
