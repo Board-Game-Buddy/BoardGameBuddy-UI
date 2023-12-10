@@ -2,7 +2,7 @@ import './ServerError.css'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-function ServerError({ resetError, serverError, currentUser}) {
+function ServerError({ resetError, serverError, currentUser }) {
 
     const errorMessage = serverError && serverError.message ? serverError.message : 'Unknown error occurred.'
 
