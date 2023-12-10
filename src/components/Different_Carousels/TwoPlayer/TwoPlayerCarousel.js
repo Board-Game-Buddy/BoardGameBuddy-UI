@@ -25,7 +25,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
     const twoPlayerGames = twoPGames.map((game, index) => (
         <GameCard
-          key={game.key}
+          key={game.id}
           title={game.attributes.title}
           categories={[game.attributes.categories]}
           image={game.attributes.image_path}
