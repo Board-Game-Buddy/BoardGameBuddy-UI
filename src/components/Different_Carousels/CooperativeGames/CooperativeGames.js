@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import PropTypes from 'prop-types';
 import { getSearchedGames } from '../../../apiCalls'
 import GameCard from '../../Card/GameCard'
 
@@ -92,3 +93,7 @@ function CooperativeGamesCarousel({ setServerError }) {
 }
 
 export default CooperativeGamesCarousel;
+
+Carousels.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};

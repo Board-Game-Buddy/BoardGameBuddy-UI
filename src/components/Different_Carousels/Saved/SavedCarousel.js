@@ -1,4 +1,5 @@
 import './SavedCarousel.css';
+import PropTypes from 'prop-types';
 import GameCard from '../../Card/GameCard';
 import { useRef } from 'react';
 

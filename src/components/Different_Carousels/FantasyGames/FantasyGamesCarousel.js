@@ -1,4 +1,5 @@
 import GameCard from '../../Card/GameCard';
+import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
@@ -92,3 +93,7 @@ function FantasyGamesCarousel({ setServerError }) {
 }
 
 export default FantasyGamesCarousel;
+
+Carousels.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};

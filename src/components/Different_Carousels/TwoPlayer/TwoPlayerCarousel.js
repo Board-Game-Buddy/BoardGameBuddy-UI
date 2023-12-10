@@ -1,4 +1,5 @@
 import './TwoPlayerCarousel.css';
+import PropTypes from 'prop-types';
 import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
