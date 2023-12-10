@@ -94,6 +94,6 @@ function CooperativeGamesCarousel({ setServerError }) {
 
 export default CooperativeGamesCarousel;
 
-Carousels.propTypes = {
+CooperativeGamesCarousel.propTypes = {
   setServerError: PropTypes.func.isRequired,
 };

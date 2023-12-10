@@ -95,6 +95,6 @@ function StrategyGamesCarousel({ games, setServerError }) {
 
 export default StrategyGamesCarousel;
 
-Carousels.propTypes = {
+StrategyGamesCarousel.propTypes = {
   setServerError: PropTypes.func.isRequired,
 };

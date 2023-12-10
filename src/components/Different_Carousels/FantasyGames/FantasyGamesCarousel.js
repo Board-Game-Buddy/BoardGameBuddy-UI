@@ -94,6 +94,6 @@ function FantasyGamesCarousel({ setServerError }) {
 
 export default FantasyGamesCarousel;
 
-Carousels.propTypes = {
+FantasyGamesCarousel.propTypes = {
   setServerError: PropTypes.func.isRequired,
 };

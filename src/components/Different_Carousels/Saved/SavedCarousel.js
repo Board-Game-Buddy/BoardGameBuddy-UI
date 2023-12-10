@@ -75,6 +75,6 @@ function SavedCarousel({ games }) {
 
 export default SavedCarousel;
 
-Carousels.propTypes = {
+SavedCarousel.propTypes = {
   setServerError: PropTypes.func.isRequired,
 };
