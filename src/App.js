@@ -21,18 +21,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    // Try to get user from localStorage
-    console.log("Effect for retrieving currentUser from localStorage");
-    const storedUser = localStorage.getItem("currentUser");
-
-    if (storedUser) {
-      
-      setCurrentUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-
-  useEffect(() => {
     getUsers()
       .then((data) => {
         setUsers(data);
