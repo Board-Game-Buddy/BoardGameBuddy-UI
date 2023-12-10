@@ -15,29 +15,19 @@ function App() {
   const [serverError, setServerError] = useState({hasError: false, message: ''})
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [currentUser, setCurrentUser] = useState(null)
-
-  //useEffect(() => {
-    // Try to get user from localStorage
-    //console.log("Effect for retrieving currentUser from localStorage");
-    //const storedUser = localStorage.getItem("currentUser");
-
-   // if (storedUser) {
-      
-      //setCurrentUser(JSON.parse(storedUser));
-    //}
-  //}, []);
-
-  //console.log(users)
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem("currentUser");
+    return storedUser ? JSON.parse(storedUser) : null;
+  })
 
   useEffect(() => {
     getBoardGames()
       .then((data) => {
-        setGames(data.data);
-        setIsLoading(false);
+        setGames(data.data)
+        setIsLoading(false)
       })
       .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` });
+        setServerError({ hasError: true, message: `${error.message}` })
       });
   }, []);
 
@@ -47,19 +37,23 @@ function App() {
         setUsers(data);
       })
       .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` });
-      });
-  }, []);
+        setServerError({ hasError: true, message: `${error.message}` })
+      })
+  }, [])
 
   const resetError = () => {
-    setServerError({ hasError: false, message: '' });
-  };
+    setServerError({ hasError: false, message: '' })
+  }
+
+  useEffect(() => {
+    localStorage.setItem("currentUser", JSON.stringify(currentUser))
+  }, [currentUser])
 
   return (
     <div className="App">
       <Header resetError={resetError} currentUser={currentUser} />
       {serverError.hasError ? (
-        <ServerError resetError={resetError} serverError={serverError} />
+        <ServerError resetError={resetError} serverError={serverError} currentUser={currentUser} />
       ) : isLoading ? (
         <LoadingComponent />
       ) : (
