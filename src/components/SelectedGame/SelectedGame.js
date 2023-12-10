@@ -1,4 +1,5 @@
 import './SelectedGame.css'
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getSelectedGame } from '../../apiCalls'
@@ -117,6 +118,11 @@ function SelectedGame({ setServerError, currentUser }) {
 }
 
 export default SelectedGame
+
+SelectedGame.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+  currentUser: PropTypes.number.isRequired,
+};
 
 
 
