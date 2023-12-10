@@ -1,12 +1,14 @@
 import "./SavedGames.css"
+import PropTypes from 'prop-types';
 import GameCard from '../Card/GameCard'
 import { useSelector } from 'react-redux'
 
 function SavedGames( {games, currentUser} ) {
   const favoriteCards = useSelector((state) => state.favoriteCards)
 
-  const savedGames = games.map((game) => {
+  console.log(favoriteCards)
 
+  const savedGames = games.map((game) => {
     if (favoriteCards.includes(game.id)) {
       return (
         <GameCard
@@ -40,3 +42,8 @@ function SavedGames( {games, currentUser} ) {
 } 
 
 export default SavedGames
+
+SavedGames.propTypes = {
+  games: PropTypes.array.isRequired,
+  currentUser: PropTypes.number.isRequired,
+};

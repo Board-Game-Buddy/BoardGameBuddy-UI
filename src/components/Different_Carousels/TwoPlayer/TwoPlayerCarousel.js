@@ -1,44 +1,100 @@
-import './TwoPlayerCarousel.css'
-import GameCard from '../../Card/GameCard'
+import './TwoPlayerCarousel.css';
+import PropTypes from 'prop-types';
+import GameCard from '../../Card/GameCard';
+import { useRef, useState, useEffect } from 'react';
+import { getSearchedGames } from '../../../apiCalls';
 
-function TwoPlayerCarousel({ games }) {
+function TwoPlayerCarousel({ games, setServerError }) {
 
-    // change to two but also only if we don't have endpoints
-    // const twoPlayers = games.filter(game => game.attributes.max_players === 4)
-    //     .map(game => (
-    //         <GameCard
-    //         id={game.id}
-    //         key={game.key}
-    //         title={game.attributes.title}
-    //         categories={[game.attributes.categories]}
-    //         image={game.attributes.cover_image}
-    //         description={game.attributes.description}
-    //         min_players={game.attributes.min_players}
-    //         max_players={game.attributes.max_players}
-    //         />
-    //     ))
+  const [twoPGames, setTwoPGames] = useState([])
 
-    const twoPlayers = games.map(game => {
-        return (
-            <GameCard 
-                id={game.id}
-                key={game.key}
-                title={game.attributes.title}
-                categories={[game.attributes.categories]}
-                image={game.attributes.cover_image}
-                description={game.attributes.description}
-                min_players={game.attributes.min_players}
-                max_players={game.attributes.max_players}
-            />
-        )
+  useEffect(() => {
+    getSearchedGames(`max_players=2`)
+      .then((data) => {
+        setTwoPGames(data.data)
         })
-    
-    return (
-        <div className='twoPlayer-carousel, carousel'>
-            {twoPlayers}
-        </div>
-    )
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` })
+        })
+    }, [setServerError])
 
+    const sliderRef = useRef(null)
+
+    if (twoPGames.length === 0) {
+        return null;
+      }
+
+    const twoPlayerGames = twoPGames.map((game, index) => (
+        <GameCard
+          key={game.id}
+          title={game.attributes.title}
+          categories={[game.attributes.categories]}
+          image={game.attributes.image_path}
+          description={game.attributes.description}
+          min_players={game.attributes.min_players}
+          max_players={game.attributes.max_players}
+          id={game.id}
+        />
+      ))
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  const handleMouseDown = (e) => {
+    isDown = true;
+    sliderRef.current.classList.add('active');
+    startX = e.pageX - sliderRef.current.offsetLeft;
+    scrollLeft = sliderRef.current.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    isDown = false;
+    sliderRef.current.classList.remove('active');
+  };
+
+  const handleMouseUp = () => {
+    isDown = false;
+    sliderRef.current.classList.remove('active');
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1; 
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const scrollBy = (distance) => {
+    sliderRef.current.scrollLeft += distance;
+  };
+
+  return (
+    <div className='saved-carousel-container'>
+        <div className='carousel-title'>Two Player Games</div>
+      <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
+        &lt;
+      </div>
+      <div
+        className='saved-carousel carousel items'
+        ref={sliderRef}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+      >
+        {twoPlayerGames}
+      </div>
+      <div className='navigation-btn right' onClick={() => scrollBy(200)}>
+        &gt;
+      </div>
+    </div>
+  );
 }
 
-export default TwoPlayerCarousel
+export default TwoPlayerCarousel;
+
+TwoPlayerCarousel.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};

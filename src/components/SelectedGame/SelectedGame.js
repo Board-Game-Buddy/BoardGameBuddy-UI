@@ -1,16 +1,18 @@
 import './SelectedGame.css'
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getSelectedGame } from '../../apiCalls'
-import train from '../../Assets/train.png'
+// import train from '../../Assets/train.png'
 import { useSelector, useDispatch } from 'react-redux'
 import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice'
 import filled from '../../Assets/filled.png'
 import unfilled from '../../Assets/unfilled.png'
+import back from '../../Assets/Back.png'
 
 function SelectedGame({ setServerError, currentUser }) {
     const { id } = useParams()
-    const idNum = parseInt(id)
+    // const idNum = parseInt(id)
     const [selectedGame, setSelectedGame] = useState(false)
     const favoriteCards = useSelector((state) => state.favoriteCards)
     const dispatch = useDispatch()
@@ -57,16 +59,14 @@ function SelectedGame({ setServerError, currentUser }) {
         dispatch(addFavorite(id));
       }
   }
-
-  // if (currentUser === null) {
-  //   window.location.href = '/';
-  //   return null;
-  // }
  
     return selectedGame && (
       <div className='entire-page'>
         <div className='selected-game-container'>
           <div className='selected-game-info'>
+            <Link to={`/${currentUser}/home`}>
+              <img src={back} alt='back button' className='back-button' />
+            </Link>
             <div className='above-image'>
               <h1 className='game-title'>{selectedGame.attributes.title}</h1>
                 <h3 className='players'>{selectedGame.attributes.min_players}-{selectedGame.attributes.max_players} players</h3>
@@ -97,28 +97,32 @@ function SelectedGame({ setServerError, currentUser }) {
             <p className='game-instructions' dangerouslySetInnerHTML={{ __html: replaceLineBreaks(selectedGame.attributes.description) }} ></p>
           </div>
         </div>
-        <div className='wrap-buttons'>
-          <div className='previous-next-buttons'> 
-            <div className='previous'>
+        {/* <div className='wrap-buttons'> */}
+          {/* <div className='previous-next-buttons'>  */}
+            {/* <div className='previous'>
               <Link to={`/game/${idNum - 1}`}>
                 <img className='previous-train' src={train} alt='train icon facing left' />
                 <div className='text'>PREVIOUS</div>
               </Link>
-            </div>
-            <div className='next'>
+            </div> */}
+            {/* <div className='next'>
               <Link to={`/game/${idNum + 1}`}>
                 <img className='next-train' src={train} alt='train icon facing right' />
                 <div className='text'>NEXT</div>
               </Link>
-            </div>
-            
-          </div>
-        </div>
+            </div> */}
+          {/* </div> */}
+        {/* </div> */}
       </div>
     )
 }
 
 export default SelectedGame
+
+SelectedGame.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+  currentUser: PropTypes.number.isRequired,
+};
 
 
 

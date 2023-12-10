@@ -1,4 +1,5 @@
 import './GameCard.css'
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import filled from '../../Assets/filled.png'
 import unfilled from '../../Assets/unfilled.png'
@@ -43,3 +44,10 @@ function GameCard({ id, title, image }) {
 }
 
 export default GameCard
+
+GameCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+};
+

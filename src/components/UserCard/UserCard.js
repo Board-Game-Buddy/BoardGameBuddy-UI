@@ -1,4 +1,5 @@
 import "./UserCard.css" 
+import PropTypes from 'prop-types';
 import { Link } from "react-router-dom" 
  
 function UserCard({ img, name, id, setCurrentUser }) {
@@ -20,3 +21,10 @@ function UserCard({ img, name, id, setCurrentUser }) {
 // we will need to make this an image!
 
 export default UserCard
+
+UserCard.propTypes = {
+  img: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
+};

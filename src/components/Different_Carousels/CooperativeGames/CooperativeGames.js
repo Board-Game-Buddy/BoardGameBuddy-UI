@@ -1,10 +1,41 @@
-import './SavedCarousel.css';
+import { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
-import GameCard from '../../Card/GameCard';
-import { useRef } from 'react';
+import { getSearchedGames } from '../../../apiCalls'
+import GameCard from '../../Card/GameCard'
 
-function SavedCarousel({ games }) {
-  const sliderRef = useRef(null);
+function CooperativeGamesCarousel({ setServerError }) {
+
+  const [cooperativeGames, setCooperativeGames] = useState([])
+
+  useEffect(() => {
+    getSearchedGames(`cooperative=true`)
+      .then((data) => {
+        setCooperativeGames(data.data)
+        })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` })
+        })
+    }, [setServerError])
+
+    const sliderRef = useRef(null)
+
+    if (cooperativeGames.length === 0) {
+        return null;
+      }
+
+    const CoOpGames = cooperativeGames.map((game, index) => (
+        <GameCard
+          key={game.id}
+          title={game.attributes.title}
+          categories={[game.attributes.categories]}
+          image={game.attributes.image_path}
+          description={game.attributes.description}
+          min_players={game.attributes.min_players}
+          max_players={game.attributes.max_players}
+          id={game.id}
+        />
+      ))
+
   let isDown = false;
   let startX;
   let scrollLeft;
@@ -38,21 +69,9 @@ function SavedCarousel({ games }) {
     sliderRef.current.scrollLeft += distance;
   };
 
-  const saved = games.map((game, index) => (
-    <GameCard
-      key={game.id}
-      title={game.attributes.title}
-      categories={[game.attributes.categories]}
-      image={game.attributes.image_path}
-      description={game.attributes.description}
-      min_players={game.attributes.min_players}
-      max_players={game.attributes.max_players}
-      id={game.id}
-    />
-  ));
-
   return (
     <div className='saved-carousel-container'>
+        <div className='carousel-title'>Top Cooperative Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
@@ -64,7 +83,7 @@ function SavedCarousel({ games }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {saved}
+        {CoOpGames}
       </div>
       <div className='navigation-btn right' onClick={() => scrollBy(200)}>
         &gt;
@@ -73,8 +92,8 @@ function SavedCarousel({ games }) {
   );
 }
 
-export default SavedCarousel;
+export default CooperativeGamesCarousel;
 
-SavedCarousel.propTypes = {
+CooperativeGamesCarousel.propTypes = {
   setServerError: PropTypes.func.isRequired,
 };

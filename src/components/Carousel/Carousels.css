@@ -3,7 +3,6 @@
     /* overflow-x: auto; */
     /* overflow-y: auto; */
     padding: 10px;
-    /* animation: scrollAnimation 150s linear infinite; */
   }
   
   @keyframes scrollAnimation {
@@ -22,20 +21,67 @@
     transition: transform 0.3s ease-in-out;
   }
   
-  /* .card:hover {
-    transform: scale(1.05);
-  } */
-  
   .game-image {
     width: 100%;
     height: auto;
   }
 
   .carousels-container {
-    margin-top: 100px;
+    margin-top: 125px;
   }
 
   .card:hover {
     cursor: pointer;
     filter: brightness(1.2);
   }
+
+  .carousel {
+    overflow-x: auto;
+  }
+  .saved-carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .navigation-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  
+  .navigation-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .left {
+    left: 10px;
+    z-index: 1;
+  }
+  
+  .right {
+    right: 10px;
+  }
+
+  .carousel-title {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    width: 12em;
+    height: 2em;
+    font-size: 1.5em;
+    background: rgba(109, 156, 243, .8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    -webkit-text-stroke: .2px black;
+    text-stroke: .2px black;
+  }
+  

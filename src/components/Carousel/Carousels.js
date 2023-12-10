@@ -1,32 +1,25 @@
 import './Carousels.css'
+import PropTypes from 'prop-types';
 import TwoPlayerCarousel from '../Different_Carousels/TwoPlayer/TwoPlayerCarousel'
-import TopRatedCarousel from '../Different_Carousels/TopRated/TopRatedCarousel'
-import SavedCarousel from '../Different_Carousels/Saved/SavedCarousel'
-import FourthCarousel from '../Different_Carousels/Fourth/FourthCarousel'
-import FifthCarousel from '../Different_Carousels/Fifth/FifthCarousel'
-import Slider from '../Different_Carousels/Swiper/Swiper'
+import StrategyGamesCarousel from '../Different_Carousels/StrategyGames/StrategyGamesCarousel'
+import FantasyGamesCarousel from '../Different_Carousels/FantasyGames/FantasyGamesCarousel'
+import CooperativeGamesCarousel from '../Different_Carousels/CooperativeGames/CooperativeGames'
 
-
-function Carousels({ games, currentUser }) {
-  // if (currentUser === null) {
-  //   window.location.href = '/';
-  //   return null;
-  // }
+function Carousels({ setServerError }) {
  
-    return (
-        <div className='carousels-container'> 
-          <SavedCarousel games={games} />
-          <SavedCarousel games={games} />
-          <SavedCarousel games={games} />
-          <SavedCarousel games={games} />
-          <SavedCarousel games={games} />
-          {/* <Slider games={games}/> */}
-          {/* <TwoPlayerCarousel games={games} />
-          <TopRatedCarousel games={games} />
-          <FourthCarousel games={games} />
-          <FifthCarousel games={games} /> */}
-        </div>
-    )
+  return (
+      <div className='carousels-container'> 
+        <TwoPlayerCarousel setServerError={setServerError} />
+        <StrategyGamesCarousel setServerError={setServerError} />
+        <FantasyGamesCarousel setServerError={setServerError} />
+        <CooperativeGamesCarousel setServerError={setServerError} />
+      </div>
+  )
 }
 
 export default Carousels
+
+Carousels.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};
+

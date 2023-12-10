@@ -1,10 +1,42 @@
-import './SavedCarousel.css';
+import './StrategyGamesCarousel.css';
 import PropTypes from 'prop-types';
 import GameCard from '../../Card/GameCard';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { getSearchedGames } from '../../../apiCalls';
 
-function SavedCarousel({ games }) {
-  const sliderRef = useRef(null);
+function StrategyGamesCarousel({ games, setServerError }) {
+
+  const [strategyGames, setStrategyGames] = useState([])
+
+  useEffect(() => {
+    getSearchedGames(`categories=strategy`)
+      .then((data) => {
+        setStrategyGames(data.data)
+        })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` })
+        })
+    }, [setServerError])
+
+    const sliderRef = useRef(null)
+
+    if (strategyGames.length === 0) {
+        return null;
+      }
+
+    const familyGames = strategyGames.map((game, index) => (
+        <GameCard
+          key={game.id}
+          title={game.attributes.title}
+          categories={[game.attributes.categories]}
+          image={game.attributes.image_path}
+          description={game.attributes.description}
+          min_players={game.attributes.min_players}
+          max_players={game.attributes.max_players}
+          id={game.id}
+        />
+      ))
+
   let isDown = false;
   let startX;
   let scrollLeft;
@@ -38,21 +70,9 @@ function SavedCarousel({ games }) {
     sliderRef.current.scrollLeft += distance;
   };
 
-  const saved = games.map((game, index) => (
-    <GameCard
-      key={game.id}
-      title={game.attributes.title}
-      categories={[game.attributes.categories]}
-      image={game.attributes.image_path}
-      description={game.attributes.description}
-      min_players={game.attributes.min_players}
-      max_players={game.attributes.max_players}
-      id={game.id}
-    />
-  ));
-
   return (
     <div className='saved-carousel-container'>
+        <div className='carousel-title'>Top Strategy Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
@@ -64,7 +84,7 @@ function SavedCarousel({ games }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {saved}
+        {familyGames}
       </div>
       <div className='navigation-btn right' onClick={() => scrollBy(200)}>
         &gt;
@@ -73,8 +93,8 @@ function SavedCarousel({ games }) {
   );
 }
 
-export default SavedCarousel;
+export default StrategyGamesCarousel;
 
-SavedCarousel.propTypes = {
+StrategyGamesCarousel.propTypes = {
   setServerError: PropTypes.func.isRequired,
 };

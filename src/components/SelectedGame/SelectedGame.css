@@ -29,6 +29,10 @@
   margin-bottom: 50px;
 }
 
+.back-button {
+  margin-top: 10px;
+}
+
 .selected-game-image {
   height: 12em;
 }
@@ -109,6 +113,7 @@
 
 .selected-favorite-button {
 transition: transform .5s;
+margin-bottom: 5px;
 }
 
 .selected-favorite-button:hover {
