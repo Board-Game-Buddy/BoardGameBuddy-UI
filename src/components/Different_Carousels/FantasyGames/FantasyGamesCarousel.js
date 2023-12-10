@@ -9,6 +9,7 @@ function FantasyGamesCarousel({ setServerError }) {
   useEffect(() => {
     getSearchedGames(`categories=fantasy`)
       .then((data) => {
+        console.log('FANTASY', data)
         setFantasyGames(data.data)
         })
       .catch((error) => {
