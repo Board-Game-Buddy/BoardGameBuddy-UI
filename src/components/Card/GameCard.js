@@ -46,7 +46,8 @@ function GameCard({ id, title, image }) {
 export default GameCard
 
 GameCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
 };
+

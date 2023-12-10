@@ -1,4 +1,5 @@
 import './Carousels.css'
+import PropTypes from 'prop-types';
 import TwoPlayerCarousel from '../Different_Carousels/TwoPlayer/TwoPlayerCarousel'
 import StrategyGamesCarousel from '../Different_Carousels/StrategyGames/StrategyGamesCarousel'
 import FantasyGamesCarousel from '../Different_Carousels/FantasyGames/FantasyGamesCarousel'
@@ -17,3 +18,8 @@ function Carousels({ setServerError }) {
 }
 
 export default Carousels
+
+Carousels.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};
+
