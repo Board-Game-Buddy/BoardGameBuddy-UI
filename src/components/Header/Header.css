@@ -43,7 +43,7 @@ nav .links {
 nav .links li {
   list-style: none;
 }
-nav .links a {
+nav .links a, .a {
   display: block;
   padding: 1em;
   font-size: 16px;
@@ -52,10 +52,10 @@ nav .links a {
   text-decoration: none;
   position: relative;
 }
-nav .links a:hover {
+nav .links a:hover, .a:hover {
   color: white;
 }
-nav .links a::before {
+nav .links a::before, .a::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -67,7 +67,7 @@ nav .links a::before {
   transform: scaleX(0);
   transition: all 0.3s ease-in-out 0s;
 }
-nav .links a:hover::before {
+nav .links a:hover::before, .a:hover::before {
   visibility: visible;
   transform: scaleX(1);
   color: white;

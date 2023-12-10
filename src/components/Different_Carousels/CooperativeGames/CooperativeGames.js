@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from 'react';
-import { getSearchedGames } from '../../../apiCalls';
-import GameCard from '../../Card/GameCard';
+import { useRef, useState, useEffect } from 'react'
+import { getSearchedGames } from '../../../apiCalls'
+import GameCard from '../../Card/GameCard'
 
 function CooperativeGamesCarousel({ setServerError }) {
 
@@ -70,7 +70,7 @@ function CooperativeGamesCarousel({ setServerError }) {
 
   return (
     <div className='saved-carousel-container'>
-        <div className='carousel-title'>Cooperative Games</div>
+        <div className='carousel-title'>Top Cooperative Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>

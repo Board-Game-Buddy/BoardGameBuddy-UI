@@ -3,13 +3,8 @@ import TwoPlayerCarousel from '../Different_Carousels/TwoPlayer/TwoPlayerCarouse
 import StrategyGamesCarousel from '../Different_Carousels/StrategyGames/StrategyGamesCarousel'
 import FantasyGamesCarousel from '../Different_Carousels/FantasyGames/FantasyGamesCarousel'
 import CooperativeGamesCarousel from '../Different_Carousels/CooperativeGames/CooperativeGames'
-import Slider from '../Different_Carousels/Swiper/Swiper'
 
-function Carousels({ currentUser, setServerError }) {
-  if (currentUser === null) {
-    window.location.href = '/';
-    return null;
-  }
+function Carousels({ setServerError }) {
  
   return (
       <div className='carousels-container'> 

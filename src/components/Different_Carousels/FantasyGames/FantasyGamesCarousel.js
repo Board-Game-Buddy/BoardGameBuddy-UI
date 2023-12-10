@@ -9,7 +9,6 @@ function FantasyGamesCarousel({ setServerError }) {
   useEffect(() => {
     getSearchedGames(`categories=fantasy`)
       .then((data) => {
-        console.log('FANTASY', data)
         setFantasyGames(data.data)
         })
       .catch((error) => {
@@ -71,7 +70,7 @@ function FantasyGamesCarousel({ setServerError }) {
 
   return (
     <div className='saved-carousel-container'>
-        <div className='carousel-title'>Fantasy Games</div>
+        <div className='carousel-title'>Top Fantasy Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
