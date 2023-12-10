@@ -1,4 +1,5 @@
 import './SavedCarousel.css';
+import PropTypes from 'prop-types';
 import GameCard from '../../Card/GameCard';
 import { useRef } from 'react';
 
@@ -39,7 +40,7 @@ function SavedCarousel({ games }) {
 
   const saved = games.map((game, index) => (
     <GameCard
-      key={game.key}
+      key={game.id}
       title={game.attributes.title}
       categories={[game.attributes.categories]}
       image={game.attributes.image_path}
@@ -73,3 +74,7 @@ function SavedCarousel({ games }) {
 }
 
 export default SavedCarousel;
+
+SavedCarousel.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};

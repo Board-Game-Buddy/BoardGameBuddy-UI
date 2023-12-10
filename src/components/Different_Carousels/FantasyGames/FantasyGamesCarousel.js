@@ -1,4 +1,5 @@
 import GameCard from '../../Card/GameCard';
+import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
@@ -24,7 +25,7 @@ function FantasyGamesCarousel({ setServerError }) {
 
     const fntsyGames = fantasyGames.map((game, index) => (
         <GameCard
-          key={game.key}
+        key={game.id}
           title={game.attributes.title}
           categories={[game.attributes.categories]}
           image={game.attributes.image_path}
@@ -92,3 +93,7 @@ function FantasyGamesCarousel({ setServerError }) {
 }
 
 export default FantasyGamesCarousel;
+
+FantasyGamesCarousel.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import './StrategyGamesCarousel.css';
+import PropTypes from 'prop-types';
 import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
@@ -25,7 +26,7 @@ function StrategyGamesCarousel({ games, setServerError }) {
 
     const familyGames = strategyGames.map((game, index) => (
         <GameCard
-          key={game.key}
+          key={game.id}
           title={game.attributes.title}
           categories={[game.attributes.categories]}
           image={game.attributes.image_path}
@@ -93,3 +94,7 @@ function StrategyGamesCarousel({ games, setServerError }) {
 }
 
 export default StrategyGamesCarousel;
+
+StrategyGamesCarousel.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import PropTypes from 'prop-types';
 import { getSearchedGames } from '../../../apiCalls'
 import GameCard from '../../Card/GameCard'
 
@@ -24,7 +25,7 @@ function CooperativeGamesCarousel({ setServerError }) {
 
     const CoOpGames = cooperativeGames.map((game, index) => (
         <GameCard
-          key={game.key}
+          key={game.id}
           title={game.attributes.title}
           categories={[game.attributes.categories]}
           image={game.attributes.image_path}
@@ -92,3 +93,7 @@ function CooperativeGamesCarousel({ setServerError }) {
 }
 
 export default CooperativeGamesCarousel;
+
+CooperativeGamesCarousel.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};
