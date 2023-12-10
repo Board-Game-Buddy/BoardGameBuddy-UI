@@ -1,32 +1,39 @@
-import './Header.css';
-import Logo from '../../Logo.png';
-import { Link, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import './Header.css'
+import Logo from '../../Logo.png'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 function Header({ resetError, currentUser }) {
-  const location = useLocation();
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isBasePath = location.pathname === '/'
+  const isSavedPath = location.pathname === `/${currentUser}/saved`
 
-  useEffect(() => {
-    if (location.pathname === '/') {
-      document.body.classList.remove("links");
+  const handleHomeClick = () => {
+    if (currentUser) {
+      navigate(`/${currentUser}/home`)
+    } else {
+      navigate("/")
     }
-  }, [location]);
-
-  const isBasePath = location.pathname === '/';
-  const isSavedPath = location.pathname === `/${currentUser}/saved`;
+  }
 
   return (
     <nav>
       <input type="checkbox" id="nav-toggle" />
       <img className='logo' src={Logo} alt="Logo" />
       <ul className="links">
-        <li>
-          <Link to={`/${currentUser}/home`} onClick={() => {resetError()}}>Home</Link>
+        <li onClick={() => {
+          resetError()
+          handleHomeClick()
+        }}>
+           <div className='a'>Home</div>
         </li>
         {!isBasePath && !isSavedPath && (
           <>
             <li>
               <Link to={`/${currentUser}/saved`}>Saved Games</Link>
+            </li>
+            <li>
+              <Link to={`/`}>Change Profile</Link>
             </li>
             {/* Additional menu items */}
           </>
@@ -41,4 +48,4 @@ function Header({ resetError, currentUser }) {
   );
 }
 
-export default Header;
+export default Header
