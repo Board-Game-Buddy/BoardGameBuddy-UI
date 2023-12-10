@@ -9,6 +9,7 @@ import Users from "./components/Users/Users"
 import ServerError from "./components/ServerError/ServerError"
 import LoadingComponent from "./components/Loading/Loading"
 import SavedGames from "./components/SavedGames/SavedGames"
+import AllGames from "./components/AllGames/AllGames"
 
 function App() {
   const [games, setGames] = useState([])
@@ -80,6 +81,10 @@ function App() {
           <Route
             path='/:userid/saved'
             element={<SavedGames games={games} currentUser={currentUser} />}
+          />
+          <Route
+            path='/:userid/all'
+            element={<AllGames currentUser={currentUser} />}
           />
           <Route path='*' element={<ServerError resetError={resetError} />} />
         </Routes>

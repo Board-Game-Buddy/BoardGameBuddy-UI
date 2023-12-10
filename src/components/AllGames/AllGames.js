@@ -1,12 +1,28 @@
 import { Routes, Route } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { getGamesByPage } from './apiCalls'
+import { getGamesByPage } from '../../apiCalls'
+import GameCard from "../Card/GameCard"
 
-function AllGames( {currentUser} ) {
-  
+function AllGames( {currentUser, setServerError} ) {
+  const [pageNumber, setPageNumber] = useState(1)
+  const [currentGames, setCurrentGames] = useState([]);
 
+  useEffect(() => {
+    getGamesByPage(pageNumber)
+      .then((data) => {
+        setCurrentGames(data.data)
+        console.log(currentGames)
+      })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` })
+      });
+  }, [pageNumber]);
 
-  const currentGames = games.map((game) => {
+  useEffect(() => {
+    console.log(currentGames);
+  }, [currentGames]);
+
+  const displayedGames = currentGames.map((game) => {
     if (currentGames.includes(game.id)) {
       return (
         <GameCard
@@ -27,7 +43,7 @@ function AllGames( {currentUser} ) {
   
     return (
       <div className='allgames'>
-        {currentGames}
+        {displayedGames}
       </div>
     )
 } 
