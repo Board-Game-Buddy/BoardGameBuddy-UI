@@ -31,21 +31,12 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    getBoardGames()
-      .then((data) => {
-        setGames(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` });
-      });
-  }, []);
 
   useEffect(() => {
     getUsers()
       .then((data) => {
         setUsers(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` });
