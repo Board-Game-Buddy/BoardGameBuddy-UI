@@ -9,7 +9,6 @@ function CooperativeGamesCarousel({ setServerError }) {
   useEffect(() => {
     getSearchedGames(`cooperative=true`)
       .then((data) => {
-        console.log(data)
         setCooperativeGames(data.data)
         })
       .catch((error) => {
