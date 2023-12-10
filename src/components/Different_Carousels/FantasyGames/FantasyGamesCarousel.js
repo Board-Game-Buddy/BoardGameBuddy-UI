@@ -1,16 +1,16 @@
-import './TwoPlayerCarousel.css';
 import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
-function TwoPlayerCarousel({ games, setServerError }) {
+function FantasyGamesCarousel({ setServerError }) {
 
-  const [twoPGames, setTwoPGames] = useState([])
+  const [fantasyGames, setFantasyGames] = useState([])
 
   useEffect(() => {
-    getSearchedGames(`max_players=2`)
+    getSearchedGames(`categories=fantasy`)
       .then((data) => {
-        setTwoPGames(data.data)
+        console.log('FANTASY', data)
+        setFantasyGames(data.data)
         })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
@@ -19,11 +19,11 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
     const sliderRef = useRef(null)
 
-    if (twoPGames.length === 0) {
+    if (fantasyGames.length === 0) {
         return null;
       }
 
-    const twoPlayerGames = twoPGames.map((game, index) => (
+    const fntsyGames = fantasyGames.map((game, index) => (
         <GameCard
           key={game.key}
           title={game.attributes.title}
@@ -35,7 +35,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
           id={game.id}
         />
       ))
-
+      
   let isDown = false;
   let startX;
   let scrollLeft;
@@ -71,7 +71,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
   return (
     <div className='saved-carousel-container'>
-        <div className='carousel-title'>Two Player Games</div>
+        <div className='carousel-title'>Fantasy Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
@@ -83,7 +83,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {twoPlayerGames}
+        {fntsyGames}
       </div>
       <div className='navigation-btn right' onClick={() => scrollBy(200)}>
         &gt;
@@ -92,4 +92,4 @@ function TwoPlayerCarousel({ games, setServerError }) {
   );
 }
 
-export default TwoPlayerCarousel;
+export default FantasyGamesCarousel;

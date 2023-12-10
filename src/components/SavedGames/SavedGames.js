@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux'
 function SavedGames( {games, currentUser} ) {
   const favoriteCards = useSelector((state) => state.favoriteCards)
 
-  const savedGames = games.map((game) => {
+  console.log(favoriteCards)
 
+  const savedGames = games.map((game) => {
     if (favoriteCards.includes(game.id)) {
       return (
         <GameCard

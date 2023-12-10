@@ -1,16 +1,16 @@
-import './TwoPlayerCarousel.css';
+import './StrategyGamesCarousel.css';
 import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
-function TwoPlayerCarousel({ games, setServerError }) {
+function StrategyGamesCarousel({ games, setServerError }) {
 
-  const [twoPGames, setTwoPGames] = useState([])
+  const [strategyGames, setStrategyGames] = useState([])
 
   useEffect(() => {
-    getSearchedGames(`max_players=2`)
+    getSearchedGames(`categories=strategy`)
       .then((data) => {
-        setTwoPGames(data.data)
+        setStrategyGames(data.data)
         })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
@@ -19,11 +19,11 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
     const sliderRef = useRef(null)
 
-    if (twoPGames.length === 0) {
+    if (strategyGames.length === 0) {
         return null;
       }
 
-    const twoPlayerGames = twoPGames.map((game, index) => (
+    const familyGames = strategyGames.map((game, index) => (
         <GameCard
           key={game.key}
           title={game.attributes.title}
@@ -71,7 +71,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
   return (
     <div className='saved-carousel-container'>
-        <div className='carousel-title'>Two Player Games</div>
+        <div className='carousel-title'>Strategy Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
@@ -83,7 +83,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {twoPlayerGames}
+        {familyGames}
       </div>
       <div className='navigation-btn right' onClick={() => scrollBy(200)}>
         &gt;
@@ -92,4 +92,4 @@ function TwoPlayerCarousel({ games, setServerError }) {
   );
 }
 
-export default TwoPlayerCarousel;
+export default StrategyGamesCarousel;
