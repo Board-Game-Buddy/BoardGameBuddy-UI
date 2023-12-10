@@ -71,7 +71,7 @@ function StrategyGamesCarousel({ games, setServerError }) {
 
   return (
     <div className='saved-carousel-container'>
-        <div className='carousel-title'>Strategy Games</div>
+        <div className='carousel-title'>Top Strategy Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
