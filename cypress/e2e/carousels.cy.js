@@ -26,7 +26,7 @@ describe('Carousel Page', () => {
     cy.get('nav').should('exist')
       .find('.logo').should('exist');
     cy.get('nav')
-      .find('.links > :nth-child(1) > a').should('exist');
+    .find('.a').should('exist').should('have.text', "Home")
     cy.get('nav')
       .find('.links > :nth-child(2) > a').should('exist');
 

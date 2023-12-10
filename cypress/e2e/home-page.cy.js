@@ -14,7 +14,7 @@ describe('Home Page', () => {
     cy.get('nav').should('exist')
       .find('.logo').should('exist');
     cy.get('nav')
-      .find('.links > :nth-child(1) > a').should('exist');
+    .find('.a').should('exist').should('have.text', "Home")
     cy.get('.users-container').children()
     .should('have.length', 3); // CHANGE THIS TO HOWEVER MANY USERS WE END UP GOING WITH THEN UNCOMMENT THE LAST 3 USERS!
     cy.get('.users-container > :nth-child(1)').find('.name').should('have.text', 'Reed Hillmar');
