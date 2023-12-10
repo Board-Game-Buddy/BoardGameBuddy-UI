@@ -58,11 +58,6 @@ function SelectedGame({ setServerError, currentUser }) {
         dispatch(addFavorite(id));
       }
   }
-
-  // if (currentUser === null) {
-  //   window.location.href = '/';
-  //   return null;
-  // }
  
     return selectedGame && (
       <div className='entire-page'>
