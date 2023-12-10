@@ -94,3 +94,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
 }
 
 export default TwoPlayerCarousel;
+
+Carousels.propTypes = {
+  setServerError: PropTypes.func.isRequired,
+};
