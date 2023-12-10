@@ -17,44 +17,54 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [currentUser, setCurrentUser] = useState(null)
 
-  console.log(users)
+  //useEffect(() => {
+    // Try to get user from localStorage
+    //console.log("Effect for retrieving currentUser from localStorage");
+    //const storedUser = localStorage.getItem("currentUser");
+
+   // if (storedUser) {
+      
+      //setCurrentUser(JSON.parse(storedUser));
+    //}
+  //}, []);
+
+  //console.log(users)
 
   useEffect(() => {
     getBoardGames()
       .then((data) => {
-        setGames(data.data)
-        setIsLoading(false)
+        setGames(data.data);
+        setIsLoading(false);
       })
       .catch((error) => {
-        setServerError({hasError: true, message: `${error.message}`})
-      })
-  }, [])
+        setServerError({ hasError: true, message: `${error.message}` });
+      });
+  }, []);
 
   useEffect(() => {
     getUsers()
       .then((data) => {
-        setUsers(data)
+        setUsers(data);
       })
       .catch((error) => {
-        setServerError({hasError: true, message: `${error.message}`})
-
-      })
-  }, [])
+        setServerError({ hasError: true, message: `${error.message}` });
+      });
+  }, []);
 
   const resetError = () => {
-    setServerError({hasError: false, message: ''})
-  }
+    setServerError({ hasError: false, message: '' });
+  };
 
   return (
     <div className="App">
       <Header resetError={resetError} currentUser={currentUser} />
       {serverError.hasError ? (
-      <ServerError resetError={resetError} serverError={serverError} />
-    ) : isLoading ? (
+        <ServerError resetError={resetError} serverError={serverError} />
+      ) : isLoading ? (
         <LoadingComponent />
-    ) : (
-      <Routes>
-        <Route path='/:userid/home'
+      ) : (
+        <Routes>
+          <Route path='/:userid/home'
             element={
               <Carousels
                 games={games}
@@ -68,19 +78,19 @@ function App() {
               <SelectedGame setServerError={setServerError} currentUser={currentUser} />
             }>
           </Route>
-        <Route
-          path='/'
-          element={<Users users={users} setCurrentUser={setCurrentUser} />}
-        />
-        <Route
-          path='/:userid/saved'
-          element={<SavedGames games={games} currentUser={currentUser} />}
-        />
-        <Route path='*' element={<ServerError resetError={resetError} />} />
-      </Routes>
-    )}
+          <Route
+            path='/'
+            element={<Users users={users} setCurrentUser={setCurrentUser} />}
+          />
+          <Route
+            path='/:userid/saved'
+            element={<SavedGames games={games} currentUser={currentUser} />}
+          />
+          <Route path='*' element={<ServerError resetError={resetError} />} />
+        </Routes>
+      )}
     </div>
-  )
+  );
 }
 
 export default App;
