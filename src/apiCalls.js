@@ -48,4 +48,3 @@ export function getGamesByPage(pageNumber) {
     return response.json()
   })
 }
-
