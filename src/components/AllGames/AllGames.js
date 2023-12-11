@@ -1,23 +1,29 @@
-import { Routes, Route } from "react-router-dom"
-import { useState, useEffect } from "react"
-import { getGamesByPage } from '../../apiCalls'
-import GameCard from "../Card/GameCard"
-import '../AllGames/AllGames.css'
-import Pagination from "../Pagination/Pagination"
+// AllGames.js
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { getGamesByPage } from '../../apiCalls';
+import GameCard from '../Card/GameCard';
+import ServerError from '../ServerError/ServerError';
+import '../AllGames/AllGames.css';
+import Pagination from '../Pagination/Pagination';
 
 function AllGames({ currentUser, setServerError }) {
-  const [pageNumber, setPageNumber] = useState(4532);
+  const { pagenumber } = useParams();
+  const [pageNumber, setPageNumber] = useState(pagenumber || 1);
   const [currentGames, setCurrentGames] = useState([]);
+  const [totalPages, setTotalPages] = useState(7508);
 
   useEffect(() => {
     getGamesByPage(pageNumber)
       .then((data) => {
         setCurrentGames(data.data);
+        // You need to set the total pages based on your data
+        setTotalPages(/* Set total pages based on your data */);
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` });
       });
-  }, [pageNumber]);
+  }, [pageNumber, setServerError]);
 
   useEffect(() => {
     console.log(currentGames);
@@ -40,9 +46,12 @@ function AllGames({ currentUser, setServerError }) {
   return (
     <div className="allgames">
       {displayedGames}
-      <Pagination/>
+      {pageNumber > totalPages && <ServerError resetError={() => setPageNumber(1)} />}
+      <div className="footer">
+        <Pagination currentUser={currentUser} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+      </div>
     </div>
-  )
+  );
 }
 
 export default AllGames;

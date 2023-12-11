@@ -45,9 +45,12 @@
 [data-pagination] a:hover {
   color: #f60;
 }
-[data-pagination] li.current {
-  background: rgba(0,0,0,.1)
+
+span:hover {
+  cursor: pointer;
+  color: #f60;
 }
+
 /* Disabled & Hidden Styles */
 [data-pagination] .disabled,
 [data-pagination] [hidden],

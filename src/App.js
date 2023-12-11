@@ -83,8 +83,8 @@ function App() {
             element={<SavedGames games={games} currentUser={currentUser} />}
           />
           <Route
-            path='/:userid/all'
-            element={<AllGames currentUser={currentUser} />}
+            path='/:userid/:pagenumber'
+            element={<AllGames currentUser={currentUser} setServerError={setServerError} />}
           />
           <Route path='*' element={<ServerError resetError={resetError} />} />
         </Routes>
