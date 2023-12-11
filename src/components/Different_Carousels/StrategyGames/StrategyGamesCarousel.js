@@ -4,7 +4,7 @@ import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
-function StrategyGamesCarousel({ games, setServerError, currentUser, userFaves }) {
+function StrategyGamesCarousel({ setServerError, currentUser, userFaves }) {
 
   const [strategyGames, setStrategyGames] = useState([])
 

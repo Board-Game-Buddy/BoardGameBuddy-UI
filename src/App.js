@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import { useState, useEffect } from "react"
 import './App.css'
-import { getBoardGames, getUsers } from './apiCalls'
+import { getUsers } from './apiCalls'
 import Carousels from "./components/Carousel/Carousels"
 import Header from "./components/Header/Header"
 import SelectedGame from "./components/SelectedGame/SelectedGame"
@@ -10,9 +10,10 @@ import ServerError from "./components/ServerError/ServerError"
 import LoadingComponent from "./components/Loading/Loading"
 import SavedGames from "./components/SavedGames/SavedGames"
 import { useApi } from "./apiHooks"
+import { useSelector, useDispatch } from "react-redux"
+import { initFavorites } from './Redux/favoriteCardsSlice'
 
 function App() {
-  const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -22,17 +23,8 @@ function App() {
   })
   const [userFaves, setUserFaves] = useState([])
   const { getUserFavorites } = useApi()
-
-  useEffect(() => {
-    getBoardGames()
-      .then((data) => {
-        setGames(data.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` })
-      });
-  }, []);
+  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     getUsers()
@@ -49,11 +41,13 @@ function App() {
     getUserFavorites(currentUser)
       .then((data) => {
         setUserFaves(data);
+        dispatch(initFavorites({ userID: currentUser, favorites: data }))
+        setIsLoading(false)
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
       })
-  }, [currentUser])
+  }, [currentUser, dispatch, favoriteCardsRedux])
 
   const resetError = () => {
     setServerError({ hasError: false, message: '' })
@@ -75,7 +69,6 @@ function App() {
           <Route path='/:userid/home'
             element={
               <Carousels
-                games={games}
                 currentUser={currentUser}
                 setServerError={setServerError}
                 userFaves={userFaves}

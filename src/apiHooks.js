@@ -29,7 +29,7 @@ export function useApi() {
         if (!response.ok) {
           throw new Error(`Failed to add favorite. Status: ${response.status}`)
         }
-        dispatch(addFavorite({ userID, cardID: gameID }))
+        dispatch(addFavorite({ userID, cardID: gameID.toString() }))
         return response.json()
       })
   }
@@ -45,7 +45,7 @@ export function useApi() {
         if (!response.ok) {
           throw new Error(`Failed to delete favorite. Status: ${response.status}`)
         }
-        dispatch(removeFavorite({ userID, cardID: gameID }))
+        dispatch(removeFavorite({ userID, cardID: gameID.toString() }))
         return { success: true }
       })
       .catch(error => {

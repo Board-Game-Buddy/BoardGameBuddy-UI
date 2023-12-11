@@ -3,21 +3,25 @@ import PropTypes from 'prop-types';
 import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { useApi } from '../../../apiHooks';
+import { useSelector } from 'react-redux'
 
 function SavedCarousel({ setServerError, currentUser, userFaves }) {
 
   const { getUserFavorites } = useApi()
   const [savedGames, setSavedGames] = useState([])
+  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     getUserFavorites(currentUser)
       .then((data) => {
         setSavedGames(data)
+        setIsLoading(false)
         })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
         })
-    }, [setServerError, currentUser])
+    }, [setServerError, currentUser, favoriteCardsRedux])
 
     const sliderRef = useRef(null)
 
@@ -29,6 +33,7 @@ function SavedCarousel({ setServerError, currentUser, userFaves }) {
           currentUser={currentUser}
           id={game.id}
           userFaves={userFaves}
+          favoriteCardsRedux={favoriteCardsRedux}
         />
       ))
 
@@ -64,6 +69,12 @@ function SavedCarousel({ setServerError, currentUser, userFaves }) {
   const scrollBy = (distance) => {
     sliderRef.current.scrollLeft += distance;
   };
+
+  if (isLoading) {
+    return (<div className='carousel-title'>
+    Loading Saved Games...
+  </div>)
+  }
 
   return (
     <div className='saved-carousel-container' id='save-car'>

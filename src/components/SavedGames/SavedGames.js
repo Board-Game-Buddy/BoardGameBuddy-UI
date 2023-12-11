@@ -7,44 +7,43 @@ import { getSelectedGame } from "../../apiCalls";
 import LoadingComponent from "../Loading/Loading";
 
 function SavedGames({ currentUser, setServerError, userFaves}) {
-  const idNum = parseInt(currentUser)
-  const favoriteCards = useSelector((state) => state.favoriteCards[currentUser] || [])
   const [renderedGames, setRenderedGames] = useState([])
   const [loading, setLoading] = useState(true)
+  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser])
 
   useEffect(() => {
     const renderGameCards = async () => {
       const gamesToRender = []
-
-      for (const game of userFaves) {
+      for (const game of favoriteCardsRedux) {
         try {
           const selectedGameData = await getSelectedGame(game.id)
           gamesToRender.push(
             
             <GameCard
-              id={selectedGameData.data.id}
-              key={selectedGameData.data.id}
-              title={selectedGameData.data.attributes.title}
-              image={selectedGameData.data.attributes.image_path}
-              currentUser={currentUser}
-              userFaves={userFaves}
+            id={selectedGameData.data.id}
+            key={selectedGameData.data.id}
+            title={selectedGameData.data.attributes.title}
+            image={selectedGameData.data.attributes.image_path}
+            currentUser={currentUser}
+            userFaves={userFaves}
             />
-          )
-        } catch (error) {
-          console.error(`Error fetching selected game with ID ${game.id}:`, error)
+            )
+          } catch (error) {
+            console.error(`Error fetching selected game with ID ${game.id}:`, error)
+            setServerError({ hasError: true, message: `${error.message}` })
+          }
         }
+        setRenderedGames(gamesToRender)
       }
-      setRenderedGames(gamesToRender)
-    }
-    renderGameCards()
-    setLoading(false)
-  }, [userFaves, currentUser])
-
+      renderGameCards()
+      setLoading(false)
+    }, [userFaves, currentUser, setServerError, favoriteCardsRedux])
+    
   if (loading) {
     return <LoadingComponent />
   }
 
-  if (userFaves.length === 0) {
+  if (favoriteCardsRedux.length === 0) {
     return (
       <div className="no-tracked">
         <h2 className="no-tracked-text">You do not have any saved games.</h2>
@@ -58,6 +57,5 @@ function SavedGames({ currentUser, setServerError, userFaves}) {
 export default SavedGames
 
 SavedGames.propTypes = {
-  games: PropTypes.array.isRequired,
   currentUser: PropTypes.number.isRequired,
 };
