@@ -36,8 +36,8 @@ export function getUsers() {
         throw new Error(`Users not found.`)
       }
      return response.json()
-    }
-  )
+    })
+}
 
 export function getGamesByPage(pageNumber) {
   return fetch(`https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?page=${pageNumber}`)
