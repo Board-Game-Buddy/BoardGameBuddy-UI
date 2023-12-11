@@ -68,11 +68,6 @@ function Header({ resetError, currentUser }) {
             <Link to={`/${currentUser}/1`} onClick={closeNav}>
                 All Games
               </Link>
-            <li>
-              <Link to={`/`} onClick={closeNav}>
-                Change Profile
-              </Link>
-            </li>
           </>
         )}
       </ul>
