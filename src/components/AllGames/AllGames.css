@@ -1,0 +1,16 @@
+.allgames {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 110px;
+  align-items: center;
+  justify-content: center;
+  row-gap: 14px;
+}
+
+/* * {
+  border: 2px solid green;  
+} */
+
+.footer {
+  width: 100vw;
+}

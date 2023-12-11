@@ -12,6 +12,7 @@ import SavedGames from "./components/SavedGames/SavedGames"
 import { useApi } from "./apiHooks"
 import { useSelector, useDispatch } from "react-redux"
 import { initFavorites } from './Redux/favoriteCardsSlice'
+import AllGames from "./components/AllGames/AllGames"
 
 function App() {
   const [serverError, setServerError] = useState({hasError: false, message: ''})
@@ -87,6 +88,10 @@ function App() {
           <Route
             path='/:userid/saved'
             element={<SavedGames currentUser={currentUser} setServerError={setServerError} setIsLoading={setIsLoading} isLoading={isLoading} userFaves={userFaves} />}
+          />
+          <Route
+            path='/:userid/:pagenumber'
+            element={<AllGames currentUser={currentUser} setServerError={setServerError} />}
           />
           <Route path='*' element={<ServerError resetError={resetError} />} />
         </Routes>
