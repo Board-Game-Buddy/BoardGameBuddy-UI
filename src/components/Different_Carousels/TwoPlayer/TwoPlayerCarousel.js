@@ -4,7 +4,7 @@ import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
-function TwoPlayerCarousel({ games, setServerError }) {
+function TwoPlayerCarousel({ games, setServerError, currentUser, userFaves }) {
 
   const [twoPGames, setTwoPGames] = useState([])
 
@@ -33,7 +33,9 @@ function TwoPlayerCarousel({ games, setServerError }) {
           description={game.attributes.description}
           min_players={game.attributes.min_players}
           max_players={game.attributes.max_players}
+          currentUser={currentUser}
           id={game.id}
+          userFaves={userFaves}
         />
       ))
 
@@ -72,7 +74,7 @@ function TwoPlayerCarousel({ games, setServerError }) {
 
   return (
     <div className='saved-carousel-container'>
-        <div className='carousel-title'>Two Player Games</div>
+        <div className='carousel-title'>Top Two Player Games</div>
       <div className='navigation-btn left' onClick={() => scrollBy(-200)}>
         &lt;
       </div>
