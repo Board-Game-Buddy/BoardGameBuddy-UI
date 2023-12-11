@@ -4,15 +4,17 @@ import TwoPlayerCarousel from '../Different_Carousels/TwoPlayer/TwoPlayerCarouse
 import StrategyGamesCarousel from '../Different_Carousels/StrategyGames/StrategyGamesCarousel'
 import FantasyGamesCarousel from '../Different_Carousels/FantasyGames/FantasyGamesCarousel'
 import CooperativeGamesCarousel from '../Different_Carousels/CooperativeGames/CooperativeGames'
+import SavedCarousel from '../Different_Carousels/Saved/SavedCarousel';
 
-function Carousels({ setServerError }) {
+function Carousels({ setServerError, currentUser, userFaves}) {
  
   return (
-      <div className='carousels-container'> 
-        <TwoPlayerCarousel setServerError={setServerError} />
-        <StrategyGamesCarousel setServerError={setServerError} />
-        <FantasyGamesCarousel setServerError={setServerError} />
-        <CooperativeGamesCarousel setServerError={setServerError} />
+      <div className='carousels-container'>
+        <SavedCarousel setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} /> 
+        <TwoPlayerCarousel setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} />
+        <StrategyGamesCarousel setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} />
+        <FantasyGamesCarousel setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} />
+        <CooperativeGamesCarousel setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} />
       </div>
   )
 }

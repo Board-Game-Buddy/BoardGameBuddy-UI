@@ -29,6 +29,8 @@ function Header({ resetError, currentUser }) {
     setIsNavOpen(!isNavOpen);
   };
 
+  const isProfileVisible = !isBasePath;
+
   return (
     <nav>
       <input
@@ -47,13 +49,22 @@ function Header({ resetError, currentUser }) {
         >
           <div className="a">Home</div>
         </li>
-        {!isBasePath && !isSavedPath && (
+        {isProfileVisible && (
           <>
-            <li>
-              <Link to={`/${currentUser}/saved`} onClick={closeNav}>
-                Saved Games
-              </Link>
-            </li>
+            {!location.pathname.includes(`/${currentUser}/saved`) && (
+              <li>
+                <Link to={`/${currentUser}/saved`} onClick={closeNav}>
+                  Saved Games
+                </Link>
+              </li>
+            )}
+            {!isBasePath && (
+              <li>
+                <Link to={`/`} onClick={closeNav}>
+                  Change Profile
+                </Link>
+              </li>
+            )}
             <Link to={`/${currentUser}/1`} onClick={closeNav}>
                 All Games
               </Link>

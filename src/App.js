@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import { useState, useEffect } from "react"
 import './App.css'
-import { getBoardGames, getUsers } from './apiCalls'
+import { getUsers } from './apiCalls'
 import Carousels from "./components/Carousel/Carousels"
 import Header from "./components/Header/Header"
 import SelectedGame from "./components/SelectedGame/SelectedGame"
@@ -9,10 +9,12 @@ import Users from "./components/Users/Users"
 import ServerError from "./components/ServerError/ServerError"
 import LoadingComponent from "./components/Loading/Loading"
 import SavedGames from "./components/SavedGames/SavedGames"
+import { useApi } from "./apiHooks"
+import { useSelector, useDispatch } from "react-redux"
+import { initFavorites } from './Redux/favoriteCardsSlice'
 import AllGames from "./components/AllGames/AllGames"
 
 function App() {
-  const [games, setGames] = useState([])
   const [serverError, setServerError] = useState({hasError: false, message: ''})
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -20,28 +22,33 @@ function App() {
     const storedUser = localStorage.getItem("currentUser");
     return storedUser ? JSON.parse(storedUser) : null;
   })
-
-  useEffect(() => {
-    getBoardGames()
-      .then((data) => {
-        setGames(data.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` })
-      });
-  }, []);
+  const [userFaves, setUserFaves] = useState([])
+  const { getUserFavorites } = useApi()
+  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     getUsers()
       .then((data) => {
         setUsers(data);
-        setIsLoading(false);
+        setIsLoading(false)
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
       })
   }, [])
+
+  useEffect(() => {
+    getUserFavorites(currentUser)
+      .then((data) => {
+        setUserFaves(data);
+        dispatch(initFavorites({ userID: currentUser, favorites: data }))
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` })
+      })
+  }, [currentUser, dispatch, favoriteCardsRedux])
 
   const resetError = () => {
     setServerError({ hasError: false, message: '' })
@@ -63,15 +70,15 @@ function App() {
           <Route path='/:userid/home'
             element={
               <Carousels
-                games={games}
                 currentUser={currentUser}
                 setServerError={setServerError}
+                userFaves={userFaves}
               />
             }>
           </Route>
           <Route path='/game/:id'
             element={
-              <SelectedGame setServerError={setServerError} currentUser={currentUser} />
+              <SelectedGame setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} />
             }>
           </Route>
           <Route
@@ -80,7 +87,7 @@ function App() {
           />
           <Route
             path='/:userid/saved'
-            element={<SavedGames games={games} currentUser={currentUser} />}
+            element={<SavedGames currentUser={currentUser} setServerError={setServerError} setIsLoading={setIsLoading} isLoading={isLoading} userFaves={userFaves} />}
           />
           <Route
             path='/:userid/:pagenumber'

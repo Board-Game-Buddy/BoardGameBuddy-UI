@@ -4,19 +4,27 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getSelectedGame } from '../../apiCalls'
 // import train from '../../Assets/train.png'
-import { useSelector, useDispatch } from 'react-redux'
-import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice'
+import { useDispatch } from 'react-redux'
+// import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice'
 import filled from '../../Assets/filled.png'
 import unfilled from '../../Assets/unfilled.png'
 import back from '../../Assets/Back.png'
+import { useApi } from '../../apiHooks'
 
-function SelectedGame({ setServerError, currentUser }) {
+function SelectedGame({ setServerError, currentUser, userFaves }) {
+
     const { id } = useParams()
+    const idNum = parseInt(currentUser)
     // const idNum = parseInt(id)
     const [selectedGame, setSelectedGame] = useState(false)
-    const favoriteCards = useSelector((state) => state.favoriteCards)
+    // const favoriteCards = useSelector((state) => state.favoriteCards[currentUser] || [])
     const dispatch = useDispatch()
-    const isFavorite = favoriteCards.includes(id);
+    // const isFavorite = favoriteCards.includes(id);
+    // const isFavorite = useSelector((state) => {
+    //   return state.favoriteCards[currentUser]?.includes(id) || false;
+    // })
+    const isFavorite = userFaves.some((favorite) => favorite.id === id)
+    const { postUserFavorite, deleteUserFavorite } = useApi()
 
       useEffect(() => {
         getSelectedGame(id)
@@ -54,11 +62,11 @@ function SelectedGame({ setServerError, currentUser }) {
 
     const toggleFavorite = () => {
       if (isFavorite) {
-        dispatch(removeFavorite(id))
+        deleteUserFavorite(idNum, id)
     } else {
-        dispatch(addFavorite(id));
+        postUserFavorite(idNum, id)
       }
-  }
+    }
  
     return selectedGame && (
       <div className='entire-page'>
@@ -90,7 +98,7 @@ function SelectedGame({ setServerError, currentUser }) {
                     <img src={filled} alt='filled in collection icon showing that this game is saved to the users favorites' style={{cursor: 'pointer', fontSize: '1.3em'}} />) : 
                     (
                     <img src={unfilled} alt='unfilled collection icon showing that this game is not saved to the users favorites' style={{fontSize: '1.3em'}} />
-                    )}
+                )}
                 </div>
           </div>
           <div className='selected-game-instructions-container'>
@@ -123,47 +131,3 @@ SelectedGame.propTypes = {
   setServerError: PropTypes.func.isRequired,
   currentUser: PropTypes.number.isRequired,
 };
-
-
-
-
-
-// function SelectedGame({ setServerError }) {
-//     const { id } = useParams()
-//     const [selectedGame, setSelectedGame] = useState(false)
-
-//     useEffect( () => {  
-//       getSelectedGame(id)
-//         .then(data => setSelectedGame(data.data))
-//         .catch(error => setServerError({hasError: true, message: `${error.message}`}))
-//       }, [id, setServerError])
-
-//       if (!selectedGame) {
-//         return <div>Loading...</div>
-//       }
-
-//     const replaceLineBreaks = (text) => {
-//       return text.replace(/&#10;/g, '<br />')
-//     }
-
-//     return selectedGame && (
-//         <div className='selected-game-container'>
-//             <div className='selected-game-image-container'>
-//                 <img className='selected-game-image' src={selectedGame.attributes.cover_image} alt={`boardgame cover for ${selectedGame.attributes.title}`} />
-//             </div>
-//             <div className='selected-game-info'>
-//                 <h2 className='game-title'>{selectedGame.attributes.title}</h2>
-//                 <div className='player-range'>
-//                   <h3>{selectedGame.attributes.min_players}-{selectedGame.attributes.max_players} players</h3>
-//                 </div>
-//                 <h3 className='rating'>
-//                   Average Rating: {selectedGame.attributes.rating?.toFixed(1/2)/2}/5 <br />
-//                   {selectedGame.attributes.categories?.join(', ')}
-//                 </h3>
-//                 <p className='description' dangerouslySetInnerHTML={{ __html: replaceLineBreaks(selectedGame.attributes.description) }} />
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default SelectedGame

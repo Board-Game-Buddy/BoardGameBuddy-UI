@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import filled from '../../Assets/filled.png'
 import unfilled from '../../Assets/unfilled.png'
-import { useSelector, useDispatch } from 'react-redux';
-import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice'
+import { useApi } from '../../apiHooks';
+import { useSelector } from 'react-redux'
 
-function GameCard({ id, title, image }) {
+function GameCard({ id, title, image, currentUser, userFaves }) {
 
-  const dispatch = useDispatch()
-  const isFavorite = useSelector((state) => state.favoriteCards.includes(id))
+  const idNum = parseInt(currentUser)
+  const isFavorite = userFaves.some((favorite) => favorite.id === id)
+  const { postUserFavorite, deleteUserFavorite } = useApi()
+  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser]?.includes(id) || false)
 
-  const toggleFavorite = () => {
-    if (isFavorite) {
-      dispatch(removeFavorite(id));
-  } else {
-      dispatch(addFavorite(id));
+    const toggleFavorite = () => {
+      if (isFavorite) {
+        deleteUserFavorite(idNum, id)
+    } else {
+        postUserFavorite(idNum, id)
+      }
     }
-  }
 
     return (
         <div className='card'>
@@ -33,10 +35,10 @@ function GameCard({ id, title, image }) {
             </Link>
             <div className='selected-favorite-btn' id="save" onClick={() => toggleFavorite()}>
             {isFavorite ? (
-              <img src={filled} alt='filled in collection icon showing that this game is saved to the users favorites' style={{cursor: 'pointer', fontSize: '1.3em'}} />
-              ) : (
-              <img src={unfilled} alt='unfilled collection icon showing that this game is not saved to the users favorites' style={{fontSize: '1.3em'}} />
-            )}
+                    <img src={filled} alt='filled in collection icon showing that this game is saved to the users favorites' style={{cursor: 'pointer', fontSize: '1.3em'}} />) : 
+                    (
+                    <img src={unfilled} alt='unfilled collection icon showing that this game is not saved to the users favorites' style={{fontSize: '1.3em'}} />
+              )}
           </div>
         </div>
       </div>
