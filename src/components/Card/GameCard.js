@@ -27,7 +27,7 @@ function GameCard({ id, title, image }) {
                 id={id}
                 key={id}
                 className='game-image'
-                src={image}
+                src={image || 'https://www.its.ac.id/tmesin/wp-content/uploads/sites/22/2022/07/no-image.png'}
                 alt={`Board game cover for ${title}`}
               />
             </Link>
