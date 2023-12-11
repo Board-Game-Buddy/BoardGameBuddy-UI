@@ -91,9 +91,9 @@ function App() {
           />
           <Route
             path='/:userid/:pagenumber'
-            element={<AllGames currentUser={currentUser} setServerError={setServerError} />}
+            element={<AllGames currentUser={currentUser} setServerError={setServerError} userFaves={userFaves}/>}
           />
-          <Route path='*' element={<ServerError resetError={resetError} />} />
+          <Route path='*' element={<ServerError resetError={resetError}  />} />
         </Routes>
       )}
     </div>
