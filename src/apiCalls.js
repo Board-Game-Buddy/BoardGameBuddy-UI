@@ -41,10 +41,11 @@ export function getUsers() {
 
 export function getGamesByPage(pageNumber) {
   return fetch(`https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?page=${pageNumber}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Two player games not found.')
-    }
-    return response.json()
-  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Two player games not found.');
+      }
+      return response.json();
+    });
 }
+
