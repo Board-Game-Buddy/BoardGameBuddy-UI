@@ -6,12 +6,16 @@ import GameCard from '../Card/GameCard';
 import ServerError from '../ServerError/ServerError';
 import '../AllGames/AllGames.css';
 import Pagination from '../Pagination/Pagination';
+import { useSelector } from 'react-redux';
+import LoadingComponent from '../Loading/Loading';
 
-function AllGames({ currentUser, setServerError }) {
+function AllGames({ currentUser, setServerError, userFaves }) {
   const { pagenumber } = useParams();
   const [pageNumber, setPageNumber] = useState(pagenumber || 1);
   const [currentGames, setCurrentGames] = useState([]);
   const [totalPages, setTotalPages] = useState(7508);
+  const [isLoading, setIsLoading] = useState(true)
+  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser])
 
   useEffect(() => {
     getGamesByPage(pageNumber)
@@ -19,11 +23,12 @@ function AllGames({ currentUser, setServerError }) {
         setCurrentGames(data.data);
         // You need to set the total pages based on your data
         setTotalPages(/* Set total pages based on your data */);
+        setIsLoading(false)
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` });
       });
-  }, [pageNumber, setServerError]);
+  }, [pageNumber, setServerError, favoriteCardsRedux]);
 
   useEffect(() => {
     console.log(currentGames);
@@ -40,8 +45,14 @@ function AllGames({ currentUser, setServerError }) {
       min_players={game.attributes.min_players}
       max_players={game.attributes.max_players}
       currentUser={currentUser}
+      userFaves={userFaves}
+      favoriteCardsRedux={favoriteCardsRedux}
     />
   ));
+
+  if (isLoading) {
+    return <LoadingComponent />
+  }
 
   return (
     <div className="allgames">
