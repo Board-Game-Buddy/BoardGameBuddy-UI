@@ -12,7 +12,6 @@ import SavedGames from "./components/SavedGames/SavedGames"
 import { useApi } from "./apiHooks"
 import { useSelector, useDispatch } from "react-redux"
 import { initFavorites } from './Redux/favoriteCardsSlice'
-import AllGames from "./components/AllGames/AllGames"
 
 function App() {
   const [serverError, setServerError] = useState({hasError: false, message: ''})
