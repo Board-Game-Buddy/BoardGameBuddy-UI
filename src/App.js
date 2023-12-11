@@ -9,6 +9,7 @@ import Users from "./components/Users/Users"
 import ServerError from "./components/ServerError/ServerError"
 import LoadingComponent from "./components/Loading/Loading"
 import SavedGames from "./components/SavedGames/SavedGames"
+import { useApi } from "./apiHooks"
 
 function App() {
   const [games, setGames] = useState([])
@@ -19,6 +20,8 @@ function App() {
     const storedUser = localStorage.getItem("currentUser");
     return storedUser ? JSON.parse(storedUser) : null;
   })
+  const [userFaves, setUserFaves] = useState([])
+  const { getUserFavorites } = useApi()
 
   useEffect(() => {
     getBoardGames()
@@ -35,12 +38,22 @@ function App() {
     getUsers()
       .then((data) => {
         setUsers(data);
-        setIsLoading(false);
+        setIsLoading(false)
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` })
       })
   }, [])
+
+  useEffect(() => {
+    getUserFavorites(currentUser)
+      .then((data) => {
+        setUserFaves(data);
+      })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` })
+      })
+  }, [currentUser])
 
   const resetError = () => {
     setServerError({ hasError: false, message: '' })
@@ -65,12 +78,13 @@ function App() {
                 games={games}
                 currentUser={currentUser}
                 setServerError={setServerError}
+                userFaves={userFaves}
               />
             }>
           </Route>
           <Route path='/game/:id'
             element={
-              <SelectedGame setServerError={setServerError} currentUser={currentUser} />
+              <SelectedGame setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} />
             }>
           </Route>
           <Route
@@ -79,7 +93,7 @@ function App() {
           />
           <Route
             path='/:userid/saved'
-            element={<SavedGames games={games} currentUser={currentUser} />}
+            element={<SavedGames currentUser={currentUser} setServerError={setServerError} setIsLoading={setIsLoading} isLoading={isLoading} userFaves={userFaves} />}
           />
           <Route path='*' element={<ServerError resetError={resetError} />} />
         </Routes>
