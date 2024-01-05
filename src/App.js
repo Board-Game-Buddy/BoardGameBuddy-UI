@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './App.css';
 import { getUsers } from './apiCalls';
@@ -15,6 +15,7 @@ import { initFavorites } from './Redux/favoriteCardsSlice';
 import AllGames from "./components/AllGames/AllGames";
 
 function App() {
+  const location = useLocation();
   const [serverError, setServerError] = useState({ hasError: false, message: '' });
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,6 @@ function App() {
     const storedUser = localStorage.getItem("currentUser");
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  const [userFaves, setUserFaves] = useState([]);
   const [favoritesFetched, setFavoritesFetched] = useState(false);
   const { getUserFavorites } = useApi();
   const dispatch = useDispatch();
@@ -57,7 +57,12 @@ function App() {
         });
     }
   }, [currentUser, dispatch, favoritesFetched]);
-  
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setCurrentUser(null);
+    }
+  }, [location.pathname]);
 
   const resetError = () => {
     setServerError({ hasError: false, message: '' });
@@ -69,7 +74,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header resetError={resetError} currentUser={currentUser} />
+      <Header resetError={resetError} currentUser={currentUser} setCurrentUser={setCurrentUser} />
       {serverError.hasError ? (
         <ServerError resetError={resetError} serverError={serverError} currentUser={currentUser} />
       ) : isLoading ? (

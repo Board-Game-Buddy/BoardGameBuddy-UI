@@ -4,7 +4,7 @@ import Logo from '../../Logo.png'
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-function Header({ resetError, currentUser }) {
+function Header({ resetError, currentUser, setCurrentUser }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isBasePath = location.pathname === '/';
@@ -60,7 +60,7 @@ function Header({ resetError, currentUser }) {
             )}
             {!isBasePath && (
               <li>
-                <Link to={`/`} onClick={closeNav}>
+                <Link to={`/`} onClick={() => { setCurrentUser(null); closeNav(); }}>
                   Change Profile
                 </Link>
               </li>
