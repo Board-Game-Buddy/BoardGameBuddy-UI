@@ -1,62 +1,71 @@
-import { Routes, Route } from "react-router-dom"
-import { useState, useEffect } from "react"
-import './App.css'
-import { getUsers } from './apiCalls'
-import Carousels from "./components/Carousel/Carousels"
-import Header from "./components/Header/Header"
-import SelectedGame from "./components/SelectedGame/SelectedGame"
-import Users from "./components/Users/Users"
-import ServerError from "./components/ServerError/ServerError"
-import LoadingComponent from "./components/Loading/Loading"
-import SavedGames from "./components/SavedGames/SavedGames"
-import { useApi } from "./apiHooks"
-import { useSelector, useDispatch } from "react-redux"
-import { initFavorites } from './Redux/favoriteCardsSlice'
-import AllGames from "./components/AllGames/AllGames"
+import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import './App.css';
+import { getUsers } from './apiCalls';
+import Carousels from "./components/Carousel/Carousels";
+import Header from "./components/Header/Header";
+import SelectedGame from "./components/SelectedGame/SelectedGame";
+import Users from "./components/Users/Users";
+import ServerError from "./components/ServerError/ServerError";
+import LoadingComponent from "./components/Loading/Loading";
+import SavedGames from "./components/SavedGames/SavedGames";
+import { useApi } from "./apiHooks";
+import { useSelector, useDispatch } from "react-redux";
+import { initFavorites } from './Redux/favoriteCardsSlice';
+import AllGames from "./components/AllGames/AllGames";
 
 function App() {
-  const [serverError, setServerError] = useState({hasError: false, message: ''})
-  const [users, setUsers] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [serverError, setServerError] = useState({ hasError: false, message: '' });
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(() => {
     const storedUser = localStorage.getItem("currentUser");
     return storedUser ? JSON.parse(storedUser) : null;
-  })
-  const [userFaves, setUserFaves] = useState([])
-  const { getUserFavorites } = useApi()
-  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser])
-  const dispatch = useDispatch()
+  });
+  const [userFaves, setUserFaves] = useState([]);
+  const [favoritesFetched, setFavoritesFetched] = useState(false);
+  const { getUserFavorites } = useApi();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getUsers()
       .then((data) => {
         setUsers(data);
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` })
-      })
-  }, [])
+        setServerError({ hasError: true, message: `${error.message}` });
+      });
+  }, []);
 
   useEffect(() => {
-    getUserFavorites(currentUser)
-      .then((data) => {
-        setUserFaves(data);
-        dispatch(initFavorites({ userID: currentUser, favorites: data }))
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` })
-      })
-  }, [currentUser, dispatch, favoriteCardsRedux])
+    if (currentUser && !favoritesFetched) {
+      console.log("Fetching user favorites for user:", currentUser);
+  
+      getUserFavorites(currentUser)
+        .then((data) => {
+          console.log("User favorites fetched successfully:", data);
+          dispatch(initFavorites({ userID: currentUser, favorites: data }));
+          setFavoritesFetched(true);
+        })
+        .catch((error) => {
+          console.error("Error fetching user favorites:", error);
+          setServerError({ hasError: true, message: `${error.message}` });
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [currentUser, dispatch, favoritesFetched]);
+  
 
   const resetError = () => {
-    setServerError({ hasError: false, message: '' })
-  }
+    setServerError({ hasError: false, message: '' });
+  };
 
   useEffect(() => {
-    localStorage.setItem("currentUser", JSON.stringify(currentUser))
-  }, [currentUser])
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  }, [currentUser]);
 
   return (
     <div className="App">
