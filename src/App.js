@@ -56,7 +56,7 @@ function App() {
           setIsLoading(false);
         });
     }
-  }, [currentUser, dispatch, favoritesFetched]);
+  }, [currentUser, dispatch, favoritesFetched, getUserFavorites]);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -86,13 +86,13 @@ function App() {
               <Carousels
                 currentUser={currentUser}
                 setServerError={setServerError}
-                userFaves={userFaves}
+            
               />
             }>
           </Route>
           <Route path='/game/:id'
             element={
-              <SelectedGame setServerError={setServerError} currentUser={currentUser} userFaves={userFaves} />
+              <SelectedGame setServerError={setServerError} currentUser={currentUser}  />
             }>
           </Route>
           <Route
@@ -101,11 +101,11 @@ function App() {
           />
           <Route
             path='/:userid/saved'
-            element={<SavedGames currentUser={currentUser} setServerError={setServerError} setIsLoading={setIsLoading} isLoading={isLoading} userFaves={userFaves} />}
+            element={<SavedGames currentUser={currentUser} setServerError={setServerError} setIsLoading={setIsLoading} isLoading={isLoading}  />}
           />
           <Route
             path='/:userid/:pagenumber'
-            element={<AllGames currentUser={currentUser} setServerError={setServerError} userFaves={userFaves}/>}
+            element={<AllGames currentUser={currentUser} setServerError={setServerError} />}
           />
           <Route path='*' element={<ServerError resetError={resetError}  />} />
         </Routes>

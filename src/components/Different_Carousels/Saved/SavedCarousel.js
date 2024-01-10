@@ -5,17 +5,13 @@ import { useRef, useState, useEffect } from 'react';
 import { useApi } from '../../../apiHooks';
 import { useSelector } from 'react-redux';
 
-function SavedCarousel({ setServerError, currentUser, userFaves }) {
+function SavedCarousel({ setServerError, currentUser}) {
   const { getUserFavorites } = useApi();
   const [savedGames, setSavedGames] = useState([]);
   const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (userFaves.length > 0) {
-      setSavedGames(userFaves);
-      setIsLoading(false);
-    } else {
       getUserFavorites(currentUser)
         .then((data) => {
           setSavedGames(data);
@@ -24,8 +20,8 @@ function SavedCarousel({ setServerError, currentUser, userFaves }) {
         .catch((error) => {
           setServerError({ hasError: true, message: `${error.message}` });
         });
-    }
-  }, [setServerError, currentUser, userFaves]);
+    }, 
+    [setServerError, currentUser]);
 
   const sliderRef = useRef(null);
 
@@ -84,7 +80,6 @@ function SavedCarousel({ setServerError, currentUser, userFaves }) {
                 image={game.image_path}
                 currentUser={currentUser}
                 id={game.id}
-                userFaves={userFaves}
                 favoriteCardsRedux={favoriteCardsRedux}
               />
             ))}

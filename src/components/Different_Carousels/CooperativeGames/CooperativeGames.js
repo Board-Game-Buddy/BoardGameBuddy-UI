@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getSearchedGames } from '../../../apiCalls'
 import GameCard from '../../Card/GameCard'
 
-function CooperativeGamesCarousel({ setServerError, currentUser, userFaves }) {
+function CooperativeGamesCarousel({ setServerError, currentUser}) {
 
   const [cooperativeGames, setCooperativeGames] = useState([])
 
@@ -34,7 +34,6 @@ function CooperativeGamesCarousel({ setServerError, currentUser, userFaves }) {
           max_players={game.attributes.max_players}
           id={game.id}
           currentUser={currentUser}
-          userFaves={userFaves}
         />
       ))
 

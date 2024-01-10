@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { getSelectedGame } from "../../apiCalls";
 import LoadingComponent from "../Loading/Loading";
 
-function SavedGames({ currentUser, setServerError, userFaves}) {
+function SavedGames({ currentUser, setServerError}) {
   const [renderedGames, setRenderedGames] = useState([])
   const [loading, setLoading] = useState(true)
   const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser])
@@ -25,7 +25,6 @@ function SavedGames({ currentUser, setServerError, userFaves}) {
             title={selectedGameData.data.attributes.title}
             image={selectedGameData.data.attributes.image_path}
             currentUser={currentUser}
-            userFaves={userFaves}
             />
             )
           } catch (error) {
@@ -37,7 +36,7 @@ function SavedGames({ currentUser, setServerError, userFaves}) {
       }
       renderGameCards()
       setLoading(false)
-    }, [userFaves, currentUser, setServerError, favoriteCardsRedux])
+    }, [currentUser, setServerError, favoriteCardsRedux])
     
   if (loading) {
     return <LoadingComponent />

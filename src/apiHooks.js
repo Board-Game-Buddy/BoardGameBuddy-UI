@@ -40,7 +40,7 @@ export function useApi() {
           throw new Error(`Failed to add favorite. Status: ${response.status}`);
         }
         dispatch(addFavorite({ userID, cardID: gameID.toString() }));
-        console.log('Favorite saved successfully.');
+        console.log('Favorite added successfully.');
         return response.json();
       })
       .catch(error => {

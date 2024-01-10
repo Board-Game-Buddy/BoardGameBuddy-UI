@@ -4,7 +4,7 @@ import GameCard from '../../Card/GameCard';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
-function StrategyGamesCarousel({ setServerError, currentUser, userFaves }) {
+function StrategyGamesCarousel({ setServerError, currentUser }) {
 
   const [strategyGames, setStrategyGames] = useState([])
 
@@ -35,7 +35,6 @@ function StrategyGamesCarousel({ setServerError, currentUser, userFaves }) {
           max_players={game.attributes.max_players}
           id={game.id}
           currentUser={currentUser}
-          userFaves={userFaves}
         />
       ))
 
