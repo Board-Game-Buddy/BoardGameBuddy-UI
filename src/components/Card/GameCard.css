@@ -8,6 +8,7 @@
 
 .game-image {
     height: 12em;
+    border-radius: 10px;
 }
 
 .image-container {
@@ -34,7 +35,7 @@ border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
   opacity: .8;
-  transition: transform .5s;
+  transition: transform .15s;
 }
 
 .selected-favorite-btn:hover {

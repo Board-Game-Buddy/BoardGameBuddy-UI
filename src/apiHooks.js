@@ -1,24 +1,34 @@
-import { useDispatch } from 'react-redux'
-import { addFavorite, removeFavorite, initFavorites } from './Redux/favoriteCardsSlice'
+import { useDispatch } from 'react-redux';
+
+import { addFavorite, removeFavorite, initFavorites } from './Redux/favoriteCardsSlice';
 
 export function useApi() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const getUserFavorites = (userID) => {
+    console.log('Fetching user favorites for userID:', userID);
+
     return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/${userID}/favorites`)
       .then(response => {
         if (!response.ok) {
-          throw new Error('User favorites not found.')
+          throw new Error('User favorites not found.');
         }
-        return response.json()
+        return response.json();
       })
       .then(data => {
-        dispatch(initFavorites({ userID, favorites: data }))
-        return data
+        console.log('User favorites fetched successfully:', data);
+        dispatch(initFavorites({ userID, favorites: data }));
+        return data;
       })
-  }
+      .catch(error => {
+        console.error('Error fetching user favorites:', error);
+        throw error; // Rethrow the error to propagate it to the caller
+      });
+  };
 
   const postUserFavorite = (userID, gameID) => {
+    console.log('Saving favorite for userID:', userID, 'gameID:', gameID);
+
     return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/${userID}/favorites?board_game_id=${gameID}`, {
       method: 'POST',
       headers: {
@@ -27,14 +37,21 @@ export function useApi() {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error(`Failed to add favorite. Status: ${response.status}`)
+          throw new Error(`Failed to add favorite. Status: ${response.status}`);
         }
-        dispatch(addFavorite({ userID, cardID: gameID.toString() }))
-        return response.json()
+        dispatch(addFavorite({ userID, cardID: gameID.toString() }));
+        console.log('Favorite added successfully.');
+        return response.json();
       })
-  }
+      .catch(error => {
+        console.error('Error saving favorite:', error);
+        throw error; // Rethrow the error to propagate it to the caller
+      });
+  };
 
   const deleteUserFavorite = (userID, gameID) => {
+    console.log('Deleting favorite for userID:', userID, 'gameID:', gameID);
+
     return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/${userID}/favorites?board_game_id=${gameID}`, {
       method: 'DELETE',
       headers: {
@@ -43,16 +60,17 @@ export function useApi() {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error(`Failed to delete favorite. Status: ${response.status}`)
+          throw new Error(`Failed to delete favorite. Status: ${response.status}`);
         }
-        dispatch(removeFavorite({ userID, cardID: gameID.toString() }))
-        return { success: true }
+        dispatch(removeFavorite({ userID, cardID: gameID.toString() }));
+        console.log('Favorite deleted successfully.');
+        return { success: true };
       })
       .catch(error => {
-        console.error('Error deleting favorite:', error)
-        return { success: false, error: error.message }
-      })
-  }
+        console.error('Error deleting favorite:', error);
+        return { success: false, error: error.message };
+      });
+  };
 
-  return { getUserFavorites, postUserFavorite, deleteUserFavorite }
+  return { getUserFavorites, postUserFavorite, deleteUserFavorite };
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
 import { getSearchedGames } from '../../../apiCalls';
 
-function FantasyGamesCarousel({ setServerError, currentUser, userFaves }) {
+function FantasyGamesCarousel({ setServerError, currentUser}) {
 
   const [fantasyGames, setFantasyGames] = useState([])
 
@@ -34,7 +34,6 @@ function FantasyGamesCarousel({ setServerError, currentUser, userFaves }) {
           max_players={game.attributes.max_players}
           id={game.id}
           currentUser={currentUser}
-          userFaves={userFaves}
         />
       ))
       

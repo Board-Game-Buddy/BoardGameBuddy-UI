@@ -2,6 +2,12 @@ body {
   padding: 0;
   margin: 0;
 }
+
+nav .links .a:hover {
+  color: white;
+  cursor: pointer; /* Add this line */
+}
+
 .container {
   position: relative;
   margin-top: 100px;

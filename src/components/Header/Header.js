@@ -4,7 +4,7 @@ import Logo from '../../Logo.png'
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-function Header({ resetError, currentUser }) {
+function Header({ resetError, currentUser, setCurrentUser }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isBasePath = location.pathname === '/';
@@ -40,42 +40,39 @@ function Header({ resetError, currentUser }) {
         onChange={toggleNav}
       />
       <img className="logo" src={Logo} alt="Logo" />
-      <ul className="links">
-        <li
-          onClick={() => {
-            resetError();
-            handleHomeClick();
-          }}
-        >
-          <div className="a">Home</div>
-        </li>
-        {isProfileVisible && (
-          <>
-            {!location.pathname.includes(`/${currentUser}/saved`) && (
-              <li>
-                <Link to={`/${currentUser}/saved`} onClick={closeNav}>
-                  Saved Games
-                </Link>
-              </li>
-            )}
-            {!isBasePath && (
-              <li>
-                <Link to={`/`} onClick={closeNav}>
-                  Change Profile
-                </Link>
-              </li>
-            )}
-            <Link to={`/${currentUser}/1`} onClick={closeNav}>
+      {!isBasePath && (
+        <ul className="links">
+          <li
+            onClick={() => {
+              resetError();
+              handleHomeClick();
+            }}
+          >
+            <div className="a">Home</div>
+          </li>
+          {isProfileVisible && (
+            <>
+              {!location.pathname.includes(`/${currentUser}/saved`) && (
+                <li>
+                  <Link to={`/${currentUser}/saved`} onClick={closeNav}>
+                    Saved Games
+                  </Link>
+                </li>
+              )}
+              {!isBasePath && (
+                <li>
+                  <Link to={`/`} onClick={() => { setCurrentUser(null); closeNav(); }}>
+                    Change Profile
+                  </Link>
+                </li>
+              )}
+              <Link to={`/${currentUser}/1`} onClick={closeNav}>
                 All Games
               </Link>
-            <li>
-              <Link to={`/`} onClick={closeNav}>
-                Change Profile
-              </Link>
-            </li>
-          </>
-        )}
-      </ul>
+            </>
+          )}
+        </ul>
+      )}
       <label htmlFor="nav-toggle" className="icon-burger">
         <div className="line"></div>
         <div className="line"></div>
@@ -86,6 +83,7 @@ function Header({ resetError, currentUser }) {
 }
 
 export default Header;
+
 Header.propTypes = {
   resetError: PropTypes.func.isRequired,
   currentUser: PropTypes.number.isRequired,
