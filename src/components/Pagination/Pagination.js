@@ -1,7 +1,9 @@
+// Import necessary modules
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../Pagination/Pagination.css';
 
+// Define the Pagination component
 function Pagination({ currentUser, pageNumber, setPageNumber }) {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -10,7 +12,12 @@ function Pagination({ currentUser, pageNumber, setPageNumber }) {
 
   useEffect(() => {
     setInputValue(pagenumber || '');
-  }, [pagenumber]);
+    setPageNumber((prevPageNumber) => {
+      const parsedPageNumber = parseInt(pagenumber, 10) || 1;
+      navigate(`/${currentUser}/${parsedPageNumber}`);
+      return parsedPageNumber;
+    });
+  }, [pagenumber, setPageNumber, currentUser, navigate]);
 
   const handlePageClick = (page) => {
     setPageNumber(page);
@@ -35,54 +42,52 @@ function Pagination({ currentUser, pageNumber, setPageNumber }) {
     navigate(`/${currentUser}/${parsedValue}`);
   };
 
+  const handlePrevClick = () => {
+    setPageNumber((prevPageNumber) => {
+      const prevPage = Math.max(1, parseInt(prevPageNumber, 10) - 1);
+      navigate(`/${currentUser}/${prevPage}`);
+      return prevPage;
+    });
+  };
+
+  const handleNextClick = () => {
+    setPageNumber((prevPageNumber) => {
+      const nextPage = parseInt(prevPageNumber, 10) + 1;
+      navigate(`/${currentUser}/${nextPage}`);
+      return nextPage;
+    });
+  };
+
+  const generatePageNumbers = () => {
+    const currentPage = pageNumber || 1;
+    const startPage = Math.floor((currentPage - 1) / 9) * 9 + 1;
+    const endPage = Math.min(startPage + 8, 7508);
+    const pages = [];
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  };
+
   return (
     <footer data-pagination>
       <ul>
-        <li>
-          <Link to={`/${currentUser}/1`} onClick={() => handlePageClick(1)}>
-            1
-          </Link>
+        <li className={pageNumber === 1 ? 'active' : ''}>
+          <span onClick={handlePrevClick}>{'<'}</span>
         </li>
-        <li>
-          <Link to={`/${currentUser}/2`} onClick={() => handlePageClick(2)}>
-            2
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/3`} onClick={() => handlePageClick(3)}>
-            3
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/4`} onClick={() => handlePageClick(4)}>
-            4
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/5`} onClick={() => handlePageClick(5)}>
-            5
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/6`} onClick={() => handlePageClick(6)}>
-            6
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/7`} onClick={() => handlePageClick(7)}>
-            7
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/8`} onClick={() => handlePageClick(8)}>
-            8
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/9`} onClick={() => handlePageClick(9)}>
-            9
-          </Link>
-        </li>
+        {generatePageNumbers().map((page) => (
+          <li key={page} className={pageNumber === page ? 'active' : ''}>
+            <Link
+              to={`/${currentUser}/${page}`}
+              onClick={() => handlePageClick(page)}
+              className={pageNumber === page ? 'active-link' : ''}
+            >
+              {page}
+            </Link>
+          </li>
+        ))}
         <li>
           {showInput ? (
             <input
@@ -99,9 +104,16 @@ function Pagination({ currentUser, pageNumber, setPageNumber }) {
           )}
         </li>
         <li>
-          <Link to={`/${currentUser}/7508`} onClick={() => handlePageClick(7508)}>
+          <Link
+            to={`/${currentUser}/7508`}
+            onClick={() => handlePageClick(7508)}
+            className={pageNumber === 7508 ? 'active-link' : ''}
+          >
             7508
           </Link>
+        </li>
+        <li>
+          <span onClick={handleNextClick}>{'>'}</span>
         </li>
       </ul>
     </footer>

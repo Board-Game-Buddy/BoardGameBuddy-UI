@@ -10,6 +10,7 @@
   -moz-osx-font-smoothing: grayscale;
   font-kerning: auto;
 }
+
 [data-pagination] {
   font-size: 8pt;
   line-height: 1;
@@ -20,6 +21,7 @@
   text-align: center;
   transition: font-size .2s ease-in-out;
 }
+
 [data-pagination] ul {
   list-style-type: none;
   display: inline;
@@ -27,23 +29,32 @@
   margin: 0;
   padding: .5em;
 }
+
 [data-pagination] ul li {
   display: inline-block;
   font-size: 100%;
   width: auto;
   border-radius: 3px;
 }
-[data-pagination] > a {
+
+[data-pagination] ul li.active:not(:first-child) {
+  color: #f60; /* Text color for the active page, excluding the first child */
+}
+
+[data-pagination] > a,
+[data-pagination] span {
+  color: #777; /* Color for chevrons and ellipsis (grey) */
   font-size: 140%;
 }
+
 [data-pagination] a {
   color: #777;
   font-size: 100%;
   padding: .5em;
 }
-[data-pagination] a:focus,
-[data-pagination] a:hover {
-  color: #f60;
+
+[data-pagination] a.active-link {
+  color: #f60; /* Text color for the active link */
 }
 
 span:hover {
@@ -58,21 +69,25 @@ span:hover {
   opacity: .5;
   pointer-events: none;
 }
+
 @media (min-width: 350px) {
   [data-pagination] {
     font-size: 10pt;
   }
 }
+
 @media (min-width: 500px) {
   [data-pagination] {
     font-size: 12pt;
   }
 }
+
 @media (min-width: 700px) {
   [data-pagination] {
     font-size: 14pt;
   }
 }
+
 @media (min-width: 900px) {
   [data-pagination] {
     font-size: 16pt;
