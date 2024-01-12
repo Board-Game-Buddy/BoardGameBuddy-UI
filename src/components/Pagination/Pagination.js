@@ -1,7 +1,9 @@
+// Import necessary modules
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../Pagination/Pagination.css';
 
+// Define the Pagination component
 function Pagination({ currentUser, pageNumber, setPageNumber }) {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -35,54 +37,34 @@ function Pagination({ currentUser, pageNumber, setPageNumber }) {
     navigate(`/${currentUser}/${parsedValue}`);
   };
 
+  const handlePrevClick = () => {
+    const prevPage = Math.max(1, pageNumber - 1);
+    setPageNumber(prevPage);
+    navigate(`/${currentUser}/${prevPage}`);
+  };
+
+  const handleNextClick = () => {
+    setPageNumber((prevPageNumber) => {
+      const nextPage = parseInt(prevPageNumber, 10) + 1;
+      navigate(`/${currentUser}/${nextPage}`);
+      return nextPage;
+    });
+  };
+  
+  
   return (
     <footer data-pagination>
       <ul>
         <li>
-          <Link to={`/${currentUser}/1`} onClick={() => handlePageClick(1)}>
-            1
-          </Link>
+          <span onClick={handlePrevClick}>{'<'}</span>
         </li>
-        <li>
-          <Link to={`/${currentUser}/2`} onClick={() => handlePageClick(2)}>
-            2
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/3`} onClick={() => handlePageClick(3)}>
-            3
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/4`} onClick={() => handlePageClick(4)}>
-            4
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/5`} onClick={() => handlePageClick(5)}>
-            5
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/6`} onClick={() => handlePageClick(6)}>
-            6
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/7`} onClick={() => handlePageClick(7)}>
-            7
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/8`} onClick={() => handlePageClick(8)}>
-            8
-          </Link>
-        </li>
-        <li>
-          <Link to={`/${currentUser}/9`} onClick={() => handlePageClick(9)}>
-            9
-          </Link>
-        </li>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((page) => (
+          <li key={page}>
+            <Link to={`/${currentUser}/${page}`} onClick={() => handlePageClick(page)}>
+              {page}
+            </Link>
+          </li>
+        ))}
         <li>
           {showInput ? (
             <input
@@ -102,6 +84,9 @@ function Pagination({ currentUser, pageNumber, setPageNumber }) {
           <Link to={`/${currentUser}/7508`} onClick={() => handlePageClick(7508)}>
             7508
           </Link>
+        </li>
+        <li>
+          <span onClick={() => handleNextClick()}>{'>'}</span>
         </li>
       </ul>
     </footer>
