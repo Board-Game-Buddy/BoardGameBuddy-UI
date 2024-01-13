@@ -8,7 +8,7 @@ import { useApi } from '../../apiHooks';
 import { useSelector, useDispatch } from 'react-redux';
 import { addFavorite, removeFavorite, updateFavoriteStatus } from '../../Redux/favoriteCardsSlice';
 
-const GameCard = ({ id, title, image, currentUser }) => {
+const GameCard = ({ id, title, image, currentUser }, handleToggleFavorite) => {
   const idNum = parseInt(currentUser);
   const dispatch = useDispatch();
   const [localIsFavorite, setLocalIsFavorite] = useState(false);
@@ -16,17 +16,42 @@ const GameCard = ({ id, title, image, currentUser }) => {
   // Provide a default empty array if userFaves is undefined
   const userFaves = useSelector((state) => state.favoriteCards[currentUser] || []);
 
-  const isFavorite = userFaves.some((favorite) => favorite && favorite.id === id);
+  // const isFavorite = userFaves.some((favorite) => favorite && favorite.id === id);
+  const isFavorite = useSelector((state) => state.favoriteCards[currentUser]?.includes(id));
   const { postUserFavorite, deleteUserFavorite, getUserFavorites } = useApi();
+
+  // useEffect(() => {
+  //   setLocalIsFavorite(isFavorite);
+  //   const updateFavoriteUI = () => {
+  //     dispatch(updateFavoriteStatus({ gameID: id, isFavorite }));
+  //   };
+
+  //   updateFavoriteUI();
+  // }, [isFavorite, dispatch, id]);
+
+  // const toggleFavorite = async () => {
+  //   try {
+  //     setLocalIsFavorite(!localIsFavorite); // Update UI immediately
+
+  //     if (localIsFavorite) {
+  //       await deleteUserFavorite(idNum, id);
+  //       dispatch(removeFavorite({ userID: idNum, gameID: id }));
+  //     } else {
+  //       await postUserFavorite(idNum, id);
+  //       dispatch(addFavorite({ userID: idNum, gameID: id }));
+  //     }
+
+  //     // Fetch the updated user favorites
+  //     await getUserFavorites(idNum);
+  //   } catch (error) {
+  //     console.error('Error toggling favorite:', error);
+  //     // Handle error if needed
+  //   }
+  // };
 
   useEffect(() => {
     setLocalIsFavorite(isFavorite);
-    const updateFavoriteUI = () => {
-      dispatch(updateFavoriteStatus({ gameID: id, isFavorite }));
-    };
-
-    updateFavoriteUI();
-  }, [isFavorite, dispatch, id]);
+  }, [isFavorite]);
 
   const toggleFavorite = async () => {
     try {
@@ -42,6 +67,11 @@ const GameCard = ({ id, title, image, currentUser }) => {
 
       // Fetch the updated user favorites
       await getUserFavorites(idNum);
+
+      // Call the callback function to navigate to SavedGames
+      if (handleToggleFavorite) {
+        handleToggleFavorite();
+      }
     } catch (error) {
       console.error('Error toggling favorite:', error);
       // Handle error if needed

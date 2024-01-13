@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './App.css';
 import { getUsers } from './apiCalls';
@@ -26,6 +26,7 @@ function App() {
   const [favoritesFetched, setFavoritesFetched] = useState(false);
   const { getUserFavorites } = useApi();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUsers()
@@ -72,9 +73,14 @@ function App() {
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
   }, [currentUser]);
 
+  const handleToggleFavorite = () => {
+    // You can use this function to navigate to the SavedGames page
+    navigate(`/${currentUser}/saved`);
+  };
+
   return (
     <div className="App">
-      <Header resetError={resetError} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <Header resetError={resetError} currentUser={currentUser} setCurrentUser={setCurrentUser} users={users} />
       {serverError.hasError ? (
         <ServerError resetError={resetError} serverError={serverError} currentUser={currentUser} />
       ) : isLoading ? (
@@ -105,7 +111,7 @@ function App() {
           />
           <Route
             path='/:userid/:pagenumber'
-            element={<AllGames currentUser={currentUser} setServerError={setServerError} />}
+            element={<AllGames currentUser={currentUser} setServerError={setServerError} handleToggleFavorite={handleToggleFavorite} />}
           />
           <Route path='*' element={<ServerError resetError={resetError}  />} />
         </Routes>

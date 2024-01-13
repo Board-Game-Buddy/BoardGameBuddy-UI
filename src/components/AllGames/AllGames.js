@@ -9,7 +9,7 @@ import Pagination from '../Pagination/Pagination';
 import { useSelector } from 'react-redux';
 import LoadingComponent from '../Loading/Loading';
 
-function AllGames({ currentUser, setServerError, userFaves }) {
+function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite }) {
   const { pagenumber } = useParams();
   const [pageNumber, setPageNumber] = useState(pagenumber || 1);
   const [currentGames, setCurrentGames] = useState([]);
@@ -47,6 +47,7 @@ function AllGames({ currentUser, setServerError, userFaves }) {
       currentUser={currentUser}
       userFaves={userFaves}
       favoriteCardsRedux={favoriteCardsRedux}
+      handleToggleFavorite={handleToggleFavorite}
     />
   ));
 

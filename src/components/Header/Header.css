@@ -26,7 +26,9 @@ nav {
   height: 100px;
   background-color: black;
   padding: 0 5%;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 nav .logo { 
   float: left;
@@ -97,6 +99,24 @@ nav .icon-burger .line {
   border-radius: 3px;
   transition: all .5s ease-in-out;
 }
+
+.profile-change {
+  display: flex;
+}
+
+.userPic {
+  border-radius: 50%;
+  height: 4em;
+  margin-left: .5em;
+}
+
+.userPicHidden {
+  border-radius: 50%;
+  height: 4em;
+  display: none;
+  margin-right: 3em;
+}
+
 @media screen and (max-width: 768px) {
   nav .logo {
       float: none;
@@ -136,5 +156,23 @@ nav .icon-burger .line {
   }
   nav :checked ~ .icon-burger .line:nth-child(2) {
       opacity: 0;
+  }
+  .userPicHidden {
+    display: block;
+  }
+  .userPic {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .userPicHidden {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .userPic {
+    display: block;
   }
 }
