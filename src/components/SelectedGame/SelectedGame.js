@@ -8,16 +8,15 @@ import filled from '../../Assets/filled.png';
 import unfilled from '../../Assets/unfilled.png';
 import back from '../../Assets/Back.png';
 import { useApi } from '../../apiHooks';
-import { updateFavoriteStatusForGame } from '../../Redux/favoriteCardsSlice';
+import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice';
 
 function SelectedGame({ setServerError, currentUser }) {
   const { id } = useParams();
-  const idNum = parseInt(currentUser);
+  const numID = parseInt(currentUser);
   const [selectedGame, setSelectedGame] = useState(false);
-  const [isFavoriteLocal, setIsFavoriteLocal] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false)
   const dispatch = useDispatch();
-  const { postUserFavorite, deleteUserFavorite } = useApi();
-  
+  const userFaves = useSelector((state) => state.favoriteCards[currentUser] || []);
 
   useEffect(() => {
     getSelectedGame(id)
@@ -29,46 +28,25 @@ function SelectedGame({ setServerError, currentUser }) {
       });
   }, [id, setServerError]);
 
-  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser] || []);
-  // const isFavorite = favoriteCardsRedux.some((favorite) => favorite.id === id);
-
-  // useEffect(() => {
-  //   setIsFavoriteLocal(isFavorite);
-  // }, [isFavorite]);
-
-  // const toggleFavorite = async () => {
-  //   try {
-  //     if (isFavoriteLocal) {
-  //       await deleteUserFavorite(idNum, id);
-  //     } else {
-  //       await postUserFavorite(idNum, id);
-  //     }
-
-  //     dispatch(updateFavoriteStatusForGame({ userID: idNum, gameID: id, isFavorite: !isFavoriteLocal }));
-  //   } catch (error) {
-  //     console.error('Error toggling favorite:', error);
-  //   }
-  // };
-
-  const isFavorite = useSelector((state) => state.favoriteCards[currentUser]?.includes(id));
-
   useEffect(() => {
-    setIsFavoriteLocal(isFavorite);
-  }, [isFavorite]);
+    setIsFavorite(userFaves.some((favorite) => favorite.id === id));
+  }, [id, userFaves])
+
+  const { postUserFavorite, deleteUserFavorite } = useApi();
 
   const toggleFavorite = async () => {
     try {
-      // Toggle favorite in Redux state directly
-      if (isFavoriteLocal) {
-        await deleteUserFavorite(idNum, id);
+      if (isFavorite) {
+        await deleteUserFavorite(numID, id);
+        console.log('InsideID', id)
+        console.log('CurrentUser', currentUser)
+        dispatch(removeFavorite({ userID: numID, cardID: id }));
       } else {
-        await postUserFavorite(idNum, id);
+        await postUserFavorite(numID, id);
+        dispatch(addFavorite({ userID: numID, cardID: id }));
       }
-
-      dispatch(updateFavoriteStatusForGame({ userID: idNum, gameID: id, isFavorite: !isFavoriteLocal }));
     } catch (error) {
       console.error('Error toggling favorite:', error);
-      // Handle error if needed
     }
   };
 
@@ -96,39 +74,6 @@ function SelectedGame({ setServerError, currentUser }) {
     return [...stars, ...transparentStars];
   }
 
-  // const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser] || []);
-  // const isFavorite = favoriteCardsRedux.some((favorite) => favorite.id === id);
-
-  // const toggleFavorite = () => {
-  //   if (isFavorite) {
-  //     deleteUserFavorite(idNum, id);
-  //   } else {
-  //     postUserFavorite(idNum, id);
-  //   }
-  // };
-
-  // const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser] || []);
-  // const isFavorite = favoriteCardsRedux.some((favorite) => favorite.id === id);
-
-  // const toggleFavorite = async () => {
-  //   try {
-  //     if (isFavoriteLocal) {
-  //       await deleteUserFavorite(idNum, id);
-  //     } else {
-  //       await postUserFavorite(idNum, id);
-  //     }
-
-  //     // Update local state to reflect the new favorite status
-  //     setIsFavoriteLocal(!isFavoriteLocal);
-
-  //     // Dispatch the action to update the favorite status for the current game
-  //     dispatch(updateFavoriteStatusForGame({ userID: idNum, gameID: id, isFavorite: !isFavoriteLocal }));
-  //   } catch (error) {
-  //     console.error('Error toggling favorite:', error);
-  //     // Handle error if needed
-  //   }
-  // };
-
   return selectedGame && (
     <div className="entire-page">
       <div className="selected-game-container">
@@ -152,7 +97,7 @@ function SelectedGame({ setServerError, currentUser }) {
           </div>
           <h3 className="categories">{selectedGame.attributes.categories}</h3>
           <div className="selected-favorite-button" id="save" onClick={toggleFavorite}>
-            {isFavoriteLocal ? (
+            {isFavorite ? (
               <img src={filled} alt="filled in collection icon showing that this game is saved to the users favorites" style={{ cursor: 'pointer', fontSize: '1.3em' }} />
             ) : (
               <img src={unfilled} alt="unfilled collection icon showing that this game is not saved to the users favorites" style={{ fontSize: '1.3em' }} />

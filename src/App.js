@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import './App.css';
 import { getUsers } from './apiCalls';
@@ -10,7 +10,7 @@ import ServerError from "./components/ServerError/ServerError";
 import LoadingComponent from "./components/Loading/Loading";
 import SavedGames from "./components/SavedGames/SavedGames";
 import { useApi } from "./apiHooks";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { initFavorites } from './Redux/favoriteCardsSlice';
 import AllGames from "./components/AllGames/AllGames";
 
@@ -26,7 +26,6 @@ function App() {
   const [favoritesFetched, setFavoritesFetched] = useState(false);
   const { getUserFavorites } = useApi();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     getUsers()
@@ -73,11 +72,6 @@ function App() {
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
   }, [currentUser]);
 
-  const handleToggleFavorite = () => {
-    // You can use this function to navigate to the SavedGames page
-    navigate(`/${currentUser}/saved`);
-  };
-
   return (
     <div className="App">
       <Header resetError={resetError} currentUser={currentUser} setCurrentUser={setCurrentUser} users={users} />
@@ -111,7 +105,7 @@ function App() {
           />
           <Route
             path='/:userid/:pagenumber'
-            element={<AllGames currentUser={currentUser} setServerError={setServerError} handleToggleFavorite={handleToggleFavorite} />}
+            element={<AllGames currentUser={currentUser} setServerError={setServerError}  />}
           />
           <Route path='*' element={<ServerError resetError={resetError}  />} />
         </Routes>

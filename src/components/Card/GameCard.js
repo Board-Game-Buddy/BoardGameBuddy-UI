@@ -6,75 +6,33 @@ import filled from '../../Assets/filled.png';
 import unfilled from '../../Assets/unfilled.png';
 import { useApi } from '../../apiHooks';
 import { useSelector, useDispatch } from 'react-redux';
-import { addFavorite, removeFavorite, updateFavoriteStatus } from '../../Redux/favoriteCardsSlice';
+import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice';
 
-const GameCard = ({ id, title, image, currentUser }, handleToggleFavorite) => {
-  const idNum = parseInt(currentUser);
+const GameCard = ( { id, title, image, currentUser } ) => {
   const dispatch = useDispatch();
-  const [localIsFavorite, setLocalIsFavorite] = useState(false);
-
-  // Provide a default empty array if userFaves is undefined
+  const numID = parseInt(currentUser)
   const userFaves = useSelector((state) => state.favoriteCards[currentUser] || []);
-
-  // const isFavorite = userFaves.some((favorite) => favorite && favorite.id === id);
-  const isFavorite = useSelector((state) => state.favoriteCards[currentUser]?.includes(id));
-  const { postUserFavorite, deleteUserFavorite, getUserFavorites } = useApi();
-
-  // useEffect(() => {
-  //   setLocalIsFavorite(isFavorite);
-  //   const updateFavoriteUI = () => {
-  //     dispatch(updateFavoriteStatus({ gameID: id, isFavorite }));
-  //   };
-
-  //   updateFavoriteUI();
-  // }, [isFavorite, dispatch, id]);
-
-  // const toggleFavorite = async () => {
-  //   try {
-  //     setLocalIsFavorite(!localIsFavorite); // Update UI immediately
-
-  //     if (localIsFavorite) {
-  //       await deleteUserFavorite(idNum, id);
-  //       dispatch(removeFavorite({ userID: idNum, gameID: id }));
-  //     } else {
-  //       await postUserFavorite(idNum, id);
-  //       dispatch(addFavorite({ userID: idNum, gameID: id }));
-  //     }
-
-  //     // Fetch the updated user favorites
-  //     await getUserFavorites(idNum);
-  //   } catch (error) {
-  //     console.error('Error toggling favorite:', error);
-  //     // Handle error if needed
-  //   }
-  // };
+  const [isFavorite, setIsFavorite] = useState(false)
 
   useEffect(() => {
-    setLocalIsFavorite(isFavorite);
-  }, [isFavorite]);
+    setIsFavorite(userFaves.some((favorite) => favorite.id === id));
+  }, [id, userFaves])
+
+  const { postUserFavorite, deleteUserFavorite } = useApi();
 
   const toggleFavorite = async () => {
     try {
-      setLocalIsFavorite(!localIsFavorite); // Update UI immediately
-
-      if (localIsFavorite) {
-        await deleteUserFavorite(idNum, id);
-        dispatch(removeFavorite({ userID: idNum, gameID: id }));
+      if (isFavorite) {
+        await deleteUserFavorite(numID, id);
+        console.log('InsideID', id)
+        console.log('CurrentUser', currentUser)
+        dispatch(removeFavorite({ userID: numID, cardID: id }));
       } else {
-        await postUserFavorite(idNum, id);
-        dispatch(addFavorite({ userID: idNum, gameID: id }));
-      }
-
-      // Fetch the updated user favorites
-      await getUserFavorites(idNum);
-
-      // Call the callback function to navigate to SavedGames
-      if (handleToggleFavorite) {
-        handleToggleFavorite();
+        await postUserFavorite(numID, id);
+        dispatch(addFavorite({ userID: numID, cardID: id }));
       }
     } catch (error) {
       console.error('Error toggling favorite:', error);
-      // Handle error if needed
     }
   };
 
@@ -90,8 +48,8 @@ const GameCard = ({ id, title, image, currentUser }, handleToggleFavorite) => {
             alt={`Board game cover for ${title}`}
           />
         </Link>
-        <div className='selected-favorite-btn' id="save" onClick={() => toggleFavorite()}>
-          {localIsFavorite ? (
+        <div className='selected-favorite-btn' id="save" onClick={toggleFavorite}>
+          {isFavorite ? (
             <img src={filled} alt='filled in collection icon showing that this game is saved to the users favorites' style={{ cursor: 'pointer', fontSize: '1.5em'}} />
           ) : (
             <img src={unfilled} alt='unfilled collection icon showing that this game is not saved to the users favorites' style={{ fontSize: '1.5em' }} />
