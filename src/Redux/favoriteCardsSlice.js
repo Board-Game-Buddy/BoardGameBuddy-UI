@@ -9,18 +9,31 @@ const favoriteCardsSlice = createSlice({
       if (!state[userID]) {
         state[userID] = [];
       }
-      // Make sure to push the cardID to the array
-      state[userID].push(cardID);
+      console.log('addFavorite reducer called. New state:', state);
+      return {
+        ...state,
+        [userID]: [...state[userID], cardID],
+      };
     },
     removeFavorite: (state, action) => {
       const { userID, cardID } = action.payload;
       if (state[userID]) {
-        state[userID] = state[userID].filter((id) => id !== cardID);
+        console.log('removeFavorite reducer called. New state:', state);
+        return {
+          ...state,
+          [userID]: state[userID].filter((id) => id !== cardID),
+        };
       }
+      console.log('removeFavorite reducer called with invalid userID. Current state:', state);
+      return state;
     },
     initFavorites: (state, action) => {
       const { userID, favorites } = action.payload;
-      state[userID] = favorites;
+      console.log('initFavorites reducer called. New state:', state);
+      return {
+        ...state,
+        [userID]: favorites,
+      };
     },
   }
 });

@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getSelectedGame } from '../../apiCalls';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import filled from '../../Assets/filled.png';
 import unfilled from '../../Assets/unfilled.png';
 import back from '../../Assets/Back.png';
 import { useApi } from '../../apiHooks';
-import { addFavorite, removeFavorite } from '../../Redux/favoriteCardsSlice';
 
 function SelectedGame({ setServerError, currentUser }) {
   const { id } = useParams();
   const numID = parseInt(currentUser);
   const [selectedGame, setSelectedGame] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false)
-  const dispatch = useDispatch();
   const userFaves = useSelector((state) => state.favoriteCards[currentUser] || []);
 
   useEffect(() => {
@@ -38,13 +36,12 @@ function SelectedGame({ setServerError, currentUser }) {
     try {
       if (isFavorite) {
         await deleteUserFavorite(numID, id);
-        console.log('InsideID', id)
-        console.log('CurrentUser', currentUser)
-        dispatch(removeFavorite({ userID: numID, cardID: id }));
       } else {
         await postUserFavorite(numID, id);
-        dispatch(addFavorite({ userID: numID, cardID: id }));
       }
+  
+      // Manually update the userFaves state
+      setIsFavorite(!isFavorite);
     } catch (error) {
       console.error('Error toggling favorite:', error);
     }

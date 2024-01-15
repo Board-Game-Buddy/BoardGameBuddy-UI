@@ -3,9 +3,17 @@ import PropTypes from 'prop-types';
 import GameCard from '../Card/GameCard'
 import { useSelector } from 'react-redux'
 import LoadingComponent from "../Loading/Loading";
+import { useApi } from "../../apiHooks";
+import { useEffect } from "react";
 
 function SavedGames({ currentUser }) {
   const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser]);
+  const { getUserFavorites } = useApi()
+
+  // useEffect(() => {
+  //       setIsFavorite(userFaves.some((favorite) => favorite.id === id));
+  //       console.log('userFaves in useEffect:', userFaves);
+  //     }, [id, userFaves])
 
   if (!favoriteCardsRedux) {
     return <LoadingComponent />;

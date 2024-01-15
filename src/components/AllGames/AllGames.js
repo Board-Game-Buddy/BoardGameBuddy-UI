@@ -30,14 +30,10 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
       });
   }, [pageNumber, setServerError, favoriteCardsRedux]);
 
-  // useEffect(() => {
-  //   console.log(currentGames);
-  // }, [currentGames]);
-
   const displayedGames = currentGames.map((game) => (
     <GameCard
       id={game.id}
-      key={game.key}
+      key={game.id}
       title={game.attributes.title}
       categories={game.attributes.categories}
       image={game.attributes.image_path}
