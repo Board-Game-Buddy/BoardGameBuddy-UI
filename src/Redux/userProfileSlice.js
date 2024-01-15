@@ -11,7 +11,6 @@ const userProfileSlice = createSlice({
       },
     updateUserProfile: (state, action) => {
       const { userID, savedGames } = action.payload;
-      // Update the user's profile with saved games data
       state[userID] = { ...state[userID], savedGames };
       console.log('updateUserProfile reducer called. New state:', state);
     },
