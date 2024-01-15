@@ -10,7 +10,7 @@ function Carousels({ setServerError, currentUser}) {
  
   return (
       <div className='carousels-container'>
-        <SavedCarousel setServerError={setServerError} currentUser={currentUser} /> 
+        {/* <SavedCarousel setServerError={setServerError} currentUser={currentUser} />  */}
         <TwoPlayerCarousel setServerError={setServerError} currentUser={currentUser}  />
         <StrategyGamesCarousel setServerError={setServerError} currentUser={currentUser}  />
         <FantasyGamesCarousel setServerError={setServerError} currentUser={currentUser} />

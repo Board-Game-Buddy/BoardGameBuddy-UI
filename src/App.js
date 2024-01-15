@@ -45,7 +45,7 @@ function App() {
       getUserFavorites(currentUser)
         .then((data) => {
           console.log("User favorites fetched successfully:", data);
-          dispatch(initFavorites({ userID: currentUser, favorites: data }));
+          // dispatch(initFavorites({ userID: currentUser, favorites: data }));
           setFavoritesFetched(true);
         })
         .catch((error) => {
@@ -56,7 +56,7 @@ function App() {
           setIsLoading(false);
         });
     }
-  }, [currentUser, dispatch, favoritesFetched, getUserFavorites]);
+  }, [currentUser, favoritesFetched, getUserFavorites]);
 
   useEffect(() => {
     if (location.pathname === '/') {
