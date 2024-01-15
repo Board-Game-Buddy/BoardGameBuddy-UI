@@ -1,32 +1,35 @@
 [
   {
   "data": {
+  "id": 10,
+  "type": "user",
+  "attributes": {
+  "name": "Abdul",
+  "email": "abdul@turing.edu",
+  "image_path": "https://media.licdn.com/dms/image/D4E03AQHetbvZ68Ynxw/profile-displayphoto-shrink_400_400/0/1672697152056?e=1707955200&v=beta&t=hhM_f-1JV6r1mem0ak73uYwRLbH9Xad2KjEBbXIe1vU"
+  }
+  }
+  },
+  {
+  "data": {
   "id": 4,
   "type": "user",
   "attributes": {
-  "name": "Reed Hillmar",
-  "email": "reedhillmar@gmail.com"
+  "name": "Reed",
+  "email": "reed@reed.reed",
+  "image_path": "https://avatars.githubusercontent.com/u/134157871?v=4"
   }
   }
   },
   {
   "data": {
-  "id": 5,
+  "id": 7,
   "type": "user",
   "attributes": {
-  "name": "Noelle Hemphill",
-  "email": "n.hemphill4@gmail.com"
-  }
-  }
-  },
-  {
-  "data": {
-  "id": 6,
-  "type": "user",
-  "attributes": {
-  "name": "Connor Richmond",
-  "email": "richmond.connor@gmail.com"
+  "name": "Lane",
+  "email": "Lane@lane.lane",
+  "image_path": "https://avatars.githubusercontent.com/u/128104820?s=400&u=8de01d3f9ff4401d0594a208975da72499e668eb&v=4"
   }
   }
   }
-  ]
+]

@@ -1,6 +1,6 @@
 describe('Carousel Page', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/', {
+    cy.intercept('GET', 'https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users', {
       fixture: 'mockUsers',
     }).as('getUsers');
     cy.intercept('GET', 'https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games', {
@@ -18,6 +18,9 @@ describe('Carousel Page', () => {
     cy.intercept('GET', 'https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?cooperative=true', {
       fixture: 'coop',
     }).as('coop');
+    cy.intercept('GET', 'https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/10/favorites', {
+      fixture: 'user10Faves'
+    })
   });
 
   it('should display the header with image, home, and about sections', () => {
