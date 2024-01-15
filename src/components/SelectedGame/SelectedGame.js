@@ -28,8 +28,13 @@ function SelectedGame({ setServerError, currentUser }) {
       });
   }, [id, setServerError]);
 
+  // useEffect(() => {
+  //   setIsFavorite(userFaves.some((favorite) => favorite.id === id));
+  // }, [id, userFaves])
+
   useEffect(() => {
-    setIsFavorite(userFaves.some((favorite) => favorite.id === id));
+    let newIsFavorite = userFaves.some((favorite) => favorite.id === id);
+    setIsFavorite(newIsFavorite);
   }, [id, userFaves])
 
   const { postUserFavorite, deleteUserFavorite, getUserFavorites } = useApi();

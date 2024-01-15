@@ -10,8 +10,6 @@ import ServerError from "./components/ServerError/ServerError";
 import LoadingComponent from "./components/Loading/Loading";
 import SavedGames from "./components/SavedGames/SavedGames";
 import { useApi } from "./apiHooks";
-import { useDispatch } from "react-redux";
-import { initFavorites } from './Redux/favoriteCardsSlice';
 import AllGames from "./components/AllGames/AllGames";
 
 function App() {
@@ -25,7 +23,6 @@ function App() {
   });
   const [favoritesFetched, setFavoritesFetched] = useState(false);
   const { getUserFavorites } = useApi();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     getUsers()
@@ -40,12 +37,8 @@ function App() {
 
   useEffect(() => {
     if (currentUser && !favoritesFetched) {
-      console.log("Fetching user favorites for user:", currentUser);
-  
       getUserFavorites(currentUser)
         .then((data) => {
-          console.log("User favorites fetched successfully:", data);
-          // dispatch(initFavorites({ userID: currentUser, favorites: data }));
           setFavoritesFetched(true);
         })
         .catch((error) => {

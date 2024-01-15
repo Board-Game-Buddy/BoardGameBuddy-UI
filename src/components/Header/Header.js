@@ -36,8 +36,6 @@ function Header({ resetError, currentUser, setCurrentUser, users }) {
     setCurrentProfile(foundProfile);
   }, [users, currentUser])
 
-  console.log('currentProf', currentProfile)
-
   return (
     <nav>
       <input

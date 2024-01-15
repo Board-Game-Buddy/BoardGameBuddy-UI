@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import './GameCard.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -27,19 +27,15 @@ const GameCard = ( { id, title, image, currentUser } ) => {
       } else {
         await postUserFavorite(numID, id);
       }
-  
-      // Manually update the userFaves state
+
       setIsFavorite(!isFavorite);
   
-      // Fetch and initialize user favorites
       const updatedFavorites = await getUserFavorites(numID);
       dispatch(initFavorites({ userID: numID, favorites: updatedFavorites }));
     } catch (error) {
       console.error('Error toggling favorite:', error);
     }
   };
-
-  console.log('userFaves in component:', userFaves);
 
   return (
     <div className='card'>

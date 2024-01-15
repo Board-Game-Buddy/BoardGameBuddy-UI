@@ -2,21 +2,24 @@ import "./UserCard.css"
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom" 
 import { useDispatch } from 'react-redux';
-import { updateUserProfile } from "../../Redux/userProfileSlice";
 import LoadingComponent from "../Loading/Loading";
 import { useState } from "react";
+import { initFavorites } from '../../Redux/favoriteCardsSlice';
+import { useApi } from '../../apiHooks';
 
  
-function UserCard({ img, name, id, setCurrentUser, selectSavedGamesByUserID }) {
+function UserCard({ img, name, id, setCurrentUser }) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false)
+
+  const { getUserFavorites } = useApi();
 
   const handleCardClick = async () => {
     setCurrentUser(id);
     setIsLoading(true)
     try {
-      const savedGames = await selectSavedGamesByUserID(id);
-      dispatch(updateUserProfile({ userID: id, savedGames }));
+      const updatedFavorites = await getUserFavorites(id);
+      dispatch(initFavorites({ userID: id, favorites: updatedFavorites }));
     } catch (error) {
       console.error('Error fetching saved games:', error);
     } finally {
