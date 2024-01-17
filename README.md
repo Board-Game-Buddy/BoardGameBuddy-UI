@@ -4,7 +4,7 @@
 
 ### [Deployed Link](https://board-game-buddy-ui.vercel.app/)
 
-![image](https://github.com/Board-Game-Buddy/BoardGameBuddy_UI/assets/130513948/01586ed2-defc-4639-b64b-b67695c9de4a)
+![image](https://github.com/Board-Game-Buddy/BoardGameBuddy_UI/assets/130513948/9b59256b-52fb-4b36-a1a9-b824642843fc)
 
 </div>
 
@@ -49,6 +49,11 @@ Back End:
 - Use a consistent, modular file structure
 - Write robust tests using Cypress
 - Create pagination within the application
+- Display user on each page
+- Further research Redux and refactor to maintain immutability in reducers
+- Repair Redux to maintain profiles and favorite cards separately
+- Have the state for a specific user load when the user is selected
+- Repair Cypress testing
 ```
 
 ### Preview

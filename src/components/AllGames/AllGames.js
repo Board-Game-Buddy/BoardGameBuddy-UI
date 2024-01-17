@@ -9,7 +9,7 @@ import Pagination from '../Pagination/Pagination';
 import { useSelector } from 'react-redux';
 import LoadingComponent from '../Loading/Loading';
 
-function AllGames({ currentUser, setServerError, userFaves }) {
+function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite }) {
   const { pagenumber } = useParams();
   const [pageNumber, setPageNumber] = useState(pagenumber || 1);
   const [currentGames, setCurrentGames] = useState([]);
@@ -30,14 +30,10 @@ function AllGames({ currentUser, setServerError, userFaves }) {
       });
   }, [pageNumber, setServerError, favoriteCardsRedux]);
 
-  // useEffect(() => {
-  //   console.log(currentGames);
-  // }, [currentGames]);
-
   const displayedGames = currentGames.map((game) => (
     <GameCard
       id={game.id}
-      key={game.key}
+      key={game.id}
       title={game.attributes.title}
       categories={game.attributes.categories}
       image={game.attributes.image_path}
@@ -47,6 +43,7 @@ function AllGames({ currentUser, setServerError, userFaves }) {
       currentUser={currentUser}
       userFaves={userFaves}
       favoriteCardsRedux={favoriteCardsRedux}
+      handleToggleFavorite={handleToggleFavorite}
     />
   ));
 

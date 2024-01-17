@@ -1,14 +1,14 @@
 import './Header.css'
 import PropTypes from 'prop-types';
 import Logo from '../../Logo.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-function Header({ resetError, currentUser, setCurrentUser }) {
+function Header({ resetError, currentUser, setCurrentUser, users }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isBasePath = location.pathname === '/';
-  const isSavedPath = location.pathname === `/${currentUser}/saved`;
+  const [currentProfile, setCurrentProfile] = useState(null)
 
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -31,6 +31,11 @@ function Header({ resetError, currentUser, setCurrentUser }) {
 
   const isProfileVisible = !isBasePath;
 
+  useEffect(() => {
+    const foundProfile = users.find((profile) => profile.data.id === currentUser);
+    setCurrentProfile(foundProfile);
+  }, [users, currentUser])
+
   return (
     <nav>
       <input
@@ -39,7 +44,14 @@ function Header({ resetError, currentUser, setCurrentUser }) {
         checked={isNavOpen}
         onChange={toggleNav}
       />
-      <img className="logo" src={Logo} alt="Logo" />
+      <Link to={isBasePath ? '/' : `/${currentUser}/home`}>
+        <img className="logo" src={Logo} alt="Logo" />
+      </Link>
+      <img
+        className='userPicHidden'
+        src={currentProfile ? currentProfile.data.attributes.image_path : ''}
+        alt={currentProfile ? `${currentProfile.data.attributes.name} user number ${currentUser}` : ''}
+      />
       {!isBasePath && (
         <ul className="links">
           <li
@@ -61,7 +73,7 @@ function Header({ resetError, currentUser, setCurrentUser }) {
               )}
               {!isBasePath && (
                 <li>
-                  <Link to={`/`} onClick={() => { setCurrentUser(null); closeNav(); }}>
+                  <Link className='profile-change' to={`/`} onClick={() => { setCurrentUser(null); closeNav(); }}>
                     Change Profile
                   </Link>
                 </li>
@@ -69,6 +81,11 @@ function Header({ resetError, currentUser, setCurrentUser }) {
               <Link to={`/${currentUser}/1`} onClick={closeNav}>
                 All Games
               </Link>
+              <img
+                className='userPic'
+                src={currentProfile ? currentProfile.data.attributes.image_path : ''}
+                alt={currentProfile ? `${currentProfile.data.attributes.name} user number ${currentUser}` : ''}
+              />
             </>
           )}
         </ul>
@@ -86,5 +103,5 @@ export default Header;
 
 Header.propTypes = {
   resetError: PropTypes.func.isRequired,
-  currentUser: PropTypes.number.isRequired,
+  currentUser: PropTypes.number,
 };

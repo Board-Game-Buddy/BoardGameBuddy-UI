@@ -6,7 +6,7 @@ export function useApi() {
   const dispatch = useDispatch();
 
   const getUserFavorites = (userID) => {
-    console.log('Fetching user favorites for userID:', userID);
+    // console.log('Fetching user favorites for userID:', userID);
 
     return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/${userID}/favorites`)
       .then(response => {
@@ -16,7 +16,7 @@ export function useApi() {
         return response.json();
       })
       .then(data => {
-        console.log('User favorites fetched successfully:', data);
+        // console.log('User favorites fetched successfully:', data);
         dispatch(initFavorites({ userID, favorites: data }));
         return data;
       })
@@ -27,7 +27,7 @@ export function useApi() {
   };
 
   const postUserFavorite = (userID, gameID) => {
-    console.log('Saving favorite for userID:', userID, 'gameID:', gameID);
+    // console.log('Saving favorite for userID:', userID, 'gameID:', gameID);
 
     return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/${userID}/favorites?board_game_id=${gameID}`, {
       method: 'POST',
@@ -40,7 +40,7 @@ export function useApi() {
           throw new Error(`Failed to add favorite. Status: ${response.status}`);
         }
         dispatch(addFavorite({ userID, cardID: gameID.toString() }));
-        console.log('Favorite added successfully.');
+        // console.log('Favorite added successfully.');
         return response.json();
       })
       .catch(error => {
@@ -50,7 +50,7 @@ export function useApi() {
   };
 
   const deleteUserFavorite = (userID, gameID) => {
-    console.log('Deleting favorite for userID:', userID, 'gameID:', gameID);
+    // console.log('Deleting favorite for userID:', userID, 'gameID:', gameID);
 
     return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/${userID}/favorites?board_game_id=${gameID}`, {
       method: 'DELETE',
@@ -63,7 +63,7 @@ export function useApi() {
           throw new Error(`Failed to delete favorite. Status: ${response.status}`);
         }
         dispatch(removeFavorite({ userID, cardID: gameID.toString() }));
-        console.log('Favorite deleted successfully.');
+        // console.log('Favorite deleted successfully.');
         return { success: true };
       })
       .catch(error => {

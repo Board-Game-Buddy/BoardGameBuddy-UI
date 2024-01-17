@@ -6,45 +6,34 @@ import filled from '../../Assets/filled.png';
 import unfilled from '../../Assets/unfilled.png';
 import { useApi } from '../../apiHooks';
 import { useSelector, useDispatch } from 'react-redux';
-import { addFavorite, removeFavorite, updateFavoriteStatus } from '../../Redux/favoriteCardsSlice';
+import { initFavorites } from '../../Redux/favoriteCardsSlice';
 
-const GameCard = ({ id, title, image, currentUser }) => {
-  const idNum = parseInt(currentUser);
+const GameCard = ( { id, title, image, currentUser } ) => {
   const dispatch = useDispatch();
-  const [localIsFavorite, setLocalIsFavorite] = useState(false);
-
-  // Provide a default empty array if userFaves is undefined
+  const numID = parseInt(currentUser)
   const userFaves = useSelector((state) => state.favoriteCards[currentUser] || []);
-
-  const isFavorite = userFaves.some((favorite) => favorite && favorite.id === id);
-  const { postUserFavorite, deleteUserFavorite, getUserFavorites } = useApi();
+  const [isFavorite, setIsFavorite] = useState(false)
 
   useEffect(() => {
-    setLocalIsFavorite(isFavorite);
-    const updateFavoriteUI = () => {
-      dispatch(updateFavoriteStatus({ gameID: id, isFavorite }));
-    };
+    setIsFavorite(userFaves.some((favorite) => favorite.id === id));
+  }, [id, userFaves])
 
-    updateFavoriteUI();
-  }, [isFavorite, dispatch, id]);
+  const { postUserFavorite, deleteUserFavorite, getUserFavorites } = useApi();
 
   const toggleFavorite = async () => {
     try {
-      setLocalIsFavorite(!localIsFavorite); // Update UI immediately
-
-      if (localIsFavorite) {
-        await deleteUserFavorite(idNum, id);
-        dispatch(removeFavorite({ userID: idNum, gameID: id }));
+      if (isFavorite) {
+        await deleteUserFavorite(numID, id);
       } else {
-        await postUserFavorite(idNum, id);
-        dispatch(addFavorite({ userID: idNum, gameID: id }));
+        await postUserFavorite(numID, id);
       }
 
-      // Fetch the updated user favorites
-      await getUserFavorites(idNum);
+      setIsFavorite(!isFavorite);
+  
+      const updatedFavorites = await getUserFavorites(numID);
+      dispatch(initFavorites({ userID: numID, favorites: updatedFavorites }));
     } catch (error) {
       console.error('Error toggling favorite:', error);
-      // Handle error if needed
     }
   };
 
@@ -60,8 +49,8 @@ const GameCard = ({ id, title, image, currentUser }) => {
             alt={`Board game cover for ${title}`}
           />
         </Link>
-        <div className='selected-favorite-btn' id="save" onClick={() => toggleFavorite()}>
-          {localIsFavorite ? (
+        <div className='selected-favorite-btn' id="save" onClick={toggleFavorite}>
+          {isFavorite ? (
             <img src={filled} alt='filled in collection icon showing that this game is saved to the users favorites' style={{ cursor: 'pointer', fontSize: '1.5em'}} />
           ) : (
             <img src={unfilled} alt='unfilled collection icon showing that this game is not saved to the users favorites' style={{ fontSize: '1.5em' }} />

@@ -73,7 +73,7 @@ function SavedCarousel({ setServerError, currentUser}) {
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
           >
-            {savedGames.map((game, index) => (
+            {favoriteCardsRedux.map((game, index) => (
               <GameCard
                 key={game.id}
                 title={game.title}

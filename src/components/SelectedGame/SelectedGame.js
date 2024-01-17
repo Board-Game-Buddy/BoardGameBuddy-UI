@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getSelectedGame } from '../../apiCalls';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import filled from '../../Assets/filled.png';
 import unfilled from '../../Assets/unfilled.png';
 import back from '../../Assets/Back.png';
 import { useApi } from '../../apiHooks';
+import { initFavorites } from '../../Redux/favoriteCardsSlice';
 
 function SelectedGame({ setServerError, currentUser }) {
-  const { id } = useParams();
-  const idNum = parseInt(currentUser);
-  const [selectedGame, setSelectedGame] = useState(false);
   const dispatch = useDispatch();
-  const { postUserFavorite, deleteUserFavorite } = useApi();
+  const { id } = useParams();
+  const numID = parseInt(currentUser);
+  const [selectedGame, setSelectedGame] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false)
+  const userFaves = useSelector((state) => state.favoriteCards[currentUser] || []);
 
   useEffect(() => {
     getSelectedGame(id)
@@ -25,6 +27,38 @@ function SelectedGame({ setServerError, currentUser }) {
         setServerError({ hasError: true, message: `${error.message}` });
       });
   }, [id, setServerError]);
+
+  useEffect(() => {
+    let newIsFavorite = userFaves.some((favorite) => favorite.id === id);
+
+    setIsFavorite((prevIsFavorite) => {
+      if (newIsFavorite !== prevIsFavorite) {
+        return newIsFavorite;
+      }
+      return prevIsFavorite;
+    });
+  }, [id, userFaves]);
+
+  const { postUserFavorite, deleteUserFavorite, getUserFavorites } = useApi();
+
+  const toggleFavorite = async () => {
+    try {
+      if (isFavorite) {
+        await deleteUserFavorite(numID, id);
+      } else {
+        await postUserFavorite(numID, id);
+      }
+  
+      // Manually update the userFaves state
+      setIsFavorite(!isFavorite);
+  
+      // Fetch and initialize user favorites
+      const updatedFavorites = await getUserFavorites(numID);
+      dispatch(initFavorites({ userID: numID, favorites: updatedFavorites }));
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
+  };
 
   const replaceLineBreaks = (text) => {
     return text.replace(/&#10;/g, '<br />');
@@ -50,17 +84,6 @@ function SelectedGame({ setServerError, currentUser }) {
     return [...stars, ...transparentStars];
   }
 
-  const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser] || []);
-  const isFavorite = favoriteCardsRedux.some((favorite) => favorite.id === id);
-
-  const toggleFavorite = () => {
-    if (isFavorite) {
-      deleteUserFavorite(idNum, id);
-    } else {
-      postUserFavorite(idNum, id);
-    }
-  };
-
   return selectedGame && (
     <div className="entire-page">
       <div className="selected-game-container">
@@ -83,7 +106,7 @@ function SelectedGame({ setServerError, currentUser }) {
             <img className="selected-game-image" src={selectedGame.attributes.image_path} alt={`boardgame cover for ${selectedGame.attributes.title}`} />
           </div>
           <h3 className="categories">{selectedGame.attributes.categories}</h3>
-          <div className="selected-favorite-button" id="save" onClick={() => toggleFavorite()}>
+          <div className="selected-favorite-button" id="save" onClick={toggleFavorite}>
             {isFavorite ? (
               <img src={filled} alt="filled in collection icon showing that this game is saved to the users favorites" style={{ cursor: 'pointer', fontSize: '1.3em' }} />
             ) : (
@@ -103,5 +126,5 @@ export default SelectedGame;
 
 SelectedGame.propTypes = {
   setServerError: PropTypes.func.isRequired,
-  currentUser: PropTypes.number.isRequired,
+  currentUser: PropTypes.number,
 };
