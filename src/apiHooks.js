@@ -2,6 +2,8 @@ import { useDispatch } from 'react-redux';
 
 import { addFavorite, removeFavorite, initFavorites } from './Redux/favoriteCardsSlice';
 
+import { addUserProfile, updateUserProfile, removeUserProfile } from './Redux/userProfileSlice';
+
 export function useApi() {
   const dispatch = useDispatch();
 
@@ -72,5 +74,26 @@ export function useApi() {
       });
   };
 
-  return { getUserFavorites, postUserFavorite, deleteUserFavorite };
+  const createUserProfile = (name, email) => {
+    const userData = {
+      name: name,
+      email: email
+    }
+
+    return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(userData)
+    })
+    .then (response => {
+      if (!response.ok) {
+        throw new Error(`Failed to post new user. Status: ${response.status}`)
+      }
+      dispatch(addUserProfile({name, email}))
+    })
+  }
+
+  return { getUserFavorites, postUserFavorite, deleteUserFavorite, createUserProfile };
 }
