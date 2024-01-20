@@ -1,11 +1,44 @@
-/* App.css */
+.user-selection {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6em;
+}
 
-/* Existing styles... */
+.add-remove-profiles {
+  display: flex;
+  justify-content: flex-end;
+  font-size: .7em;
+  color: white;
+  margin-right: 3em;
+  padding: 0px;
+}
 
-/* 
-* {
-  border: 2px solid green;
-} */
+.add-profile {
+  margin-right: 2em;
+}
+
+.add-profile, .remove-profile {
+  position: relative;
+}
+
+.add-profile::after, .remove-profile::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.add-profile:hover::after, .remove-profile:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
 .users-container {
   display: flex;
   align-items: center;
@@ -13,12 +46,12 @@
   padding: 20px;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
-  height: 90vh;
+  height: 50vh;
 }
 
 @media (max-width: 1052px) {
   .users-container {
-    margin-top:150px;
+    /* margin-top: 30px; */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-content: center; /* Add this line to center items */
@@ -31,7 +64,7 @@
 
 @media (max-width: 560px) {
   .users-container {
-    margin-top: 80px;
+    /* margin-top: 80px; */
     scale: 80%;
   }
 }
