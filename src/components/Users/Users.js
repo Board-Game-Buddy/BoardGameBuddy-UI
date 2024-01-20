@@ -17,8 +17,14 @@ function Users( {users, setCurrentUser} ) {
   })
 
   return (
-    <div className="users-container">
+    <div className="user-selection">
+      <div className='add-remove-profiles'>
+        <h2 className='add-profile'>Add Profile</h2>
+        <h2 className='remove-profile'>Remove Profile</h2>
+      </div>
+      <div className='users-container'>
       {allUsers}
+      </div>
     </div>
   )}
   
