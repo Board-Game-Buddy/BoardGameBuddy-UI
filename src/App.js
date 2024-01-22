@@ -11,6 +11,7 @@ import LoadingComponent from "./components/Loading/Loading";
 import SavedGames from "./components/SavedGames/SavedGames";
 import { useApi } from "./apiHooks";
 import AllGames from "./components/AllGames/AllGames";
+import AddUserProfileForm from "./components/AddUserForm/AddUserForm";
 
 function App() {
   const location = useLocation();
@@ -65,6 +66,10 @@ function App() {
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
   }, [currentUser]);
 
+  function addUser(newUser) {
+    setUsers([...users, newUser]);
+  }
+
   return (
     <div className="App">
       <Header resetError={resetError} currentUser={currentUser} setCurrentUser={setCurrentUser} users={users} />
@@ -99,6 +104,10 @@ function App() {
           <Route
             path='/:userid/:pagenumber'
             element={<AllGames currentUser={currentUser} setServerError={setServerError}  />}
+          />
+          <Route
+            path="/newuser"
+            element={<AddUserProfileForm addUser={addUser} />}
           />
           <Route path='*' element={<ServerError resetError={resetError}  />} />
         </Routes>
