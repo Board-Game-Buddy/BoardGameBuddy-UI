@@ -8,6 +8,7 @@ function Header({ resetError, currentUser, setCurrentUser, users }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isBasePath = location.pathname === '/';
+  const newUserPath = location.pathname ==='/newuser'
   const [currentProfile, setCurrentProfile] = useState(null)
 
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -44,7 +45,7 @@ function Header({ resetError, currentUser, setCurrentUser, users }) {
         checked={isNavOpen}
         onChange={toggleNav}
       />
-      <Link to={isBasePath ? '/' : `/${currentUser}/home`}>
+      <Link to={isBasePath || newUserPath ? '/' : `/${currentUser}/home`}>
         <img className="logo" src={Logo} alt="Logo" />
       </Link>
       <img
@@ -52,7 +53,7 @@ function Header({ resetError, currentUser, setCurrentUser, users }) {
         src={currentProfile ? currentProfile.data.attributes.image_path : ''}
         alt={currentProfile ? `${currentProfile.data.attributes.name} user number ${currentUser}` : ''}
       />
-      {!isBasePath && (
+      {!isBasePath && !newUserPath && (
         <ul className="links">
           <li
             onClick={() => {
