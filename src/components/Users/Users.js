@@ -1,6 +1,7 @@
 import './Users.css'
 import PropTypes from 'prop-types';
 import UserCard from "../UserCard/UserCard"
+import { Link } from 'react-router-dom';
 
 
 function Users( {users, setCurrentUser} ) {
@@ -19,7 +20,9 @@ function Users( {users, setCurrentUser} ) {
   return (
     <div className="user-selection">
       <div className='add-remove-profiles'>
-        <h2 className='add-profile'>Add Profile</h2>
+        <Link to='/newuser' >
+          <h2 className='add-profile'>Add Profile</h2>
+        </Link>
         <h2 className='remove-profile'>Remove Profile</h2>
       </div>
       <div className='users-container'>
