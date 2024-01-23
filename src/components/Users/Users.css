@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 6em;
+  height: 100%;
 }
 
 .add-remove-profiles {
@@ -9,7 +10,7 @@
   justify-content: flex-end;
   font-size: .7em;
   color: white;
-  margin-right: 3em;
+  margin-right: 5em;
   padding: 0px;
 }
 
@@ -31,7 +32,7 @@
   left: 0;
   background-color: white;
   transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
+  transition: transform 0.3s ease-out;
 }
 
 .add-profile:hover::after, .remove-profile:hover::after {
@@ -40,31 +41,30 @@
 }
 
 .users-container {
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: space-evenly;
   padding: 20px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
   height: 50vh;
 }
 
-@media (max-width: 1052px) {
+a {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
   .users-container {
-    /* margin-top: 30px; */
+    scale: 90%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center; /* Add this line to center items */
-  }
-  a {
-    display: flex;
-    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 350px) {
   .users-container {
-    /* margin-top: 80px; */
     scale: 80%;
   }
 }
