@@ -52,11 +52,14 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
   }
 
   return (
-    <div className="allgames">
-      {displayedGames}
-      {pageNumber > totalPages && <ServerError resetError={() => setPageNumber(1)} />}
-      <div className="footer">
-        <Pagination currentUser={currentUser} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+    <div className="allgames-container">
+     <section className="filters"></section>
+      <div className="allgames">
+        {displayedGames}
+        {pageNumber > totalPages && <ServerError resetError={() => setPageNumber(1)} />}
+        <div className="footer">
+          <Pagination currentUser={currentUser} pageNumber={pageNumber} setPageNumber={setPageNumber} />  
+        </div>
       </div>
     </div>
   );
