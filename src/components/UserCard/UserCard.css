@@ -25,3 +25,47 @@
   font-weight: bold;
   color: white;
 }
+
+.remove-action button {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  outline: none;
+}
+
+.remove-action button:hover {
+  color: red;
+}
+
+.warning {
+  font-size: 1.3em;
+  color: white;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: bold;
+  margin-bottom: 0em;
+  margin-top: 0em;
+}
+
+.yes-delete, .do-not-delete {
+  background-color: rgba(109, 156, 243, 0.5);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: .7rem;
+  transition: background-color 0.3s;
+  margin-top: 1em;
+}
+
+.yes-delete:hover, .do-not-delete:hover {
+  background-color: rgba(109, 156, 243);
+}
+
+.do-not-delete {
+  margin-bottom: 2em;
+  margin-left: 1em;
+}

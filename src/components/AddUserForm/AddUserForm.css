@@ -1,0 +1,83 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin-top: 10em;
+    padding: 20px;
+    background-color: #f0f0f029;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .form-title {
+    font-size: 2em;
+    background: white;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+  }
+  
+  .new-input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .new-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .form-buttons {
+    display: flex;
+  }
+
+  .go-back {
+    margin-left: 1em;
+  }
+  
+  .submit-new-profile, .go-back {
+    background-color: rgba(109, 156, 243, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-top: 1em;
+  }
+  
+  .submit-new-profile:hover, .go-back:hover {
+    background-color: rgba(109, 156, 243);
+  }
+
+  @media (max-width: 550px) {
+    .new-user-form {
+      max-width: 350px;
+    }
+    .new-input {
+        width: 70%;
+    }
+    .submit-new-profile, .go-back {
+        padding: 7px 15px;
+        font-size: .8rem;
+        margin-top: .6em;
+    }
+    .form-title {
+        font-size: 1.7em;
+    }
+  }

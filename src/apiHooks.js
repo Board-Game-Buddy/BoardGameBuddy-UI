@@ -2,6 +2,8 @@ import { useDispatch } from 'react-redux';
 
 import { addFavorite, removeFavorite, initFavorites } from './Redux/favoriteCardsSlice';
 
+import { addUserProfile, updateUserProfile, removeUserProfile } from './Redux/userProfileSlice';
+
 export function useApi() {
   const dispatch = useDispatch();
 
@@ -72,5 +74,52 @@ export function useApi() {
       });
   };
 
-  return { getUserFavorites, postUserFavorite, deleteUserFavorite };
+  const createUserProfile = async (data) => {
+    try {
+      const response = await fetch('https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create user profile');
+      }
+
+      const responseData = await response.json();
+
+      dispatch(addUserProfile({ userID: responseData.data.id, userData: responseData.data.attributes }));
+
+      return responseData;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const deleteUserProfile = (userID) => {
+    console.log('Deleting UserProfileID:', userID);
+
+    return fetch(`https://boardgamebuddy-api-a3b5bf335532.herokuapp.com/users/${userID}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to delete favorite. Status: ${response.status}`);
+        }
+        dispatch(removeUserProfile({ userID }));
+        console.log('Favorite deleted successfully.');
+        return { success: true };
+      })
+      .catch(error => {
+        console.error('Error deleting favorite:', error);
+        return { success: false, error: error.message };
+      });
+  };
+
+  return { getUserFavorites, postUserFavorite, deleteUserFavorite, createUserProfile, deleteUserProfile };
 }

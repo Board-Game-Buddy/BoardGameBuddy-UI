@@ -11,6 +11,7 @@ import LoadingComponent from "./components/Loading/Loading";
 import SavedGames from "./components/SavedGames/SavedGames";
 import { useApi } from "./apiHooks";
 import AllGames from "./components/AllGames/AllGames";
+import AddUserProfileForm from "./components/AddUserForm/AddUserForm";
 
 function App() {
   const location = useLocation();
@@ -61,9 +62,18 @@ function App() {
     setServerError({ hasError: false, message: '' });
   };
 
-  useEffect(() => {
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
-  }, [currentUser]);
+  // useEffect(() => {
+  //   localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  // }, [currentUser]);
+
+  function addUser(newUser) {
+    console.log("Adding user:", newUser);
+    setUsers([...users, newUser]);
+  }
+
+  const removeUser = (userID) => {
+    setUsers(users.filter((user) => user.data.id !== userID));
+  };
 
   return (
     <div className="App">
@@ -90,7 +100,7 @@ function App() {
           </Route>
           <Route
             path='/'
-            element={<Users users={users} setCurrentUser={setCurrentUser} />}
+            element={<Users users={users} setCurrentUser={setCurrentUser} onRemoveUser={removeUser} setServerError={setServerError} />}
           />
           <Route
             path='/:userid/saved'
@@ -99,6 +109,10 @@ function App() {
           <Route
             path='/:userid/:pagenumber'
             element={<AllGames currentUser={currentUser} setServerError={setServerError}  />}
+          />
+          <Route
+            path="/newuser"
+            element={<AddUserProfileForm addUser={addUser} setServerError={setServerError} />}
           />
           <Route path='*' element={<ServerError resetError={resetError}  />} />
         </Routes>
