@@ -12,7 +12,7 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
   const { pagenumber } = useParams();
   const [pageNumber, setPageNumber] = useState(pagenumber || 1);
   const [currentGames, setCurrentGames] = useState([]);
-  const [totalPages, setTotalPages] = useState(7508);
+  const [totalPages, setTotalPages] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState("");
   const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser]);
@@ -41,7 +41,7 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
       .then((data) => {
         setCurrentGames(data.data);
         setIsLoading(false);
-        setTotalPages(7508);
+        setTotalPages(data.ttotal_pages);
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` });
