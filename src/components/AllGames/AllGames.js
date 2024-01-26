@@ -52,16 +52,35 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
   }
 
   return (
-    <div className="allgames-container">
-     <section className="filters"></section>
-      <div className="allgames">
-        {displayedGames}
-        {pageNumber > totalPages && <ServerError resetError={() => setPageNumber(1)} />}
-        <div className="footer">
-          <Pagination currentUser={currentUser} pageNumber={pageNumber} setPageNumber={setPageNumber} />  
-        </div>
-      </div>
+<div className="allgames-container">
+  <section className="filters">
+    <label>
+      <input
+        type="checkbox"
+        name="genre"
+        value="Adventure"
+      />
+      Adventure
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        name="genre"
+        value="Strategy"
+      />
+      Strategy
+    </label>
+    <button>Apply Filters</button>
+  </section>
+  <div className="allgames">
+    {displayedGames}
+    {pageNumber > totalPages && <ServerError resetError={() => setPageNumber(1)} />}
+    <div className="footer">
+      <Pagination currentUser={currentUser} pageNumber={pageNumber} setPageNumber={setPageNumber} />
     </div>
+  </div>
+</div>
+
   );
 }
 
