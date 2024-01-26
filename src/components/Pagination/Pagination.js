@@ -1,10 +1,8 @@
-// Import necessary modules
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../Pagination/Pagination.css';
 
-// Define the Pagination component
-function Pagination({ currentUser, pageNumber, setPageNumber }) {
+function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const { pagenumber } = useParams();
@@ -61,7 +59,7 @@ function Pagination({ currentUser, pageNumber, setPageNumber }) {
   const generatePageNumbers = () => {
     const currentPage = pageNumber || 1;
     const startPage = Math.floor((currentPage - 1) / 9) * 9 + 1;
-    const endPage = Math.min(startPage + 8, 7508);
+    const endPage = Math.min(startPage + 8, totalPages);
     const pages = [];
 
     for (let i = startPage; i <= endPage; i++) {
@@ -105,11 +103,11 @@ function Pagination({ currentUser, pageNumber, setPageNumber }) {
         </li>
         <li>
           <Link
-            to={`/${currentUser}/7508`}
-            onClick={() => handlePageClick(7508)}
-            className={pageNumber === 7508 ? 'active-link' : ''}
+            to={`/${currentUser}/${totalPages}`}
+            onClick={() => handlePageClick(totalPages)}
+            className={pageNumber === totalPages ? 'active-link' : ''}
           >
-            7508
+            {totalPages}
           </Link>
         </li>
         <li>
