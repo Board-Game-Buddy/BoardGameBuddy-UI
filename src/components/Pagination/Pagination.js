@@ -1,7 +1,9 @@
+// Import necessary modules
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../Pagination/Pagination.css';
 
+// Define the Pagination component
 function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');

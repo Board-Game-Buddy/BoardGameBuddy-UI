@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getGamesByPage } from '../../apiCalls';
+import { getGamesByPage, getGamesByCategories } from '../../apiCalls';
 import GameCard from '../Card/GameCard';
 import ServerError from '../ServerError/ServerError';
 import '../AllGames/AllGames.css';
@@ -12,41 +12,72 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
   const { pagenumber } = useParams();
   const [pageNumber, setPageNumber] = useState(pagenumber || 1);
   const [currentGames, setCurrentGames] = useState([]);
-  const [totalPages, setTotalPages] = useState("");
+  const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [categories, setCategories] = useState("");
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser]);
 
   // Handle checkbox changes
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
 
-    // Update categories state based on checkbox status
-    setCategories((prevCategories) => {
+    // Update selected checkboxes state
+    setSelectedCheckboxes((prevSelected) => {
       if (checked) {
-        // Add the category if checked
-        return prevCategories ? `${prevCategories}, ${value}` : value;
+        // Add the category if it's not already in the state
+        if (!prevSelected.includes(value)) {
+          return [...prevSelected, value];
+        }
       } else {
         // Remove the category if unchecked
-        return prevCategories
-          .split(", ")
-          .filter((category) => category !== value)
-          .join(", ");
+        return prevSelected.filter((category) => category !== value);
       }
+
+      return prevSelected; // No change
     });
   };
 
-  useEffect(() => {
-    getGamesByPage(pageNumber, categories)
+  const applyFilters = () => {
+    setIsLoading(true);
+
+    // Use the current state of selectedCheckboxes
+    const selectedCategories = selectedCheckboxes.join(', ');
+
+    getGamesByCategories(selectedCategories)
       .then((data) => {
         setCurrentGames(data.data);
+        setTotalPages(data.total_pages);
+      })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` });
+      })
+      .finally(() => {
         setIsLoading(false);
-        setTotalPages(data.ttotal_pages);
+      });
+  };
+
+  useEffect(() => {
+    getGamesByPage(pageNumber)
+      .then((data) => {
+        setCurrentGames(data.data);
+        setTotalPages(data.total_pages);
+        setIsLoading(false);
       })
       .catch((error) => {
         setServerError({ hasError: true, message: `${error.message}` });
       });
-  }, [pageNumber, setServerError, favoriteCardsRedux, categories]);
+  }, []);
+
+  useEffect(() => {
+    getGamesByPage(pageNumber)
+      .then((data) => {
+        setCurrentGames(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` });
+      });
+  }, [pageNumber, setServerError, favoriteCardsRedux]);
 
   const displayedGames = currentGames.map((game) => (
     <GameCard
@@ -76,21 +107,183 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
           <input
             type="checkbox"
             name="genre"
-            value="Adventure"
+            value="Dice"
             onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Dice")}
           />
-          Adventure
+          Dice
         </label>
         <label>
           <input
             type="checkbox"
             name="genre"
-            value="Strategy"
+            value="Card Game"
             onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Card Game")}
           />
-          Strategy
+          Card Game
         </label>
-        <button>Apply Filters</button>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Educational"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Educational")}
+          />
+          Educational
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Mature / Adult"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Mature / Adult")}
+          />
+          Mature / Adult
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Children's Game"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Children's Game")}
+          />
+          Children's Game
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Video Game Theme"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Video Game Theme")}
+          />
+          Video Game Theme
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Sports"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Sports")}
+          />
+          Sports
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Music"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Music")}
+          />
+          Music
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Fantasy"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Fantasy")}
+          />
+          Fantasy
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Memory"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Memory")}
+          />
+          Memory
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Murder/Mystery"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Murder/Mystery")}
+          />
+          Murder/Mystery
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Party Game"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Party Game")}
+          />
+          Party Game
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Trivia"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Trivia")}
+          />
+          Trivia
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Horror"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Horror")}
+          />
+          Horror
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Action / Dexterity"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Action / Dexterity")}
+          />
+          Action / Dexterity
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Wargame"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Wargame")}
+          />
+          Wargame
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Collectible Components"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Collectible Components")}
+          />
+          Collectible Components
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="genre"
+            value="Puzzle"
+            onChange={handleCheckboxChange}
+            checked={selectedCheckboxes.includes("Puzzle")}
+          />
+          Puzzle
+        </label>
+        <button onClick={applyFilters}>Apply Filters</button>
       </section>
       <div className="allgames">
         {displayedGames}

@@ -49,3 +49,14 @@ export function getGamesByPage(pageNumber) {
     });
 }
 
+export function getGamesByCategories(categories) {
+  const queryParams = categories ? `categories=${categories}` : '';
+
+  return fetch(`https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?${queryParams}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Category games not found.');
+      }
+      return response.json();
+    });
+}
