@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getGamesByPage, getGamesByCategories } from '../../apiCalls';
+import { getGamesByPage, getGamesByCategories, getGamesByPageAndCategories } from '../../apiCalls';
 import GameCard from '../Card/GameCard';
 import ServerError from '../ServerError/ServerError';
 import '../AllGames/AllGames.css';
@@ -68,16 +68,16 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
       });
   }, []);
 
-  useEffect(() => {
-    getGamesByPage(pageNumber)
-      .then((data) => {
-        setCurrentGames(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` });
-      });
-  }, [pageNumber, setServerError, favoriteCardsRedux]);
+useEffect(() => {
+  getGamesByPageAndCategories(pageNumber, selectedCheckboxes.join(', '))
+    .then((data) => {
+      setCurrentGames(data.data);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      setServerError({ hasError: true, message: `${error.message}` });
+    });
+}, [pageNumber, setServerError, favoriteCardsRedux]);
 
   const displayedGames = currentGames.map((game) => (
     <GameCard

@@ -60,3 +60,14 @@ export function getGamesByCategories(categories) {
       return response.json();
     });
 }
+
+export function getGamesByPageAndCategories(page, categories) {
+  return fetch(`https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?page=${page}&categories=${categories}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error fetching filtered page.');
+      }
+      return response.json();
+    });
+}
+
