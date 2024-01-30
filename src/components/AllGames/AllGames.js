@@ -69,6 +69,7 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
   }, []);
 
 useEffect(() => {
+  setIsLoading(true);
   getGamesByPageAndCategories(pageNumber, selectedCheckboxes.join(', '))
     .then((data) => {
       setCurrentGames(data.data);
@@ -77,7 +78,7 @@ useEffect(() => {
     .catch((error) => {
       setServerError({ hasError: true, message: `${error.message}` });
     });
-}, [pageNumber, setServerError, favoriteCardsRedux]);
+}, [pageNumber, setServerError]);
 
   const displayedGames = currentGames.map((game) => (
     <GameCard
