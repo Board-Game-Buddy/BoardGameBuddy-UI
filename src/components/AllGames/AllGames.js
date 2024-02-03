@@ -51,6 +51,7 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
         setServerError({ hasError: true, message: `${error.message}` });
       })
       .finally(() => {
+        setPageNumber(1);
         setIsLoading(false);
       });
   };
