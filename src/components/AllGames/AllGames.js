@@ -10,7 +10,7 @@ import LoadingComponent from '../Loading/Loading';
 
 function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite }) {
   const { pagenumber } = useParams();
-  const [pageNumber, setPageNumber] = useState(pagenumber || 1);
+  const [pageNumber, setPageNumber] = useState(1);
   const [currentGames, setCurrentGames] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +39,6 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
 
   const applyFilters = () => {
     setIsLoading(true);
-
     // Use the current state of selectedCheckboxes
     const selectedCategories = selectedCheckboxes.join(', ');
 

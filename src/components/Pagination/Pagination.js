@@ -12,11 +12,9 @@ function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
 
   useEffect(() => {
     setInputValue(pagenumber || '');
-    setPageNumber((prevPageNumber) => {
-      const parsedPageNumber = parseInt(pagenumber, 10) || 1;
-      navigate(`/${currentUser}/${parsedPageNumber}`);
-      return parsedPageNumber;
-    });
+    
+    const parsedPageNumber = parseInt(pagenumber, 10) || 1;
+    navigate(`/${currentUser}/${parsedPageNumber}`);
   }, [pagenumber, setPageNumber, currentUser, navigate]);
 
   const handlePageClick = (page) => {
