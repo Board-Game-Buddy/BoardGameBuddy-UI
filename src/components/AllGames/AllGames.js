@@ -138,16 +138,6 @@ useEffect(() => {
           <input
             type="checkbox"
             name="genre"
-            value="Mature / Adult"
-            onChange={handleCheckboxChange}
-            checked={selectedCheckboxes.includes("Mature / Adult")}
-          />
-          Mature / Adult
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="genre"
             value="Children's Game"
             onChange={handleCheckboxChange}
             checked={selectedCheckboxes.includes("Children's Game")}
@@ -248,31 +238,11 @@ useEffect(() => {
           <input
             type="checkbox"
             name="genre"
-            value="Action / Dexterity"
-            onChange={handleCheckboxChange}
-            checked={selectedCheckboxes.includes("Action / Dexterity")}
-          />
-          Action / Dexterity
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="genre"
             value="Wargame"
             onChange={handleCheckboxChange}
             checked={selectedCheckboxes.includes("Wargame")}
           />
           Wargame
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="genre"
-            value="Collectible Components"
-            onChange={handleCheckboxChange}
-            checked={selectedCheckboxes.includes("Collectible Components")}
-          />
-          Collectible Components
         </label>
         <label>
           <input
