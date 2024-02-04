@@ -104,7 +104,7 @@ useEffect(() => {
   return (
     <div className="allgames-container">
       <section className="filters">
-        <label>
+        <div className="section-1"><label>
           <input
             type="checkbox"
             name="genre"
@@ -134,6 +134,8 @@ useEffect(() => {
           />
           Educational
         </label>
+        </div>
+        <div className="section-2">
         <label>
           <input
             type="checkbox"
@@ -164,6 +166,8 @@ useEffect(() => {
           />
           Sports
         </label>
+        </div>
+        <div className="section-3">
         <label>
           <input
             type="checkbox"
@@ -194,6 +198,8 @@ useEffect(() => {
           />
           Memory
         </label>
+        </div>
+        <div className="section-4">
         <label>
           <input
             type="checkbox"
@@ -224,7 +230,9 @@ useEffect(() => {
           />
           Trivia
         </label>
-        <label>
+        </div>
+       <div className="section-5">
+       <label>
           <input
             type="checkbox"
             name="genre"
@@ -254,6 +262,7 @@ useEffect(() => {
           />
           Puzzle
         </label>
+       </div>
         <button onClick={applyFilters}>Apply Filters</button>
       </section>
       <div className="allgames">
