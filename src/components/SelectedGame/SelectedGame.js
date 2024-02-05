@@ -88,31 +88,35 @@ function SelectedGame({ setServerError, currentUser }) {
     <div className="entire-page">
       <div className="selected-game-container">
         <div className="selected-game-info">
-          <Link to={`/${currentUser}/home`}>
+          <div className="header-container">          <Link to={`/${currentUser}/home`}>
             <img src={back} alt="back button" className="back-button" />
           </Link>
-          <div className="above-image">
-            <h1 className="game-title">{selectedGame.attributes.title}</h1>
-            <h3 className="players">{selectedGame.attributes.min_players}-{selectedGame.attributes.max_players} players</h3>
-            {selectedGame.attributes.rating > 0 ? (
-              <h3 className="rating">
-                Average Rating: {Math.round(selectedGame.attributes.rating?.toFixed(1) / 2)}/5 {generateStars(selectedGame.attributes.rating)}
-              </h3>
-            ) : (
-              <h3 className="rating">Average Rating: Not yet rated</h3>
-            )}
-          </div>
-          <div className="image-container">
-            <img className="selected-game-image" src={selectedGame.attributes.image_path} alt={`boardgame cover for ${selectedGame.attributes.title}`} />
-          </div>
-          <h3 className="categories">{selectedGame.attributes.categories}</h3>
           <div className="selected-favorite-button" id="save" onClick={toggleFavorite}>
             {isFavorite ? (
               <img src={filled} alt="filled in collection icon showing that this game is saved to the users favorites" style={{ cursor: 'pointer', fontSize: '1.3em' }} />
             ) : (
               <img src={unfilled} alt="unfilled collection icon showing that this game is not saved to the users favorites" style={{ fontSize: '1.3em' }} />
             )}
+          </div></div>
+
+          <div className="above-image">
+            <h1 className="game-title">{selectedGame.attributes.title}</h1>
+            <h3 className="players">Players: {selectedGame.attributes.min_players}-{selectedGame.attributes.max_players}</h3>
+            <div className="image-container">
+            </div>
+            {selectedGame.attributes.rating > 0 ? (
+              <h3 className="rating">
+                Rating: {(selectedGame.attributes.rating / 2).toFixed(1)}/5 {generateStars(selectedGame.attributes.rating)}
+
+              </h3>
+            ) : (
+              <h3 className="rating">Average Rating: Not yet rated</h3>
+            )}
           </div>
+            <img className="selected-game-image" src={selectedGame.attributes.image_path} alt={`boardgame cover for ${selectedGame.attributes.title}`} />
+
+          <h3 className="categories">Categories: {selectedGame.attributes.categories}</h3>
+    
         </div>
         <div className="selected-game-instructions-container">
           <p className="game-instructions" dangerouslySetInnerHTML={{ __html: replaceLineBreaks(selectedGame.attributes.description) }}></p>
