@@ -34,7 +34,7 @@ function Users( {users, setCurrentUser, onRemoveUser, setServerError } ) {
         <Link to='/newuser' >
           <h2 className='add-profile'>Add Profile</h2>
         </Link>
-        <h2 className='remove-profile' onClick={toggleRemoveProfile}>Remove Profile</h2>
+        {/* <h2 className='remove-profile' onClick={toggleRemoveProfile}>Remove Profile</h2> */}
       </div>
       <div className='users-container'>
       {allUsers}
