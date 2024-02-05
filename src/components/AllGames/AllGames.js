@@ -7,7 +7,6 @@ import '../AllGames/AllGames.css';
 import Pagination from '../Pagination/Pagination';
 import { useSelector } from 'react-redux';
 import LoadingComponent from '../Loading/Loading';
-import Slider from '../Slider/Slider';
 
 function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite }) {
   const { pagenumber } = useParams();

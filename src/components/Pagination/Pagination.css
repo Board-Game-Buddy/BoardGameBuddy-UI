@@ -93,3 +93,8 @@ span:hover {
     font-size: 16pt;
   }
 }
+
+.go-to {
+  margin-left: 10px;
+  color: white;
+}

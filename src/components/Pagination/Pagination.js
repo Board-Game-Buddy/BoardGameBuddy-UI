@@ -1,7 +1,7 @@
-// Import necessary modules
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../Pagination/Pagination.css';
+import { getGamesByPage } from '../../apiCalls';
 
 // Define the Pagination component
 function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
@@ -9,20 +9,17 @@ function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
   const [inputValue, setInputValue] = useState('');
   const { pagenumber } = useParams();
   const navigate = useNavigate();
+  let timeoutId; // To store the timeout ID
 
   useEffect(() => {
     setInputValue(pagenumber || '');
-    
+
     const parsedPageNumber = parseInt(pagenumber, 10) || 1;
     navigate(`/${currentUser}/${parsedPageNumber}`);
   }, [pagenumber, setPageNumber, currentUser, navigate]);
 
   const handlePageClick = (page) => {
     setPageNumber(page);
-  };
-
-  const handleMoreClick = () => {
-    setShowInput(true);
   };
 
   const handleInputChange = (event) => {
@@ -36,8 +33,25 @@ function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
 
   const handleInputKeyPress = () => {
     const parsedValue = parseInt(inputValue, 10) || 1;
-    setPageNumber(parsedValue);
-    navigate(`/${currentUser}/${parsedValue}`);
+
+    // Clear any existing timeouts
+    clearTimeout(timeoutId);
+
+    // Set a new timeout
+    timeoutId = setTimeout(() => {
+      setPageNumber(parsedValue);
+      navigate(`/${currentUser}/${parsedValue}`);
+
+      // Call your network request function here
+      getGamesByPage(parsedValue)
+        .then(data => {
+          // Handle the response data
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, 1000); // 1000ms (1 second) delay
   };
 
   const handlePrevClick = () => {
@@ -55,6 +69,15 @@ function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
       return nextPage;
     });
   };
+
+
+
+// ... (previous code)
+
+const handleInputFocus = (event) => {
+  // Select the entire value when the input box is clicked
+  event.target.select();
+};
 
   const generatePageNumbers = () => {
     const currentPage = pageNumber || 1;
@@ -98,7 +121,7 @@ function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
               placeholder="Desired Page Number"
             />
           ) : (
-            <span onClick={handleMoreClick}>...</span>
+            <span>...</span>
           )}
         </li>
         <li>
@@ -112,6 +135,19 @@ function Pagination({ currentUser, pageNumber, setPageNumber, totalPages }) {
         </li>
         <li>
           <span onClick={handleNextClick}>{'>'}</span>
+        </li>
+        <li>
+          <div className="go-to">Go to page: 
+            <input
+              className="page-input"
+              value={inputValue}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+              onKeyUp={handleInputKeyPress}
+              placeholder="Desired Page Number"
+            />
+          </div>
         </li>
       </ul>
     </footer>
