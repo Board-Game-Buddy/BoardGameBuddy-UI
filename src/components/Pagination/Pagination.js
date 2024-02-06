@@ -136,8 +136,8 @@ const handleInputFocus = (event) => {
         <li>
           <span onClick={handleNextClick}>{'>'}</span>
         </li>
-        <li>
-          <div className="go-to">Go to page: 
+      </ul>
+      <div className="go-to">Go to page: 
             <input
               className="page-input"
               value={inputValue}
@@ -148,8 +148,6 @@ const handleInputFocus = (event) => {
               placeholder="Desired Page Number"
             />
           </div>
-        </li>
-      </ul>
     </footer>
   );
 }

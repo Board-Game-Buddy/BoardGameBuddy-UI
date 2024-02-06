@@ -61,8 +61,18 @@ export function getGamesByCategories(categories) {
     });
 }
 
-export function getGamesByPageAndCategories(page, categories) {
-  return fetch(`https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?page=${page}&categories=${categories}`)
+export function getGamesByPageAndCategories(page, categories, title) {
+  let queryString = `page=${page}`;
+
+  if (categories) {
+    queryString += `&categories=${categories}`;
+  }
+
+  if (title) {
+    queryString += `&title=${title}`;
+  }
+
+  return fetch(`https://middleman-api-8d134831a182.herokuapp.com/api/v1/board_games/all_by_params?${queryString}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Error fetching filtered page.');
@@ -70,4 +80,8 @@ export function getGamesByPageAndCategories(page, categories) {
       return response.json();
     });
 }
+
+
+
+
 
