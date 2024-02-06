@@ -15,6 +15,7 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  const [titleSearch, setTitleSearch] = useState(''); // State for the title search
   const favoriteCardsRedux = useSelector((state) => state.favoriteCards[currentUser]);
 
   // Handle checkbox changes
@@ -37,24 +38,29 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
     });
   };
 
-  const applyFilters = () => {
-    setIsLoading(true);
-    // Use the current state of selectedCheckboxes
-    const selectedCategories = selectedCheckboxes.join(', ');
+// ... (previous code)
 
-    getGamesByCategories(selectedCategories)
-      .then((data) => {
-        setCurrentGames(data.data);
-        setTotalPages(data.total_pages);
-      })
-      .catch((error) => {
-        setServerError({ hasError: true, message: `${error.message}` });
-      })
-      .finally(() => {
-        setPageNumber(1);
-        setIsLoading(false);
-      });
-  };
+const applyFilters = () => {
+  setIsLoading(true);
+
+  const selectedCategories = selectedCheckboxes.join(', ');
+
+  // Use the titleSearch state directly
+  getGamesByPageAndCategories(pageNumber, selectedCategories, titleSearch)
+    .then((data) => {
+      setCurrentGames(data.data);
+      setTotalPages(data.total_pages);
+    })
+    .catch((error) => {
+      setServerError({ hasError: true, message: `${error.message}` });
+    })
+    .finally(() => {
+      setPageNumber(1);
+      setIsLoading(false);
+    });
+};
+
+
 
   useEffect(() => {
     getGamesByPage(pageNumber)
@@ -68,17 +74,17 @@ function AllGames({ currentUser, setServerError, userFaves, handleToggleFavorite
       });
   }, []);
 
-useEffect(() => {
-  setIsLoading(true);
-  getGamesByPageAndCategories(pageNumber, selectedCheckboxes.join(', '))
-    .then((data) => {
-      setCurrentGames(data.data);
-      setIsLoading(false);
-    })
-    .catch((error) => {
-      setServerError({ hasError: true, message: `${error.message}` });
-    });
-}, [pageNumber, setServerError]);
+  useEffect(() => {
+    setIsLoading(true);
+    getGamesByPageAndCategories(pageNumber, selectedCheckboxes.join(', '), titleSearch)
+      .then((data) => {
+        setCurrentGames(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setServerError({ hasError: true, message: `${error.message}` });
+      });
+  }, [pageNumber, setServerError]);
 
   const displayedGames = currentGames.map((game) => (
     <GameCard
@@ -104,6 +110,17 @@ useEffect(() => {
   return (
     <div className="allgames-container">
       <section className="filters">
+      <input
+  className="title-search"
+  placeholder="Search By Title"
+  value={titleSearch}
+  onChange={(e) => setTitleSearch(e.target.value)}
+  onKeyPress={(e) => {
+    if (e.key === 'Enter') {
+      applyFilters();
+    }
+  }}
+/>
         <div className="section-1"><label>
           <input
             type="checkbox"
@@ -263,7 +280,10 @@ useEffect(() => {
           Puzzle
         </label>
        </div>
-        <button onClick={applyFilters}>Apply Filters</button>
+        <button onClick={applyFilters}>Go!</button>
+        <div classame="title-search">
+         
+          </div>
       </section>
       <div className="allgames">
         {displayedGames}

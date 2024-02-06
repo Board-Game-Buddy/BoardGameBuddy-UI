@@ -16,20 +16,34 @@
 }
 
 .filters {
-  border: 1px solid white;
+  color: white;
   margin-top: 150px;
   margin-left: 8px;
   margin-right: 8px;
   height: 100px;
-  background-color: white;
+  background-color: rgba(109, 156, 243, 0.5);
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  font-weight: bolder;
 }
 
 button {
-  width: 10%;
+  width: 5%;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
+button:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+
+}
+
 
 .section-1, .section-2, .section-3, .section-4, .section-5 {
   display: flex;
@@ -38,5 +52,9 @@ button {
 }
 
 label, input {
+  cursor: pointer;
+}
+
+button {
   cursor: pointer;
 }

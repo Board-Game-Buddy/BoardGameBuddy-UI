@@ -96,5 +96,9 @@ span:hover {
 
 .go-to {
   margin-left: 10px;
-  color: white;
+  color: #777;
+}
+
+.page-input {
+  width: 1.5%;
 }
